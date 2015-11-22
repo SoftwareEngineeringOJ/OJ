@@ -1,0 +1,167 @@
+<html>
+ <head>
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Language" content="en-US" />
+  <title>1000 -- A+B Problem</title>
+  <link rel="stylesheet" href="poj.css" type="text/css" />
+  <link rel="shortcut icon" href="poj.ico" />
+  <link rel="icon" href="poj.gif" type="image/gif" />
+  <script src="poj.js" language="javascript"></script>
+ </head>
+ <body lang="en-US" leftmargin="5" link="blue" alink="blue" vlink="blue" onkeydown="KeyDown(event)">
+  <a name="top"></a>
+  <table style="BORDER-COLLAPSE: collapse" bordercolor="#ffffff" width="100%" border="1">
+   <tbody>
+    <tr>
+     <td align="CENTER" colspan="5">
+      <table class="h1" cellpadding="0">
+       <tbody>
+        <tr>
+         <td width="25%" align="left"><img src="images/logo1.jpg" height="100" border="0" /></td>
+         <td colspan="3" bgcolor="#EAEFFD">
+          <table class="h2">
+           <tbody>
+            <tr>
+             <td><img border="0" src="images/logo0.gif" width="450" height="90" /></td>
+             <td width="95"><img border="0" src="images/logo3.gif" width="95" height="95" /></td>
+            </tr>
+           </tbody>
+          </table></td>
+        </tr>
+       </tbody>
+      </table></td>
+    </tr>
+    <tr valign="top" align="CENTER" bgcolor="#6589d1">
+     <th class="h">Online Judge</th>
+     <th class="h">Problem Set</th>
+     <th class="h">Authors</th>
+     <th class="h">Online Contests</th>
+     <th class="h">User</th>
+    </tr>
+    <tr valign="top" align="CENTER" bgcolor="#f1f1fd">
+     <td class="h" onmouseover="scbg(this, 1)" onmouseout="scbg(this, 0)"><a href="bbs">Web Board</a><br /><a href="./">Home Page</a><br /><a href="page?id=1000" target="_blank">F.A.Qs</a><br /><a href="chart">Statistical Charts</a></td>
+     <td class="h" onmouseover="scbg(this, 1)" onmouseout="scbg(this, 0)">
+      <form action="gotoproblem" method="get">
+       <a href="problemlist">Problems</a>
+       <br />
+       <a href="submit">Submit Problem</a>
+       <br />
+       <a href="status">Online Status</a>
+       <br />
+       <font color="blue">Prob.ID:</font>
+       <input type="text" name="pid" size="6" />
+       <input type="Submit" value="Go" name="pb1" />
+      </form></td>
+     <td class="h" onmouseover="scbg(this,1)" onmouseout="scbg(this,0)">
+      <form method="GET" action="searchuser">
+       <a href="register">Register</a>
+       <br />
+       <a href="modifyuser">Update your info</a>
+       <br />
+       <a href="userlist">Authors ranklist</a>
+       <br />
+       <input type="text" name="key" size="10" />
+       <input type="Submit" value="Search" name="B1" />
+      </form></td> 
+     <td class="h" onmouseover="scbg(this,1)" onmouseout="scbg(this,0)"><font color="#1a5cc8">Current Contest</font><br /><a href="pastcontests">Past Contests</a><br /><a href="contests">Scheduled Contests</a><br /><a href="challenge.html" target="_blank"><font color="red">Award Contest</font></a></td>
+     <td align="left" class="h" onmouseover="scbg(this,1)" onmouseout="scbg(this,0)">
+      <form method="POST" action="login">
+       <table>
+        <tbody>
+         <tr>
+          <td>User ID:</td>
+          <td><input type="text" name="user_id1" size="10" style="font-family:monospace" /></td>
+         </tr>
+         <tr>
+          <td>Password:</td>
+          <td><input type="password" name="password1" size="10" style="font-family:monospace" /></td>
+         </tr>
+        </tbody>
+       </table>
+       <input type="Submit" value="login" name="B1" />&nbsp;&nbsp;
+       <a href="register" target="_parent">Register</a>
+       <input type="hidden" name="url" value="/problem?id=1000" />
+      </form></td>
+    </tr>
+   </tbody>
+  </table>
+  <table border="0" width="100%" background="images/table_back.jpg">
+   <tbody>
+    <tr>
+     <td> 
+      <div style="position: absolute; right: 10px;">
+       Language:
+       <select size="1" onchange="window.location.href='problem?id=1000&amp;lang='+this.value+'&amp;change=true'"><option value="default" selected="">Default</option><option value="zh-CN">简体中文</option><option value="es">Espa&ntilde;ol</option><option value="ja">日本語</option></select>
+      </div>
+      <div class="ptt" lang="en-US">
+       A+B Problem
+      </div> 
+      <div class="plm">
+       <table align="center">
+        <tbody>
+         <tr>
+          <td><b>Time Limit:</b> 1000MS</td>
+          <td width="10px"></td>
+          <td><b>Memory Limit:</b> 10000K</td>
+         </tr>
+         <tr>
+          <td><b>Total Submissions:</b> 371906</td>
+          <td width="10px"></td>
+          <td><b>Accepted:</b> 207524</td>
+         </tr>
+        </tbody>
+       </table>
+      </div><p class="pst">Description</p>
+      <div class="ptx" lang="en-US">
+       Calculate a+b 
+      </div><p class="pst">Input</p>
+      <div class="ptx" lang="en-US">
+       Two integer a,b (0&lt;=a,b&lt;=10)
+      </div><p class="pst">Output</p>
+      <div class="ptx" lang="en-US">
+       Output a+b
+      </div><p class="pst">Sample Input</p><pre class="sio">1 2</pre><p class="pst">Sample Output</p><pre class="sio">3</pre><p class="pst">Hint</p>
+      <div class="ptx" lang="en-US">
+       Q: Where are the input and the output? 
+       <br /> 
+       <br />A: Your program shall always 
+       <font color="red">read input from stdin (Standard Input) and write output to stdout (Standard Output)</font>. For example, you can use 'scanf' in C or 'cin' in C++ to read from stdin, and use 'printf' in C or 'cout' in C++ to write to stdout. 
+       <br /> 
+       <br />You 
+       <font color="red">shall not output any extra data</font> to standard output other than that required by the problem, otherwise you will get a &quot;Wrong Answer&quot;. 
+       <br /> 
+       <br />User programs are not allowed to open and read from/write to files. You will get a &quot;Runtime Error&quot; or a &quot;Wrong Answer&quot;if you try to do so. 
+       <br /> 
+       <br />Here is a sample solution to problem 1000 using C++/G++: 
+       <br />
+       <pre>#include &lt;iostream&gt;<br /><br />using namespace std;<br /><br />int main()<br />{<br />    int a,b;<br />    cin &gt;&gt; a &gt;&gt; b;<br />    cout &lt;&lt; a+b &lt;&lt; endl;<br />    return 0;<br />}</pre>It's important that the return type of main() must be int when you use G++/GCC,or you may get compile error. 
+       <br /> 
+       <br />Here is a sample solution to problem 1000 using C/GCC: 
+       <br />
+       <pre>#include &lt;stdio.h&gt;<br /><br />int main()<br />{<br />    int a,b;<br />    scanf(&quot;%d %d&quot;,&amp;a, &amp;b);<br />    printf(&quot;%d\n&quot;,a+b);<br />    return 0;<br />}</pre>Here is a sample solution to problem 1000 using Pascal: 
+       <br />
+       <pre>program p1000(Input,Output);<br /><br />var<br />  a,b:Integer;<br />begin<br />   Readln(a,b);<br />   Writeln(a+b);<br />end.</pre>Here is a sample solution to problem 1000 using Java: 
+       <br /> 
+       <br />Now java compiler is jdk 1.5, next is program for 1000 
+       <br />
+       <pre>import java.io.*;<br />import java.util.*;<br />public class Main<br />{<br />            public static void main(String args[]) throws Exception<br />            {<br />                    Scanner cin=new Scanner(System.in);<br />                    int a=cin.nextInt(),b=cin.nextInt();<br />                    System.out.println(a+b);<br />            }<br />}</pre>Old program for jdk 1.4 
+       <br />
+       <pre>import java.io.*;<br />import java.util.*;<br /><br />public class Main<br />{<br />    public static void main (String args[]) throws Exception<br />    {<br />        BufferedReader stdin = <br />            new BufferedReader(<br />                new InputStreamReader(System.in));<br /><br />        String line = stdin.readLine();<br />        StringTokenizer st = new StringTokenizer(line);<br />        int a = Integer.parseInt(st.nextToken());<br />        int b = Integer.parseInt(st.nextToken());<br />        System.out.println(a+b);<br />    }<br />}</pre>Here is a sample solution to problem 1000 using Fortran: 
+       <br />
+       <pre>	PROGRAM P1000<br />		IMPLICIT NONE<br />		INTEGER :: A, B<br />		READ(*,*) A, B<br />		WRITE(*, &quot;(I0)&quot;) A + B<br />	END PROGRAM P1000</pre>
+      </div><p class="pst">Source</p>
+      <div class="ptx" lang="en-US">
+       <a href="searchproblem?field=source&amp;key=POJ">POJ</a>
+      </div></td>
+    </tr>
+   </tbody>
+  </table> 
+  <font color="#333399" size="3"></font>
+  <p align="center"><font> [<a href="submit?problem_id=1000">Submit</a>]&nbsp;&nbsp; [<a href="javascript:history.go(-1)">Go Back</a>]&nbsp;&nbsp; [<a href="problemstatus?problem_id=1000">Status</a>]&nbsp;&nbsp; [<a href="bbs?problem_id=1000">Discuss</a>] </font></p> 
+  <p><img height="30" src="images/home.gif" width="40" border="0" /><font size="3"><a href=".">Home Page</a> </font>&nbsp;&nbsp;<img height="30" src="images/goback.gif" width="40" border="0" /><font size="3"><a href="javascript:history.go(-1)">Go Back</a>&nbsp;&nbsp;<img height="30" width="40" border="0" src="images/top.gif" /><a href="#top">To top</a></font><br /></p>
+  <hr />
+  <p align="center" style="font-family:Arial, Helvetica, sans-serif">All Rights Reserved 2003-2013 Ying Fuchen,Xu Pengcheng,Xie Di<br />Any problem, Please <a href="mailto:webmaster@poj.org">Contact Administrator</a></p>
+  <script type="text/javascript"> var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-790353-1']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })(); </script> 
+ </body>
+</html>
