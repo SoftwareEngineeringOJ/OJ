@@ -3,10 +3,12 @@ from django.shortcuts import render,render_to_response
 from django.http import HttpResponse,HttpResponseRedirect
 from django.template import RequestContext
 from django import forms
-from models import Problems, Status, User
+from models import Problems, Status, User, ProblemsList
 from PojSpider import PojSpider
-#用户表单
-class UserForm(forms.Form): 
+
+
+class UserForm(forms.Form):
+    #用户表单
     username = forms.CharField(label='用户',max_length=100)
     password = forms.CharField(label='密码',widget=forms.PasswordInput())
 
@@ -74,18 +76,24 @@ def cut(req):
     response.delete_cookie('username')
     return response
 
+def pojproblems_spider():
+    max_page_num = 30
+    poj_spider = PojSpider(max_page_num)
+    poj_spider.save_allpage()
+
 def problems(req):
     choice=req.GET["id"]
     if cmp(choice,"1") == 0:
-        problems_list = "POJ"
+        pojproblems_spider()
+        problems_list = ProblemsList.objects.all()
     if cmp(choice,"2") == 0:
-        problems_list = "HOJ"
+        problems_list = ProblemsList.objects.filter(OJ="HOJ")
     if cmp(choice,"3") == 0:
-        problems_list = "ZOJ"
+        problems_list = ProblemsList.objects.filter(OJ="ZOJ")
     if cmp(choice,"4") == 0:
-        problems_list = "NOJ"
+        problems_list = ProblemsList.objects.filter(OJ="NOJ")
     if cmp(choice,"5") == 0:
-        problems_list = "TYVJ"
+        problems_list = ProblemsList.objects.filter(OJ="TYVJ")
     return render_to_response('problems.html',{'problems_list':problems_list},context_instance=RequestContext(req))
 
 def status(req):
@@ -147,7 +155,3 @@ def problemshow(req):
 
 '''
 
-def pojproblems_spider():
-    poj_spider = PojSpider()
-    max_page_num = 30
-    poj_spider = PojSpider(max_page_num)

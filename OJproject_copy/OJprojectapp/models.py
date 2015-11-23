@@ -4,7 +4,7 @@ from django.contrib import admin
 # Create your models here.
 
 class User(models.Model):
-    ID = models.CharField(max_length=30)
+    userID = models.CharField(max_length=30)
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
     signature = models.TextField(max_length=200)
@@ -27,7 +27,7 @@ class Status(models.Model):
     isprivate = models.BooleanField()
 
 class ProblemsList(models.Model):
-    ID = models.CharField(max_length=15)
+    problemID = models.CharField(max_length=15)
     OJ = models.CharField(max_length=20)
     SID = models.CharField(max_length=20)
     title = models.CharField(max_length=50)
@@ -35,7 +35,7 @@ class ProblemsList(models.Model):
     source = models.CharField(max_length=50)
 
 class Problems(models.Model):
-    ID = models.CharField(max_length=15)
+    problemID = models.CharField(max_length=15)
     OJ = models.CharField(max_length=20)
     SID = models.CharField(max_length=20)
     title = models.CharField(max_length=50)
