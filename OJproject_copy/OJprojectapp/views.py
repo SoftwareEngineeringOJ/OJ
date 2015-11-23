@@ -1,11 +1,10 @@
-#coding=utf-8
+#-*- coding:utf8 -*-
 from django.shortcuts import render,render_to_response
 from django.http import HttpResponse,HttpResponseRedirect
 from django.template import RequestContext
 from django import forms
-from models import User
-from models import Userdetail,Groupdetail, POJ_Problems,HOJ_Problems,ZOJ_Problems,NOJ_Problems,TYVJ_Problems,Status
-
+from models import Problems, Status, User
+from PojSpider import PojSpider
 #用户表单
 class UserForm(forms.Form): 
     username = forms.CharField(label='用户',max_length=100)
@@ -78,21 +77,21 @@ def cut(req):
 def problems(req):
     choice=req.GET["id"]
     if cmp(choice,"1") == 0:
-        problems_list = POJ_Problems.objects.all()
+        problems_list = "POJ"
     if cmp(choice,"2") == 0:
-        problems_list = HOJ_Problems.objects.all()
+        problems_list = "HOJ"
     if cmp(choice,"3") == 0:
-        problems_list = ZOJ_Problems.objects.all()
+        problems_list = "ZOJ"
     if cmp(choice,"4") == 0:
-        problems_list = NOJ_Problems.objects.all()
+        problems_list = "NOJ"
     if cmp(choice,"5") == 0:
-        problems_list = TYVJ_Problems.objects.all()
+        problems_list = "TYVJ"
     return render_to_response('problems.html',{'problems_list':problems_list},context_instance=RequestContext(req))
 
 def status(req):
     status_list = Status.objects.all()
     return render_to_response('status.html',{'status_list':status_list},context_instance=RequestContext(req))
-
+'''
 def rank(req):
     choice = req.GET["id"]
     userdetail_list = Userdetail.objects.all()
@@ -145,3 +144,10 @@ def problemshow(req):
     choice = req.GET["id"]
     problem = HOJ_Problems.objects.get(id=choice)
     return render_to_response('problemshow.html',{'problem':problem},context_instance=RequestContext(req))
+
+'''
+
+def pojproblems_spider():
+    poj_spider = PojSpider()
+    max_page_num = 30
+    poj_spider = PojSpider(max_page_num)

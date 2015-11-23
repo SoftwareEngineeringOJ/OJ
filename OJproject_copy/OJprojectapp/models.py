@@ -1,3 +1,4 @@
+#-*- coding:utf8 -*-
 from django.db import models
 from django.contrib import admin
 # Create your models here.
@@ -48,14 +49,3 @@ class Problems(models.Model):
     hint = models.TextField()
 
 
-
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('username','username')
-class StatusAdmin(admin.ModelAdmin):
-    list_display = ('username','statu')
-class ProblemsAdmin(admin.ModelAdmin):
-    list_display = ('title','category')
-
-admin.site.register(User,UserAdmin)
-admin.site.register(Status,StatusAdmin)
-admin.site.register(Problems,ProblemsAdmin)

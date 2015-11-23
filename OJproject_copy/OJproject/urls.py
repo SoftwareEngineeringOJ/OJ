@@ -29,9 +29,9 @@ urlpatterns = [
     url(r'^enter/$', 'OJprojectapp.views.enter'),
     url(r'^cut/$', 'OJprojectapp.views.cut'),
     url(r'^problems/$', 'OJprojectapp.views.problems'),
-    url(r'^problemshow/$', 'OJprojectapp.views.problemshow'),
+    #url(r'^problemshow/$', 'OJprojectapp.views.problemshow'),
     url(r'^status/$', 'OJprojectapp.views.status'),
     url(r'^rank/$', 'OJprojectapp.views.rank'),
-    url(r'^grouprank/$', 'OJprojectapp.views.grouprank'),
+    #url(r'^grouprank/$', 'OJprojectapp.views.grouprank'),
 ]
 urlpatterns += staticfiles_urlpatterns()
