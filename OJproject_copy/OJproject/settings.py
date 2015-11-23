@@ -76,17 +76,11 @@ WSGI_APPLICATION = 'OJproject.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-    'default': {   
-        'ENGINE': 'django.db.backends.mysql',  
-        'NAME':'project',  
-        'USER':'1130310306',  
-        'PASSWORD':'1130310306',  
-        'HOST':'',  
-        'PORT':'3306',  
-        }    
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
-
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

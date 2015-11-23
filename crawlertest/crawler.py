@@ -4,7 +4,7 @@ import requests
 from lxml import etree
 reload(sys)
 sys.setdefaultencoding("utf-8")
-'''
+
 url = "http://poj.org/problemlist"
 html = requests.get(url)
 page = etree.HTML(html.text,parser=etree.HTMLParser(encoding='utf-8'))
@@ -16,7 +16,7 @@ for i in range(2, 102):
     ratio = page.xpath('/html/body/table[2]//tr[%d]/td[3]'%i)[0].xpath('string(.)')
     
     print ID,href, title,ratio
-'''
+
 
 url = "http://poj.org/problem?id=1015"
 html = requests.get(url)
@@ -29,9 +29,9 @@ mem_limit = page.xpath('/html/body/table[2]//tr/td/div[3]/table//tr[1]/td[3]')[0
 description = page.xpath('/html/body/table[2]//tr/td/div[4]')[0].xpath('string(.)')
 _input = page.xpath('/html/body/table[2]//tr/td/div[5]')[0].xpath('string(.)')
 _output = page.xpath('/html/body/table[2]//tr/td/div[6]')[0].xpath('string(.)')
-sample_input = page.xpath('/html/body/table[2]//tr/td/pre[1]/text()')
-sample_output = page.xpath('/html/body/table[2]//tr/td/pre[2]/text()')
-hint = page.xpath('/html/body/table[2]//tr/td/div[7]/text()')
+sample_input = page.xpath('/html/body/table[2]//tr/td/pre[1]/text()')[0]
+sample_output = page.xpath('/html/body/table[2]//tr/td/pre[2]/text()')[0]
+hint = page.xpath('/html/body/table[2]//tr/td/div[7]/text()')[0]
 print title,time_limit,mem_limit
 print description
 print "input:" + str(_input)
