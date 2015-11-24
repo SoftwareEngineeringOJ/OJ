@@ -154,7 +154,7 @@ def grouprank(req):
 '''
 def problemshow(req):
     choice = req.GET["id"]
-    problem = Problems.objects.get(SID=choice)
-    return render_to_response('problemshow.html',{'problem':problem},context_instance=RequestContext(req))
+    problem = Problems.objects.filter(SID=choice)
+    return render_to_response('problemshow.html',{'problem':problem[0]},context_instance=RequestContext(req))
 
 

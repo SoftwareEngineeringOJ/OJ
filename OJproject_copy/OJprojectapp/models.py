@@ -13,7 +13,7 @@ class User(models.Model):
     register_time= models.DateTimeField()
 
 class Status(models.Model):
-    runID = models.CharField(max_length=15)
+    problemID = models.CharField(max_length=15)
     username = models.CharField(max_length=30)
     OJ = models.CharField(max_length=20)
     result = models.CharField(max_length=30)
@@ -27,7 +27,6 @@ class Status(models.Model):
     isprivate = models.BooleanField()
 
 class ProblemsList(models.Model):
-    problemID = models.CharField(max_length=15)
     OJ = models.CharField(max_length=20)
     SID = models.CharField(max_length=20)
     title = models.CharField(max_length=50)
