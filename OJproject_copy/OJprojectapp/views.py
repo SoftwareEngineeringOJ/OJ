@@ -7,6 +7,8 @@ from models import Problems, Status, User, ProblemsList
 from PojSpider import PojSpider
 
 poj = PojSpider()
+Problems.objects.filter(OJ="POJ").delete()
+ProblemsList.objects.filter(OJ="POJ").delete()
 poj.save_allpage()
 
 class UserForm(forms.Form):
@@ -144,11 +146,10 @@ def grouprank(req):
     grouprank_list = Groupdetail.objects.all()
     #need sort here
     return render_to_response('grouprank.html',{'grouprank_list':grouprank_list},context_instance=RequestContext(req))
-
+'''
 def problemshow(req):
     choice = req.GET["id"]
-    problem = HOJ_Problems.objects.get(id=choice)
+    problem = Problems.objects.get(SID=choice)
     return render_to_response('problemshow.html',{'problem':problem},context_instance=RequestContext(req))
 
-'''
 

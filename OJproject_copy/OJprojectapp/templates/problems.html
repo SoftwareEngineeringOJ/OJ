@@ -78,8 +78,8 @@
                         <tbody>
                         {%for aproblem in problems_list%}
                             <tr>
-                                <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.number }}</a></td>
-                                <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.title }}</a></td>
+                                <td><a href="/problemshow/?id={{aproblem.SID}}">{{ aproblem.number }}</a></td>
+                                <td><a href="/problemshow/?id={{aproblem.SID}}">{{ aproblem.title }}</a></td>
                                 <td>{{ aproblem.category }}</td>
                                 <td>{{ aproblem.dificulty }}</td>
                             </tr>
