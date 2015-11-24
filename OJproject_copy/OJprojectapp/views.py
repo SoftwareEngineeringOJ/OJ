@@ -4,12 +4,17 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.template import RequestContext
 from django import forms
 from models import Problems, Status, User, ProblemsList
-from PojSpider import PojSpider
+from Spider import PojSpider, HojSpider
 
 poj = PojSpider()
 Problems.objects.filter(OJ="POJ").delete()
 ProblemsList.objects.filter(OJ="POJ").delete()
 poj.save_allpage()
+
+hoj = HojSpider()
+Problems.objects.filter(OJ="HOJ").delete()
+ProblemsList.objects.filter(OJ="HOJ").delete()
+hoj.save_allpage()
 
 class UserForm(forms.Form):
     #用户表单
