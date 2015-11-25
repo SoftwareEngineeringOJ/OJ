@@ -103,7 +103,7 @@ class Submit(object):
         self.login()
         code = base64.b64encode(code) # encode
         pid = pid.encode('utf-8')
-        lan = lan.encode('utf-8')
+        lan = self.map()[lan]
         code = code.encode('utf-8')
         postData = {'problem_id': pid,
                     'language': lan,

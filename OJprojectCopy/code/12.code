@@ -1,0 +1,4 @@
+        postData = {'problem_id': '',
+                    'user_id': self.username,
+                    'result': '',
+                    'language': ''} # ππ‘ÏPOST

@@ -5,8 +5,10 @@ from django.template import RequestContext
 from datetime import date, datetime
 from django import forms
 from models import *
+import urllib
 
 from linker import CodeManager, Maneger, POJ
+from django.templatetags.i18n import language
 
 check = Maneger.Judge()
 #from spider import PojSpider, HojSpider
@@ -99,15 +101,22 @@ def problemss(req):
 
 def statuss(req):
     if req.GET:
-        if cmp(req.GET["oj"],"") == 0 or cmp(req.GET["oj"],"all") == 0:
+        oj = req.GET('oj', False)
+        print 'oj = ', oj
+        return render_to_response('status.html')
+        if cmp(oj,"") == 0 or cmp(oj, "all") == 0:
             status_list=status.objects.all()
         else:
             status_list=status.objects.filter(OJ=req.GET["oj"])
-        if cmp(req.GET["language"],"all") != 0:
+        return render_to_response('status.html',{'status_list':status_list},context_instance=RequestContext(req))
+        language = req.GET("language", False)
+        if cmp(language, "all") != 0:
             status_list=status_list.filter(language=req.GET["language"])
-        if cmp(req.GET["result"],"all") != 0:
+        result = req.GET('result', False)
+        if cmp(result,"all") != 0:
             status_list=status_list.filter(result=req.GET["result"])
-        if cmp(req.GET["user"],"") != 0:
+        user = req.GET('user', False)
+        if cmp(user, "") != 0:
             status_list=status_list.filter(username=req.GET["user"])
     else:
         status_list=status.objects.all()
@@ -188,21 +197,12 @@ def myusershow(req):
     auser = user.objects.get(userID=choice)
     return render_to_response('myusershow.html',{'auser':auser,'username':username},context_instance=RequestContext(req))
 
-class Language(object):
-    
-    def __init__(self, lan, value):
-        self.lan = lan
-        self.value = value
-
 def mysubmitcode(req):
     username = req.COOKIES.get('username', '')
     sid = req.GET["sid"]
     oj = req.GET["oj"]
     title = req.GET["title"]
-    map = POJ.Submit().map()
-    lan = []
-    for l in map:
-        lan.append(Language(lan = l, value = map[l]))
+    lan = POJ.Submit().map()
     
     if req.POST:
         page = req.POST
@@ -219,5 +219,9 @@ def mysubmitcode(req):
         RunID = new.id
         CodeManager.SaveFile(code, RunID)
         check.push(new)
+        postData = {'user': username, 
+                    'oj': 'all'} # 构造POST
+        postData = urllib.urlencode(postData)
+        #return HttpResponseRedirect('/mystatus' + '?' + postData)
     return render_to_response('mysubmitcode.html',{'username':username,'title':title, 'lan':lan},context_instance=RequestContext(req))
 
