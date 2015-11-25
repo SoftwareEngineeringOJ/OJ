@@ -2,9 +2,9 @@
 from django.shortcuts import render,render_to_response
 from django.http import HttpResponse,HttpResponseRedirect
 from django.template import RequestContext
+from datetime import date, datetime
 from django import forms
-from models import user,status
-from models import userdetail,groupdetail,problemslist,problems
+from models import *
 
 from linker import CodeManager, Maneger, POJ
 
@@ -205,8 +205,19 @@ def mysubmitcode(req):
         lan.append(Language(lan = l, value = map[l]))
     
     if req.POST:
-        #page = req.POST
-        answer=req.POST["answer"]
-        language=req.POST["language"]
+        page = req.POST
+        new = status(submit_time = datetime.now(), 
+                     isprivate = True, 
+                     username = username, 
+                     language = page['language'], 
+                     runID = sid, 
+                     result = 'Pending', 
+                     OJ = oj, 
+                     contestID = 'hello')
+        code=req.POST["answer"]
+        new.save()
+        RunID = new.id
+        CodeManager.SaveFile(code, RunID)
+        check.push(new)
     return render_to_response('mysubmitcode.html',{'username':username,'title':title, 'lan':lan},context_instance=RequestContext(req))
 

@@ -9,6 +9,7 @@ from POJ import Submit
 from Queue import Queue
 import threading
 from OJproject import *
+from OJprojectapp.models import *
 
 class Worker(threading.Thread):
     
@@ -22,9 +23,9 @@ class Worker(threading.Thread):
             T = self.Q.get()
             print 'Process ', T.username
             code = CodeManager.GetFile(T.id)
-            res = self.linker.submit(T.pid, T.language, code)
+            res = self.linker.submit(T.runID, T.language, code)
             print 'res =', res
-            rec = Status.objects.get(id = T.id)
+            rec = status.objects.get(id = T.id)
             rec.result = res[0]
             rec.time = res[1]
             rec.memory = res[2]
