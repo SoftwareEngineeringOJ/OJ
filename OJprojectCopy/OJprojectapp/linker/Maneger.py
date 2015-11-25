@@ -30,6 +30,8 @@ class Worker(threading.Thread):
             rec.time = res[1]
             rec.memory = res[2]
             rec.save()
+            list = status.objects.all()
+            #list.sort(reversed = False)
         print 'All done'
 
 class Judge(object):

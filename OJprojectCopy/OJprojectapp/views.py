@@ -5,6 +5,7 @@ from django.template import RequestContext
 from datetime import date, datetime
 from django import forms
 from models import *
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import urllib
 
 from linker import CodeManager, Maneger, POJ
@@ -163,11 +164,12 @@ def myproblemss(req):
 
 def mystatuss(req):
     username = req.COOKIES.get('username','')
+    status_list = status.objects.order_by('-id')
     if req.GET:
         if not('oj' in req.GET) or (cmp(req.GET["oj"],"") == 0 or cmp(req.GET["oj"],"all") == 0):
-            status_list=status.objects.all()
+            pass
         else:
-            status_list=status.objects.filter(OJ=req.GET["oj"])
+            status_list=status_list.objects.filter(OJ=req.GET["oj"])
         if 'language' in req.GET and (cmp(req.GET["language"],"all") != 0):
             status_list=status_list.filter(language=req.GET["language"])
         if 'result' in req.GET and (cmp(req.GET["result"],"all") != 0):
@@ -176,8 +178,24 @@ def mystatuss(req):
             status_list=status_list.filter(username=req.GET["user"])
     else:
         status_list=status.objects.all()
-    status_list.reverse()
-    return render_to_response('mystatus.html',{'status_list':status_list,'username':username},context_instance=RequestContext(req))
+        
+    status_list = status_list.order_by('-id')
+    paginator = Paginator(status_list, 10) # Show 25 contacts per page
+
+    page = req.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        contacts = paginator.page(paginator.num_pages)
+
+    return render_to_response('mystatus.html', 
+                              {'status_list' : contacts, 
+                               'username' : username}, 
+                              context_instance=RequestContext(req))
 
 def myproblemshow(req):
     username = req.COOKIES.get('username','')
