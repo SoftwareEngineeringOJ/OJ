@@ -4,27 +4,16 @@
         <link href="/t/static/css/bootstrap.min.css", rel="stylesheet"/>
         <script src="/t/static/js/jquery-2.1.1.min.js"></script>
         <script src="/t/static/js/bootstrap.min.js"></script>
-        <link href="/t/static/css/yellow_button.css", rel="stylesheet"/>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <title>Book</title>
         <style>
             body{
-                padding-top:30px;
-            }
-            .panelset{
-                width: 800px;
-                text-align: center;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .panelset1{
                 padding-top:50px;
             }
-            .formset{
-            	width: 800px;
-                margin-left: auto;
-                margin-right: auto;
+            .starter{
+                padding:64px 210px;
+                text-align: center;
             }
         </style>
     </head>
@@ -59,44 +48,32 @@
                 </div>
             </div>
         </nav>
-		<div class="container">
-			<div class="panelset">
-				<div class="panelset1">
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h1 class="text-center"><b>{{problem.title}}</b></h1>
-                            <br><p><b>Time Limit : {{problem.time_limit}} Memory Limit : {{problem.mem_limit}}</b></p>
-						</div>
-					</div>
-                    <h1 class="text-left text-info">Description </h1>
-                    <div class="panel panel-info">
-                        <div class="panel-body">
-                            <br/>
-                            {{problem.description}}
-                            <br/>
-                            <h3 class="text-left">Input  </h3>
-                            <br/>
-                            <p class="text-left">{{problem.inputs}}</p>
-                            <br/>
-                            <h3 class="text-left">Output  </h3>
-                            <br/>
-                            <p class="text-left">{{problem.output}}</p>
-                            <br/>
-                            <h3 class="text-left">Sample Intput  </h3>
-                            <br/>
-                            <p class="text-left">{{problem.sample_input}}</p>
-                            <br/>
-                            <h3 class="text-left">Sample Outtput  </h3>
-                            <br/>
-                            <p class="text-left">{{problem.sample_output}}</p>
-                            <br/>
-                        </div>
-				    </div>
+        <div class="container">
+            <div class="starter">
+                <div class="formset">
+                    <form method="post" role="form">
+                        {% csrf_token %}
+                        <p class="text-left"><b>Problem : {{title}}</b></p>
+                        <p class="text-left"><b>Language : </b><select name="language">
+                                            <option value="all">All</option>
+                                            <option value="c">C</option>
+                                            <option value="c++">C++</option>
+                                            <option value="c#">C#</option>
+                                            <option value="python">Python</option>
+                                            <option value="java">Java</option>
+                                            <option value="pascal">Pascal</option>
+                                            <option value="ruby">Ruby</option>
+                                        </select></p>
+                        <p class="text-left"><b>Share Code : </b>
+                            Yes<input type="radio" name="Y" value="Yes" >
+                            No<input type="radio" name="N" value="No" >
+                        </p>
+                        <h1 class="text-left text-info">Your Code </h1>
+                        <textarea name="answer" cols="125" rows="20"></textarea>
+                        <input type="submit" class="btn btn-lg active col-md-offset-5 col-md-2" name="submit" value="Submit">
+                    </form>
                 </div>
-			</div>
-			<div class="formset">
-                <a href="/mysubmitcode/?sid={{problem.SID}}&oj={{problem.OJ}}&title={{problem.title}}" class="btn btn-lg active col-md-offset-5 col-md-2" role="menuitem"></b>Submit</b></a>
-			</div>
-		</div>
-	</body>
+            </div>
+        </div>
+    </body>
 </html>

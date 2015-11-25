@@ -71,9 +71,6 @@
                             <br/>
                             {{problem.description}}
                             <br/>
-                            {% for pic in pic_addr %}
-                                <img src={{pic}}>
-                            {% endfor %}
                             <h3 class="text-left">Input  </h3>
                             <br/>
                             <p class="text-left">{{problem.inputs}}</p>
@@ -82,11 +79,11 @@
                             <br/>
                             <p class="text-left">{{problem.output}}</p>
                             <br/>
-                            <h3 class="text-left">Sample Input  </h3>
+                            <h3 class="text-left">Sample Intput  </h3>
                             <br/>
                             <p class="text-left">{{problem.sample_input}}</p>
                             <br/>
-                            <h3 class="text-left">Sample Output  </h3>
+                            <h3 class="text-left">Sample Outtput  </h3>
                             <br/>
                             <p class="text-left">{{problem.sample_output}}</p>
                             <br/>
@@ -95,11 +92,7 @@
                 </div>
 			</div>
 			<div class="formset">
-				<form method="post">
-                    <h1 class="text-left text-danger">Code </h1>
-				    <textarea name="answer"cols="130" rows="8"></textarea>
-                    <a href="#" class="btn btn-lg active col-md-offset-5 col-md-2" role="menuitem"></b>Submit</b></a>
-				</form>
+                <a href="/login/" class="btn btn-lg active col-md-offset-5 col-md-2" role="menuitem"></b>Submit</b></a>
 			</div>
 		</div>
 	</body>

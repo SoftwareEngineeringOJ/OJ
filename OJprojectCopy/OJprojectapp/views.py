@@ -186,5 +186,11 @@ def myusershow(req):
 
 def mysubmitcode(req):
     username = req.COOKIES.get('username','')
-    return render_to_response('myusershow.html',{'auser':auser,'username':username},context_instance=RequestContext(req))
+    sid = req.GET["sid"]
+    oj = req.GET["oj"]
+    title = req.GET["title"]
+    if req.POST:
+        answer=req.POST["answer"]
+        language=req.POST["language"]
+    return render_to_response('mysubmitcode.html',{'username':username,'title':title},context_instance=RequestContext(req))
 
