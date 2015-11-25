@@ -5,8 +5,12 @@ from django.template import RequestContext
 from django import forms
 from models import user,status
 from models import userdetail,groupdetail,problemslist,problems
-from spider import PojSpider, HojSpider
 
+from linker import CodeManager, Maneger, POJ
+
+check = Maneger.Judge()
+#from spider import PojSpider, HojSpider
+'''
 poj = PojSpider()
 problems.objects.filter(OJ="POJ").delete()
 problemslist.objects.filter(OJ="POJ").delete()
@@ -16,7 +20,7 @@ hoj = HojSpider()
 problems.objects.filter(OJ="HOJ").delete()
 problemslist.objects.filter(OJ="HOJ").delete()
 hoj.save_allpage()
-
+'''
 #用户表单
 class UserRegisterForm(forms.Form): 
     username = forms.CharField(label='Username',max_length=100)
@@ -184,13 +188,25 @@ def myusershow(req):
     auser = user.objects.get(userID=choice)
     return render_to_response('myusershow.html',{'auser':auser,'username':username},context_instance=RequestContext(req))
 
+class Language(object):
+    
+    def __init__(self, lan, value):
+        self.lan = lan
+        self.value = value
+
 def mysubmitcode(req):
-    username = req.COOKIES.get('username','')
+    username = req.COOKIES.get('username', '')
     sid = req.GET["sid"]
     oj = req.GET["oj"]
     title = req.GET["title"]
+    map = POJ.Submit().map()
+    lan = []
+    for l in map:
+        lan.append(Language(lan = l, value = map[l]))
+    
     if req.POST:
+        #page = req.POST
         answer=req.POST["answer"]
         language=req.POST["language"]
-    return render_to_response('mysubmitcode.html',{'username':username,'title':title},context_instance=RequestContext(req))
+    return render_to_response('mysubmitcode.html',{'username':username,'title':title, 'lan':lan},context_instance=RequestContext(req))
 
