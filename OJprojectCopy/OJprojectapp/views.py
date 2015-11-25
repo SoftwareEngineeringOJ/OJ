@@ -191,7 +191,14 @@ def mystatuss(req):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         contacts = paginator.page(paginator.num_pages)
-
+    
+    '''
+    postData = {'language': req.GET['language'], 
+                'oj': req.GET['oj'], 
+                'result': req.GET['result'], 
+                'user': req.GET['user']} # 构造POST
+    postData = urllib.urlencode(postData)
+    '''
     return render_to_response('mystatus.html', 
                               {'status_list' : contacts, 
                                'username' : username}, 
@@ -234,7 +241,7 @@ def mysubmitcode(req):
         postData = {'user': username, 
                     'oj': 'all'} # 构造POST
         postData = urllib.urlencode(postData)
-        print 'To', '/mystatus' + '?' + postData
+        #print 'To', '/mystatus' + '?' + postData
         return HttpResponseRedirect('/mystatus' + '?' + postData)
     return render_to_response('mysubmitcode.html',{'username':username,'title':title, 'lan':lan},context_instance=RequestContext(req))
 

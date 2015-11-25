@@ -1,0 +1,72 @@
+#include <iostream>
+#include <algorithm>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+
+typedef long long LL;
+
+const int N = 32, MOD = 1e9 +7;
+
+using namespace std;
+
+int f[N], d[N], t[N], g[N], cnt[N], loc[N];
+
+int main()
+{
+	bool flag = false;
+	int n, m, cost, x, at, ans, tmp;
+	while (scanf("%d", &n) == 1)
+	{
+		if (n == 0)
+			break;
+		if (flag)
+			putchar('\n');
+		flag = true;
+		scanf("%d", &m);
+		m *= 12;
+		for (int i = 1; i <= n; ++i)
+			scanf("%d", &f[i]);
+		for (int i = 1; i <= n; ++i)
+			scanf("%d", &d[i]);
+		for (int i = 1; i < n; ++i)
+		{
+			scanf("%d", &x);
+			t[i] = t[i - 1] + x;
+		}
+		ans = -1;
+		for (int k = 1; k <= n; ++k)
+		{
+			cost = t[k - 1];
+			tmp = 0;
+			for (int i = 1; i <= k; ++i)
+				g[i] = f[i];
+			memset(loc, 0, sizeof(loc));
+			//printf("There is %d of %d\n", k, cost);
+			while (cost++ < m)
+			{
+				x = 0;
+				at = 1;
+				for (int i = 1; i <= k; ++i)
+					if (g[i] > x)
+					{
+						x = g[i];
+						at = i;
+					}
+				//printf("Find %d of %d\n", x, at);
+				tmp += x;
+				++loc[at];
+				g[at] -= min(x, d[at]);
+			}
+			if (ans < tmp)
+			{
+				ans = tmp;
+				memcpy(cnt, loc, sizeof(loc));
+			}
+		}
+		for (int i = 1; i < n; ++i)
+			printf("%d, ", cnt[i] * 5);
+		printf("%d\nNumber of fish expected: %d\n", cnt[n] * 5, ans);
+	}
+	return 0;
+}
