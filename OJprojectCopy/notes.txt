@@ -4,3 +4,5 @@ Share Code不能cancel的问题
 models的RunID需要修改为pid
 
 Language 已修改
+
+status中缺少一个按题号搜索

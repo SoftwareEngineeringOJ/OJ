@@ -101,22 +101,15 @@ def problemss(req):
 
 def statuss(req):
     if req.GET:
-        oj = req.GET('oj', False)
-        print 'oj = ', oj
-        return render_to_response('status.html')
-        if cmp(oj,"") == 0 or cmp(oj, "all") == 0:
+        if cmp(req.GET["oj"],"") == 0 or cmp(req.GET["oj"],"all") == 0:
             status_list=status.objects.all()
         else:
             status_list=status.objects.filter(OJ=req.GET["oj"])
-        return render_to_response('status.html',{'status_list':status_list},context_instance=RequestContext(req))
-        language = req.GET("language", False)
-        if cmp(language, "all") != 0:
+        if cmp(req.GET["language"],"all") != 0:
             status_list=status_list.filter(language=req.GET["language"])
-        result = req.GET('result', False)
-        if cmp(result,"all") != 0:
+        if cmp(req.GET["result"],"all") != 0:
             status_list=status_list.filter(result=req.GET["result"])
-        user = req.GET('user', False)
-        if cmp(user, "") != 0:
+        if cmp(req.GET["user"],"") != 0:
             status_list=status_list.filter(username=req.GET["user"])
     else:
         status_list=status.objects.all()
@@ -171,18 +164,19 @@ def myproblemss(req):
 def mystatuss(req):
     username = req.COOKIES.get('username','')
     if req.GET:
-        if cmp(req.GET["oj"],"") == 0 or cmp(req.GET["oj"],"all") == 0:
+        if not('oj' in req.GET) or (cmp(req.GET["oj"],"") == 0 or cmp(req.GET["oj"],"all") == 0):
             status_list=status.objects.all()
         else:
             status_list=status.objects.filter(OJ=req.GET["oj"])
-        if cmp(req.GET["language"],"all") != 0:
+        if 'language' in req.GET and (cmp(req.GET["language"],"all") != 0):
             status_list=status_list.filter(language=req.GET["language"])
-        if cmp(req.GET["result"],"all") != 0:
+        if 'result' in req.GET and (cmp(req.GET["result"],"all") != 0):
             status_list=status_list.filter(result=req.GET["result"])
-        if cmp(req.GET["user"],"") != 0:
+        if 'user' in req.GET and cmp(req.GET["user"],"") != 0:
             status_list=status_list.filter(username=req.GET["user"])
     else:
         status_list=status.objects.all()
+    status_list.reverse()
     return render_to_response('mystatus.html',{'status_list':status_list,'username':username},context_instance=RequestContext(req))
 
 def myproblemshow(req):
@@ -222,6 +216,7 @@ def mysubmitcode(req):
         postData = {'user': username, 
                     'oj': 'all'} # 构造POST
         postData = urllib.urlencode(postData)
-        #return HttpResponseRedirect('/mystatus' + '?' + postData)
+        print 'To', '/mystatus' + '?' + postData
+        return HttpResponseRedirect('/mystatus' + '?' + postData)
     return render_to_response('mysubmitcode.html',{'username':username,'title':title, 'lan':lan},context_instance=RequestContext(req))
 
