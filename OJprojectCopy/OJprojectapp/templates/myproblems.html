@@ -87,6 +87,23 @@
                             </tr>
                         {% endfor %}
                         </tbody>
+						<tbody>
+							<div class="pagination">
+								<span class="step-links">
+									{% if problems_list.has_previous %}
+										<a href="?page={{ problems_list.previous_page_number }}">previous</a>
+									{% endif %}
+
+									<span class="current">
+										Page {{ problems_list.number }} of {{ problems_list.paginator.num_pages }}.
+									</span>
+
+									{% if problems_list.has_next %}
+										<a href="?page={{ problems_list.next_page_number }}">next</a>
+									{% endif %}
+								</span>
+							</div>
+						</tbody>
                     </table>
                 </div>
             </div>

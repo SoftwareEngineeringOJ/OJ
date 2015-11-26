@@ -148,19 +148,35 @@ def myoj(req):
 def myproblemss(req):
     username = req.COOKIES.get('username','')
     if req.GET:
-        if cmp(req.GET["oj"],"all") == 0:
+        if ('oj' not in req.GET) or cmp(req.GET["oj"],"all") == 0:
             problems_list=problemslist.objects.all()
         else:
             problems_list=problemslist.objects.filter(OJ=req.GET["oj"])
-        if cmp(req.GET["sid"],"") != 0:
+        if ('sid' in req.GET) and cmp(req.GET["sid"],"") != 0:
             problems_list=problems_list.filter(SID=req.GET["sid"])
-        if cmp(req.GET["title"],"") != 0:
+        if ('title' in req.GET) and cmp(req.GET["title"],"") != 0:
             problems_list=problems_list.filter(title=req.GET["title"])
-        if cmp(req.GET["source"],"") != 0:
+        if ('source' in req.GET) and cmp(req.GET["source"],"") != 0:
             problems_list=problems_list.filter(source=req.GET["source"])
     else:
         problems_list=problemslist.objects.all()
-    return render_to_response('myproblems.html',{'problems_list':problems_list,'username':username},context_instance=RequestContext(req))
+    
+    paginator = Paginator(problems_list, 10) # Show 25 contacts per page
+
+    page = req.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        contacts = paginator.page(paginator.num_pages)
+    
+    return render_to_response('myproblems.html', 
+                              {'problems_list' : contacts, 
+                               'username' : username}, 
+                              context_instance = RequestContext(req))
 
 def mystatuss(req):
     username = req.COOKIES.get('username','')
