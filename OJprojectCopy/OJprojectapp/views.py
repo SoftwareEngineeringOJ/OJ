@@ -120,12 +120,23 @@ def problemshow(req):
     choice = req.GET["id"]
     problem = problems.objects.get(problemID=choice)
     pic_addr = problem.pics.split()
-    return render_to_response('problemshow.html',{'problem':problem, 'pic_addr':pic_addr},context_instance=RequestContext(req))
+    description = problem.description.split("\r\n")
+    inputs = problem.inputs.split("\r\n")
+    outputs = problem.output.split("\r\n")
+    sample_input = problem.sample_input.split("\r\n")
+    sample_output = problem.sample_output.split("\r\n")
+    return render_to_response('problemshow.html', {'problem': problem, 'pic_addr': pic_addr,
+                                                   "sam_inputs": sample_input,
+                                                   "sam_outputs": sample_output,
+                                                   "descriptions": description,
+                                                   "inputs": inputs,
+                                                   "outputs": outputs}
+                              , context_instance=RequestContext(req))
 
 def usershow(req):
     choice = req.GET["id"]
     auser = user.objects.get(userID=choice)
-    return render_to_response('usershow.html',{'auser':auser},context_instance=RequestContext(req))
+    return render_to_response('usershow.html', {'auser': auser}, context_instance=RequestContext(req))
 
 def logout(req):
     response = HttpResponseRedirect('/oj/')
@@ -224,7 +235,20 @@ def myproblemshow(req):
     username = req.COOKIES.get('username','')
     choice = req.GET["id"]
     problem = problems.objects.get(problemID=choice)
-    return render_to_response('myproblemshow.html',{'problem':problem,'username':username},context_instance=RequestContext(req))
+    pic_addr = problem.pics.split()
+    description = problem.description.split("\r\n")
+    inputs = problem.inputs.split("\r\n")
+    outputs = problem.output.split("\r\n")
+    sample_input = problem.sample_input.split("\r\n")
+    sample_output = problem.sample_output.split("\r\n")
+    return render_to_response('myproblemshow.html',
+                              {'problem':problem,'username':username,
+                               'pic_addr': pic_addr,
+                                "sam_inputs": sample_input,
+                                "sam_outputs": sample_output,
+                                "descriptions": description,
+                                "inputs": inputs,
+                                "outputs": outputs},context_instance=RequestContext(req))
 
 def myusershow(req):
     username = req.COOKIES.get('username','')
