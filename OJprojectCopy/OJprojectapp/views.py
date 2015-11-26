@@ -29,7 +29,7 @@ class UserRegisterForm(forms.Form):
     username = forms.CharField(label='Username',max_length=100)
     password = forms.CharField(label='Password',widget=forms.PasswordInput())
     signature = forms.CharField(label='Signature',max_length=100)
-    school = forms.CharField(label='School         ',max_length=100)
+    school = forms.CharField(label='School',max_length=100)
     email = forms.EmailField(max_length=50)
     register_time = forms.DateTimeField()
 class UserLoginForm(forms.Form): 
@@ -89,7 +89,7 @@ def problemss(req):
         if cmp(req.GET["oj"],"all") == 0:
             problems_list=problemslist.objects.all()
         else:
-            problems_list=problemslist.objects.filter(OJ=req.GET["oj"])
+            problems_list=problemslist.objects.filter(OJ=(req.GET["oj"]).upper())
         if cmp(req.GET["sid"],"") != 0:
             problems_list=problems_list.filter(SID=req.GET["sid"])
         if cmp(req.GET["title"],"") != 0:
@@ -105,7 +105,7 @@ def statuss(req):
         if cmp(req.GET["oj"],"") == 0 or cmp(req.GET["oj"],"all") == 0:
             status_list=status.objects.all()
         else:
-            status_list=status.objects.filter(OJ=req.GET["oj"])
+            status_list=status.objects.filter(OJ=req.GET["oj"].upper())
         if cmp(req.GET["language"],"all") != 0:
             status_list=status_list.filter(language=req.GET["language"])
         if cmp(req.GET["result"],"all") != 0:
@@ -162,7 +162,7 @@ def myproblemss(req):
         if ('oj' not in req.GET) or cmp(req.GET["oj"],"all") == 0:
             problems_list=problemslist.objects.all()
         else:
-            problems_list=problemslist.objects.filter(OJ=req.GET["oj"])
+            problems_list=problemslist.objects.filter(OJ=req.GET["oj"].upper())
         if ('sid' in req.GET) and cmp(req.GET["sid"],"") != 0:
             problems_list=problems_list.filter(SID=req.GET["sid"])
         if ('title' in req.GET) and cmp(req.GET["title"],"") != 0:
@@ -196,7 +196,7 @@ def mystatuss(req):
         if not('oj' in req.GET) or (cmp(req.GET["oj"],"") == 0 or cmp(req.GET["oj"],"all") == 0):
             pass
         else:
-            status_list=status_list.objects.filter(OJ=req.GET["oj"])
+            status_list=status_list.objects.filter(OJ=req.GET["oj"].upper())
         if 'language' in req.GET and (cmp(req.GET["language"],"all") != 0):
             status_list=status_list.filter(language=req.GET["language"])
         if 'result' in req.GET and (cmp(req.GET["result"],"all") != 0):
