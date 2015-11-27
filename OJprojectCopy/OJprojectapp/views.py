@@ -286,8 +286,13 @@ def mysubmitcode(req):
     return render_to_response('mysubmitcode.html',{'username':username,'title':title, 'lan':lan},context_instance=RequestContext(req))
 
 def codeshow(req):
-    if req.GET:
+    if req.GET and 'id' in req.GET:
         id = req.GET["id"]
         code = CodeManager.GetFile(id)
-
-    return render_to_response('codeshow.html', {'code':code}, context_instance=RequestContext(req))
+    print 'code =\n', code
+    #code = 1
+    return render_to_response('codeshow.html', 
+                              {'CodeText' : code}, 
+                              context_instance=RequestContext(req))
+    return render_to_response('codeshow.html', {'CodeText': code, 
+                                                'Username':'addf'}, context_instance=RequestContext(req))
