@@ -1,0 +1,79 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+typedef struct node
+{
+    int x;
+    int y;
+}node;
+node bob[110];
+node dog[110];
+int map[110][110];
+int pre[110],vist[110];
+int N,M;
+double guli(int a,int b,int c,int d)   //计算2点间距离
+{return sqrt((double)((c-a)*(c-a)+(d-b)*(d-b)));}
+int check(int i,int j)  
+{
+    double s1=guli(bob[i].x,bob[i].y,dog[j].x,dog[j].y);
+    double s2=guli(bob[i+1].x,bob[i+1].y,dog[j].x,dog[j].y);
+    double s=guli(bob[i].x,bob[i].y,bob[i+1].x,bob[i+1].y);
+    if(s1+s2>2*s)
+        return 0;
+    return 1;
+}
+int DFS(int v)
+{
+    for(int i=0;i<M;i++)
+    {
+        if(!vist[i]&&map[v][i])
+        {
+            vist[i]=1;
+            if(pre[i]==-1||DFS(pre[i]))
+            {
+                pre[i]=v;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+int main()
+{
+    int i,j,sum;
+    while(scanf("%d %d",&N,&M)!=EOF)
+    {
+        for(i=0;i<N;i++)
+            scanf("%d %d",&bob[i].x,&bob[i].y);
+        for(i=0;i<M;i++)
+            scanf("%d %d",&dog[i].x,&dog[i].y);
+        for(i=0;i<N-1;i++)    //构造矩阵
+            for(j=0;j<M;j++)
+                map[i][j]=check(i,j);
+        memset(pre,-1,sizeof(pre));   //二分图匹配
+        for(i=0,sum=0;i<N-1;i++)
+        {
+            memset(vist,0,sizeof(vist));
+            sum+=DFS(i);
+        }
+        printf("%d\n",sum+N);
+        int hash[110];
+        memset(hash,-1,sizeof(hash));   //转换对象
+        for(i=0;i<M;i++)
+        {
+            if(pre[i]!=-1)
+                hash[pre[i]]=i;
+        }
+        printf("%d %d",bob[0].x,bob[0].y);
+        if(hash[0]!=-1)
+            printf(" %d %d",dog[hash[0]].x,dog[hash[0]].y);
+        for(i=1;i<N;i++)
+        {
+            printf(" %d %d",bob[i].x,bob[i].y);
+            if(hash[i]!=-1)
+                printf(" %d %d",dog[hash[i]].x,dog[hash[i]].y);
+        }
+        printf("\n");
+    }
+    return 0;
+}

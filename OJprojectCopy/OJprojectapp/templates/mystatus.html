@@ -41,7 +41,7 @@
                     </ul>
                     <div style="padding-top: 10px;">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}！</p></li>
+                            <li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}!</p></li>
                             <li><a href="/enter/">Enter MY OJ </a></li></li>
                             <li><a href="/logout/"> Logout </a></li>
                         </ul>
@@ -92,7 +92,7 @@
                                         </select></td>
                                     <td>submit time </td>
                                     <td>code file </td>
-                                    <td>isprivate </td>
+                                    <td><a>isprivate </td>
                                 </tr>
                             </form>
                         </thead>
@@ -108,7 +108,13 @@
                                 <td>{{ astatu.language }}</td>
                                 <td>{{ astatu.submit_time }}</td>
                                 <td>{{ astatu.code_file }}</td>
-                                <td>{{ astatu.isprivate }}</td>
+                                {% if astatu.username = username %}
+                                	<td><a href="/codeshow/?id={{astatu.id}}">{{ astatu.isprivate }}</a></td>
+                                {% elif astatu.isprivate = False %}
+                                	<td><a href="/codeshow/?id={{astatu.id}}">{{ astatu.isprivate }}</a></td>
+                                {% else %}
+                                	<td>{{ astatu.isprivate }}</td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                         </tbody>
