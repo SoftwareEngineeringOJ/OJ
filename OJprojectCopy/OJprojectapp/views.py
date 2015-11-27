@@ -434,5 +434,5 @@ def codeshow(req):
     if req.GET:
         id = req.GET["id"]
         code = CodeManager.GetFile(id)
-        print code
-    return render_to_response('codeshow.html', {'code':code}, context_instance=RequestContext(req))
+        codes = code.split("\n")
+    return render_to_response('codeshow.html', {'codes':codes}, context_instance=RequestContext(req))

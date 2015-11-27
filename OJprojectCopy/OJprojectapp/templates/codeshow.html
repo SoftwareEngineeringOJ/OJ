@@ -67,7 +67,9 @@
                         </div>
                         <div class="panel-body">
                             <br/>
-                            <p>{{ code }}</p>
+                            {% for code in codes %}
+                            <p class="text-left">{{ code }}</p>
+                            {% endfor %}
                             <br/>
                         </div>
                     </div>
