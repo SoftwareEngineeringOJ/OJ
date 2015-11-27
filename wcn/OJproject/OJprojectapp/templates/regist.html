@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>REGISTER</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="/t/static/css/bootstrap.min.css", rel="stylesheet"/>
+    <link href="/t/static/css/yellow_button.css", rel="stylesheet"/>
+    <style>
+      .container{
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+        border-bottom-left-radius: 50px;
+        border-bottom-right-radius: 50px;
+        border: 1px solid #000000;
+        height: 510px;
+        width: 450px;
+        margin: 100px 0px 0px 420px;
+      }
+    </style>
+  </head>
+  <body background="/static/images/bg0.jpg">
+    <div class="container">
+    	<h1 align="center" class="">Register Page</h1>
+		<form method = 'post' enctype="multipart/form-data" style="margin:45px">
+      <div style="padding-left: 20px">
+			{% csrf_token %}
+		    {{uf.as_p}}
+      </div>
+		  <div class="span1" style="padding-left: 55px;padding-top:15px;">
+        <div>
+           <input type="submit" value="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Register" class="y-btn">
+        </div>
+        <a href="http://127.0.0.1:8000/login/" style="padding-left: 90px;">Login</a>
+      </div>
+		</form>			
+    </div> <!-- /container -->
+  </body>
+</html>
+
+
+

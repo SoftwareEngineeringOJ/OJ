@@ -16,7 +16,7 @@ class PojSpider():
         pass
 
     def save_allpage(self):
-        for page_number in range(1, 2): #总页数
+        for page_number in range(1, 50): #总页数
             self.save_prolst(page_number)
 
     def save_prolst(self, page_number):
@@ -25,7 +25,7 @@ class PojSpider():
         url = "http://poj.org/problemlist?volume=%d"%page_number
         html = requests.get(url)
         pro_lst_page = etree.HTML(html.text)
-        for i in range(2, 50):
+        for i in range(2, 80):
             ID = pro_lst_page.xpath('/html/body/table[2]//tr[%d]/td[1]/text()'%i)
             href = pro_lst_page.xpath('/html/body/table[2]//tr[%d]/td[2]/a/@href'%i)
             title = pro_lst_page.xpath('/html/body/table[2]//tr[%d]/td[2]/a/text()'%i)
@@ -97,7 +97,7 @@ class HojSpider():
         pass
 
     def save_allpage(self):
-        for page_number in range(1, 2): #总页数
+        for page_number in range(1, 10): #总页数
             self.save_prolst(page_number)
 
     def save_prolst(self, page_number):
