@@ -69,23 +69,36 @@
                     <div class="panel panel-info">
                         <div class="panel-body">
                             <br/>
-                            {{problem.description}}
+                            {% for des in descriptions %}
+                                <p class="text-left">{{des}}</p>
+                            {% endfor %}
+                            {% for pic in pic_addr %}
+                                <img src={{pic}} >
+                            {% endfor %}
                             <br/>
                             <h3 class="text-left">Input  </h3>
                             <br/>
-                            <p class="text-left">{{problem.inputs}}</p>
+                            {% for input in inputs %}
+                                <p class="text-left">{{input}}</p>
+                            {% endfor %}
                             <br/>
                             <h3 class="text-left">Output  </h3>
                             <br/>
-                            <p class="text-left">{{problem.output}}</p>
+                            {% for output in outputs %}
+                                <p class="text-left">{{output}}</p>
+                            {% endfor %}
                             <br/>
                             <h3 class="text-left">Sample Intput  </h3>
                             <br/>
-                            <p class="text-left">{{problem.sample_input}}</p>
+                            {% for input in sam_inputs %}
+                                <p class="text-left">{{input}}</p>
+                            {% endfor %}
                             <br/>
-                            <h3 class="text-left">Sample Outtput  </h3>
+                            <h3 class="text-left">Sample Output  </h3>
                             <br/>
-                            <p class="text-left">{{problem.sample_output}}</p>
+                            {% for output in sam_outputs %}
+                                <p class="text-left">{{output}}</p>
+                            {% endfor %}
                             <br/>
                         </div>
 				    </div>

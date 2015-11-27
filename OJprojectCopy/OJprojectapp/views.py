@@ -29,7 +29,7 @@ class UserRegisterForm(forms.Form):
     username = forms.CharField(label='Username',max_length=100)
     password = forms.CharField(label='Password',widget=forms.PasswordInput())
     signature = forms.CharField(label='Signature',max_length=100)
-    school = forms.CharField(label='School         ',max_length=100)
+    school = forms.CharField(label='School',max_length=100)
     email = forms.EmailField(max_length=50)
     register_time = forms.DateTimeField()
 class UserLoginForm(forms.Form): 
@@ -89,7 +89,7 @@ def problemss(req):
         if cmp(req.GET["oj"],"all") == 0:
             problems_list=problemslist.objects.all()
         else:
-            problems_list=problemslist.objects.filter(OJ=req.GET["oj"])
+            problems_list=problemslist.objects.filter(OJ=(req.GET["oj"]).upper())
         if cmp(req.GET["sid"],"") != 0:
             problems_list=problems_list.filter(SID=req.GET["sid"])
         if cmp(req.GET["title"],"") != 0:
@@ -105,7 +105,7 @@ def statuss(req):
         if cmp(req.GET["oj"],"") == 0 or cmp(req.GET["oj"],"all") == 0:
             status_list=status.objects.all()
         else:
-            status_list=status.objects.filter(OJ=req.GET["oj"])
+            status_list=status.objects.filter(OJ=req.GET["oj"].upper())
         if cmp(req.GET["language"],"all") != 0:
             status_list=status_list.filter(language=req.GET["language"])
         if cmp(req.GET["result"],"all") != 0:
@@ -120,12 +120,23 @@ def problemshow(req):
     choice = req.GET["id"]
     problem = problems.objects.get(problemID=choice)
     pic_addr = problem.pics.split()
-    return render_to_response('problemshow.html',{'problem':problem, 'pic_addr':pic_addr},context_instance=RequestContext(req))
+    description = problem.description.split("\r\n")
+    inputs = problem.inputs.split("\r\n")
+    outputs = problem.output.split("\r\n")
+    sample_input = problem.sample_input.split("\r\n")
+    sample_output = problem.sample_output.split("\r\n")
+    return render_to_response('problemshow.html', {'problem': problem, 'pic_addr': pic_addr,
+                                                   "sam_inputs": sample_input,
+                                                   "sam_outputs": sample_output,
+                                                   "descriptions": description,
+                                                   "inputs": inputs,
+                                                   "outputs": outputs}
+                              , context_instance=RequestContext(req))
 
 def usershow(req):
     choice = req.GET["id"]
     auser = user.objects.get(userID=choice)
-    return render_to_response('usershow.html',{'auser':auser},context_instance=RequestContext(req))
+    return render_to_response('usershow.html', {'auser': auser}, context_instance=RequestContext(req))
 
 def logout(req):
     response = HttpResponseRedirect('/oj/')
@@ -151,7 +162,7 @@ def myproblemss(req):
         if ('oj' not in req.GET) or cmp(req.GET["oj"],"all") == 0:
             problems_list=problemslist.objects.all()
         else:
-            problems_list=problemslist.objects.filter(OJ=req.GET["oj"])
+            problems_list=problemslist.objects.filter(OJ=req.GET["oj"].upper())
         if ('sid' in req.GET) and cmp(req.GET["sid"],"") != 0:
             problems_list=problems_list.filter(SID=req.GET["sid"])
         if ('title' in req.GET) and cmp(req.GET["title"],"") != 0:
@@ -185,7 +196,7 @@ def mystatuss(req):
         if not('oj' in req.GET) or (cmp(req.GET["oj"],"") == 0 or cmp(req.GET["oj"],"all") == 0):
             pass
         else:
-            status_list=status_list.objects.filter(OJ=req.GET["oj"])
+            status_list=status_list.objects.filter(OJ=req.GET["oj"].upper())
         if 'language' in req.GET and (cmp(req.GET["language"],"all") != 0):
             status_list=status_list.filter(language=req.GET["language"])
         if 'result' in req.GET and (cmp(req.GET["result"],"all") != 0):
@@ -224,7 +235,20 @@ def myproblemshow(req):
     username = req.COOKIES.get('username','')
     choice = req.GET["id"]
     problem = problems.objects.get(problemID=choice)
-    return render_to_response('myproblemshow.html',{'problem':problem,'username':username},context_instance=RequestContext(req))
+    pic_addr = problem.pics.split()
+    description = problem.description.split("\r\n")
+    inputs = problem.inputs.split("\r\n")
+    outputs = problem.output.split("\r\n")
+    sample_input = problem.sample_input.split("\r\n")
+    sample_output = problem.sample_output.split("\r\n")
+    return render_to_response('myproblemshow.html',
+                              {'problem':problem,'username':username,
+                               'pic_addr': pic_addr,
+                                "sam_inputs": sample_input,
+                                "sam_outputs": sample_output,
+                                "descriptions": description,
+                                "inputs": inputs,
+                                "outputs": outputs},context_instance=RequestContext(req))
 
 def myusershow(req):
     username = req.COOKIES.get('username','')
@@ -261,3 +285,9 @@ def mysubmitcode(req):
         return HttpResponseRedirect('/mystatus' + '?' + postData)
     return render_to_response('mysubmitcode.html',{'username':username,'title':title, 'lan':lan},context_instance=RequestContext(req))
 
+def codeshow(req):
+    if req.GET:
+        id = req.GET["id"]
+        code = CodeManager.GetFile(id)
+
+    return render_to_response('codeshow.html', {'code':code}, context_instance=RequestContext(req))

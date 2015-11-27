@@ -112,7 +112,13 @@
                                 <td>{{ astatu.language }}</td>
                                 <td>{{ astatu.submit_time }}</td>
                                 <td>{{ astatu.code_file }}</td>
-                                <td>{{ astatu.isprivate }}</td>
+                                {% if username = astatu.username %}
+                                    <td><a href="/codeshow/?id={{astatu.id}}">{{ astatu.isprivate }}</a></td>
+                                {% elif astatu.isprivate = false %}
+                                    <td><a href="/codeshow/?id={{astatu.id}}">{{ astatu.isprivate }}</a></td>
+                                {% else %}
+                                    <td>{{ astatu.isprivate }}</td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                         </tbody>
