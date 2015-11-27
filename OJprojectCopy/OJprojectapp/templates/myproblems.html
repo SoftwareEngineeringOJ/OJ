@@ -2,6 +2,7 @@
 <html lang="zh-CN">
     <head lang="en">
         <link href="/t/static/css/bootstrap.min.css", rel="stylesheet"/>
+        <link href="/t/static/css/various_button.css", rel="stylesheet"/>
         <script src="/t/static/js/jquery-2.1.1.min.js"></script>
         <script src="/t/static/js/bootstrap.min.js"></script>
         <meta charset="UTF-8">
@@ -54,25 +55,31 @@
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover">
                         <thead>
-                            <form role="form" method="GET">
+                            <form role="form" method="post">
+                                {% csrf_token %}
                                 <div class="form-group">
-
+                                    <input type="submit" class="vbutton blue" name="previouspage" value="...previous">
+                                    <input type="submit" class="vbutton blue" name="1" value="{{value1}}">
+                                    <input type="submit" class="vbutton blue" name="2" value="{{value2}}">
+                                    <input type="submit" class="vbutton blue" name="3" value="{{value3}}">
+                                    <input type="submit" class="vbutton blue" name="4" value="{{value4}}">
+                                    <input type="submit" class="vbutton blue" name="5" value="{{value5}}">
+                                    <input type="submit" class="vbutton blue" name="nextpage" value="nextpage...">
+                                </div>
+                                <div class="form-group">
                                     <input type="submit" class="btn" name="filter" value="Filter">
                                     <input type="reset" class="btn" name="reset" value="Reset">
                                 </div>
                                 <tr class="info">
                                     <td>OJ <br><select name="oj">
-                                            <option value="all">All</option>
-                                            <option value="poj">POJ</option>
-                                            <option value="hoj">HOJ</option>
-                                            <option value="noj">NOJ</option>
-                                            <option value="noj">NOJ</option>
-                                            <option value="tyvj">TYVJ</option>
+                                        {% for i in oj_show %}
+                                            <option value="{{i}}">{{i}}</option>
+                                        {% endfor %}
                                         </select></td>
-                                    <td>SID <br><input type="text" name="sid"></td>
-                                    <td>title <br><input type="text" name="title"></td>
+                                    <td>SID <br><input type="text" name="sid" value="{{sid_show}}"></td>
+                                    <td>title <br><input type="text" name="title" value="{{title_show}}"></td>
                                     <td>ratio</td>
-                                    <td>source <br><input type="text" name="source"></td>
+                                    <td>source <br><input type="text" name="source" value="{{source_show}}"></td>
                                 </tr>
                             </form>
                         </thead>
@@ -87,23 +94,6 @@
                             </tr>
                         {% endfor %}
                         </tbody>
-						<tbody>
-							<div class="pagination">
-								<span class="step-links">
-									{% if problems_list.has_previous %}
-										<a href="?page={{ problems_list.previous_page_number }}">previous</a>
-									{% endif %}
-
-									<span class="current">
-										Page {{ problems_list.number }} of {{ problems_list.paginator.num_pages }}.
-									</span>
-
-									{% if problems_list.has_next %}
-										<a href="?page={{ problems_list.next_page_number }}">next</a>
-									{% endif %}
-								</span>
-							</div>
-						</tbody>
                     </table>
                 </div>
             </div>

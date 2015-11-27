@@ -12,7 +12,7 @@
                 padding-top:50px;
             }
             .starter{
-                padding:64px 210px;
+                padding:64px 150px;
                 text-align: center;
             }
         </style>
@@ -55,16 +55,15 @@
                         {% csrf_token %}
                         <p class="text-left"><b>Problem : {{title}}</b></p>
                         <p class="text-left"><b>Language : </b><select name="language">
-						{% for l in lan %}
+								{% for l in lan %}
                                             <option value="{{ l }}">{{ l }}</option>
-						{% endfor %}
+								{% endfor %}
                                         </select></p>
-                        <p class="text-left"><b>Share Code : </b>
-                            Yes<input type="radio" name="Y" value="Yes" >
-                            No<input type="radio" name="N" value="No" >
-                        </p>
+                        <label class="text-left"><b>Share Code : </b><lanel>
+                            Yes<input type="radio" name="share" value="Yes" checked>
+                            No<input type="radio" name="share" value="No" >
                         <h1 class="text-left text-info">Your Code </h1>
-                        <textarea name="answer" cols="125" rows="20"></textarea>
+                        <textarea name="answer" cols="120" rows="20"></textarea>
                         <input type="submit" class="btn btn-lg active col-md-offset-5 col-md-2" name="submit" value="Submit">
                     </form>
                 </div>

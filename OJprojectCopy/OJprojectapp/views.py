@@ -12,6 +12,11 @@ from linker import CodeManager, Maneger, POJ
 from django.templatetags.i18n import language
 
 check = Maneger.Judge()
+problem_pagenumber=0
+myproblem_pagenumber=0
+status_pagenumber=0
+mystatus_pagenumber=0
+
 #from spider import PojSpider, HojSpider
 '''
 poj = PojSpider()
@@ -85,36 +90,128 @@ def login(req):
     return render_to_response('login.html',{'uf':uf},context_instance=RequestContext(req))
 
 def problemss(req):
-    if req.GET:
-        if cmp(req.GET["oj"],"all") == 0:
-            problems_list=problemslist.objects.all()
+    oj_show=["all","POJ","HOJ","NOJ","ZOJ","TYVJ"]
+    global problem_pagenumber
+    if req.POST:
+        if cmp(req.POST["oj"],"all") == 0:
+            problems_list=problemslist.objects.all().order_by('SID')
         else:
-            problems_list=problemslist.objects.filter(OJ=(req.GET["oj"]).upper())
-        if cmp(req.GET["sid"],"") != 0:
-            problems_list=problems_list.filter(SID=req.GET["sid"])
-        if cmp(req.GET["title"],"") != 0:
-            problems_list=problems_list.filter(title=req.GET["title"])
-        if cmp(req.GET["source"],"") != 0:
-            problems_list=problems_list.filter(source=req.GET["source"])
+            problems_list=problemslist.objects.filter(OJ=req.POST["oj"]).order_by('SID')
+        find=oj_show.index(req.POST["oj"])
+        first=oj_show[0]
+        oj_show[0]=req.POST["oj"]
+        oj_show[find]=first
+        if cmp(req.POST["sid"],"") != 0:
+            problems_list=problems_list.filter(SID=req.POST["sid"]).order_by('SID')
+        sid_show=req.POST["sid"]
+        if cmp(req.POST["title"],"") != 0:
+            problems_list=problems_list.filter(title=req.POST["title"]).order_by('SID')
+        title_show=req.POST["title"]
+        if cmp(req.POST["source"],"") != 0:
+            problems_list=problems_list.filter(source=req.POST["source"]).order_by('SID')
+        source_show=req.POST["source"]
+        if req.POST.has_key("1"):
+            problems_list=problems_list[problem_pagenumber+100:problem_pagenumber+200]
+        if req.POST.has_key("2"):
+            problems_list=problems_list[problem_pagenumber+200:problem_pagenumber+300]
+        if req.POST.has_key("3"):
+            problems_list=problems_list[problem_pagenumber+300:problem_pagenumber+400]
+        if req.POST.has_key("4"):
+            problems_list=problems_list[problem_pagenumber+400:problem_pagenumber+500]
+        if req.POST.has_key("5"):
+            problems_list=problems_list[problem_pagenumber+500:problem_pagenumber+600]
+        if req.POST.has_key("nextpage"):
+            problems_list=problems_list[problem_pagenumber+500:problem_pagenumber+600]
+            problem_pagenumber+=500
+        if req.POST.has_key("previouspage"):
+            if(problem_pagenumber>=500):
+               problems_list=problems_list[problem_pagenumber:problem_pagenumber+100]
+               problem_pagenumber-=500
+        if req.POST.has_key("filter"):
+            problems_list=problems_list[0:100]
+            problem_pagenumber=0
+        value1=str(problem_pagenumber+100)
+        value2=str(problem_pagenumber+200)
+        value3=str(problem_pagenumber+300)
+        value4=str(problem_pagenumber+400)
+        value5=str(problem_pagenumber+500)
     else:
-        problems_list=problemslist.objects.all()
-    return render_to_response('problems.html',{'problems_list':problems_list},context_instance=RequestContext(req))
+        problems_list=problemslist.objects.all().order_by('SID')[0:100]
+        sid_show=""
+        title_show=""
+        source_show=""
+        value1="100"
+        value2="200"
+        value3="300"
+        value4="400"
+        value5="500"
+        problem_pagenumber=0
+    return render_to_response('problems.html',{'problems_list':problems_list,'oj_show':oj_show,'sid_show':sid_show,'title_show':title_show,'source_show':source_show,'value1':value1,'value2':value2,'value3':value3,'value4':value4,'value5':value5},context_instance=RequestContext(req))
 
 def statuss(req):
-    if req.GET:
-        if cmp(req.GET["oj"],"") == 0 or cmp(req.GET["oj"],"all") == 0:
-            status_list=status.objects.all()
+    oj_show=["all","POJ","HOJ","NOJ","ZOJ","TYVJ"]
+    result_show=["all","Accept","Wrong answer","Compilation Error","Presentation Error","Submit Failed","Memory limit exceeded","Time Limit Exceeded","Output Limit Exceeded"]
+    language_show=["all","C","C++","C#","Python","Java"]
+    global status_pagenumber
+    if req.POST:
+        if cmp(req.POST["oj"],"all") == 0:
+            status_list=status.objects.all().order_by('-id')
         else:
-            status_list=status.objects.filter(OJ=req.GET["oj"].upper())
-        if cmp(req.GET["language"],"all") != 0:
-            status_list=status_list.filter(language=req.GET["language"])
-        if cmp(req.GET["result"],"all") != 0:
-            status_list=status_list.filter(result=req.GET["result"])
-        if cmp(req.GET["user"],"") != 0:
-            status_list=status_list.filter(username=req.GET["user"])
+            status_list=status.objects.filter(OJ=req.POST["oj"]).order_by('-id')
+        find=oj_show.index(req.POST["oj"])
+        first=oj_show[0]
+        oj_show[0]=req.POST["oj"]
+        oj_show[find]=first
+        if cmp(req.POST["language"],"all") != 0:
+            status_list=status_list.filter(language=req.POST["language"]).order_by('-id')
+        find=language_show.index(req.POST["language"])
+        first=language_show[0]
+        language_show[0]=req.POST["language"]
+        language_show[find]=first
+        if cmp(req.POST["result"],"all") != 0:
+            status_list=status_list.filter(result=req.POST["result"]).order_by('-id')
+        find=result_show.index(req.POST["result"])
+        first=result_show[0]
+        result_show[0]=req.POST["result"]
+        result_show[find]=first
+        if cmp(req.POST["user"],"") != 0:
+            status_list=status_list.filter(username=req.POST["user"]).order_by('-id')
+        user_show=req.POST["user"]
+        if req.POST.has_key("1"):
+            status_list=status_list[status_pagenumber+100:status_pagenumber+200]
+        if req.POST.has_key("2"):
+            status_list=status_list[status_pagenumber+200:status_pagenumber+300]
+        if req.POST.has_key("3"):
+            status_list=status_list[status_pagenumber+300:status_pagenumber+400]
+        if req.POST.has_key("4"):
+            status_list=status_list[status_pagenumber+400:status_pagenumber+500]
+        if req.POST.has_key("5"):
+            status_list=status_list[status_pagenumber+500:status_pagenumber+600]
+        if req.POST.has_key("nextpage"):
+            status_list=status_list[status_pagenumber+500:status_pagenumber+600]
+            status_pagenumber+=500
+        if req.POST.has_key("previouspage"):
+            if(status_pagenumber>=500):
+               status_list=status_list[status_pagenumber:status_pagenumber+100]
+               status_pagenumber-=500
+        if req.POST.has_key("filter"):
+            status_list=status_list[0:100]
+            status_pagenumber=0
+        value1=str(status_pagenumber+100)
+        value2=str(status_pagenumber+200)
+        value3=str(status_pagenumber+300)
+        value4=str(status_pagenumber+400)
+        value5=str(status_pagenumber+500)
     else:
-        status_list=status.objects.all()
-    return render_to_response('status.html',{'status_list':status_list},context_instance=RequestContext(req))
+        status_list=status.objects.all().order_by('-id')[0:100]
+        user_show=""
+        value1="100"
+        value2="200"
+        value3="300"
+        value4="400"
+        value5="500"
+        status_pagenumber=0
+    return render_to_response('status.html',{'status_list':status_list,'oj_show':oj_show,'result_show':result_show,'language_show':language_show,'usershow':usershow,'value1':value1,'value2':value2,'value3':value3,'value4':value4,'value5':value5},context_instance=RequestContext(req))
 
 def problemshow(req):
     choice = req.GET["id"]
@@ -158,78 +255,126 @@ def myoj(req):
 
 def myproblemss(req):
     username = req.COOKIES.get('username','')
-    if req.GET:
-        if ('oj' not in req.GET) or cmp(req.GET["oj"],"all") == 0:
-            problems_list=problemslist.objects.all()
+    oj_show=["all","POJ","HOJ","NOJ","ZOJ","TYVJ"]
+    global myproblem_pagenumber
+    if req.POST:
+        if cmp(req.POST["oj"],"all") == 0:
+            problems_list=problemslist.objects.all().order_by('SID')
         else:
-            problems_list=problemslist.objects.filter(OJ=req.GET["oj"].upper())
-        if ('sid' in req.GET) and cmp(req.GET["sid"],"") != 0:
-            problems_list=problems_list.filter(SID=req.GET["sid"])
-        if ('title' in req.GET) and cmp(req.GET["title"],"") != 0:
-            problems_list=problems_list.filter(title=req.GET["title"])
-        if ('source' in req.GET) and cmp(req.GET["source"],"") != 0:
-            problems_list=problems_list.filter(source=req.GET["source"])
+            problems_list=problemslist.objects.filter(OJ=req.POST["oj"]).order_by('SID')
+        find=oj_show.index(req.POST["oj"])
+        first=oj_show[0]
+        oj_show[0]=req.POST["oj"]
+        oj_show[find]=first
+        if cmp(req.POST["sid"],"") != 0:
+            problems_list=problems_list.filter(SID=req.POST["sid"]).order_by('SID')
+        sid_show=req.POST["sid"]
+        if cmp(req.POST["title"],"") != 0:
+            problems_list=problems_list.filter(title=req.POST["title"]).order_by('SID')
+        title_show=req.POST["title"]
+        if cmp(req.POST["source"],"") != 0:
+            problems_list=problems_list.filter(source=req.POST["source"]).order_by('SID')
+        source_show=req.POST["source"]
+        if req.POST.has_key("1"):
+            problems_list=problems_list[myproblem_pagenumber+100:myproblem_pagenumber+200]
+        if req.POST.has_key("2"):
+            problems_list=problems_list[myproblem_pagenumber+200:myproblem_pagenumber+300]
+        if req.POST.has_key("3"):
+            problems_list=problems_list[myproblem_pagenumber+300:myproblem_pagenumber+400]
+        if req.POST.has_key("4"):
+            problems_list=problems_list[myproblem_pagenumber+400:myproblem_pagenumber+500]
+        if req.POST.has_key("5"):
+            problems_list=problems_list[myproblem_pagenumber+500:myproblem_pagenumber+600]
+        if req.POST.has_key("nextpage"):
+            problems_list=problems_list[myproblem_pagenumber+500:myproblem_pagenumber+600]
+            myproblem_pagenumber+=500
+        if req.POST.has_key("previouspage"):
+            if(myproblem_pagenumber>=500):
+               problems_list=problems_list[myproblem_pagenumber:myproblem_pagenumber+100]
+               myproblem_pagenumber-=500
+        if req.POST.has_key("filter"):
+            problems_list=problems_list[0:100]
+            myproblem_pagenumber=0
+        value1=str(myproblem_pagenumber+100)
+        value2=str(myproblem_pagenumber+200)
+        value3=str(myproblem_pagenumber+300)
+        value4=str(myproblem_pagenumber+400)
+        value5=str(myproblem_pagenumber+500)
     else:
-        problems_list=problemslist.objects.all()
-    
-    paginator = Paginator(problems_list, 10) # Show 25 contacts per page
-
-    page = req.GET.get('page')
-    try:
-        contacts = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        contacts = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        contacts = paginator.page(paginator.num_pages)
-    
-    return render_to_response('myproblems.html', 
-                              {'problems_list' : contacts, 
-                               'username' : username}, 
-                              context_instance = RequestContext(req))
+        problems_list=problemslist.objects.all().order_by('SID')[0:100]
+        sid_show=""
+        title_show=""
+        source_show=""
+        value1="100"
+        value2="200"
+        value3="300"
+        value4="400"
+        value5="500"
+        myproblem_pagenumber=0
+    return render_to_response('myproblems.html',{'problems_list':problems_list,'username':username,'oj_show':oj_show,'sid_show':sid_show,'title_show':title_show,'source_show':source_show,'value1':value1,'value2':value2,'value3':value3,'value4':value4,'value5':value5},context_instance=RequestContext(req))
 
 def mystatuss(req):
     username = req.COOKIES.get('username','')
-    status_list = status.objects.order_by('-id')
-    if req.GET:
-        if not('oj' in req.GET) or (cmp(req.GET["oj"],"") == 0 or cmp(req.GET["oj"],"all") == 0):
-            pass
+    oj_show=["all","POJ","HOJ","NOJ","ZOJ","TYVJ"]
+    result_show=["all","Accept","Wrong answer","Compilation Error","Presentation Error","Submit Failed","Memory limit exceeded","Time Limit Exceeded","Output Limit Exceeded"]
+    language_show=["all","C","C++","C#","Python","Java"]
+    global mystatus_pagenumber
+    if req.POST:
+        if cmp(req.POST["oj"],"all") == 0:
+            status_list=status.objects.all().order_by('-id')
         else:
-            status_list=status_list.objects.filter(OJ=req.GET["oj"].upper())
-        if 'language' in req.GET and (cmp(req.GET["language"],"all") != 0):
-            status_list=status_list.filter(language=req.GET["language"])
-        if 'result' in req.GET and (cmp(req.GET["result"],"all") != 0):
-            status_list=status_list.filter(result=req.GET["result"])
-        if 'user' in req.GET and cmp(req.GET["user"],"") != 0:
-            status_list=status_list.filter(username=req.GET["user"])
+            status_list=status.objects.filter(OJ=req.POST["oj"]).order_by('-id')
+        find=oj_show.index(req.POST["oj"])
+        first=oj_show[0]
+        oj_show[0]=req.POST["oj"]
+        oj_show[find]=first
+        if cmp(req.POST["language"],"all") != 0:
+            status_list=status_list.filter(language=req.POST["language"]).order_by('-id')
+        find=language_show.index(req.POST["language"])
+        first=language_show[0]
+        language_show[0]=req.POST["language"]
+        language_show[find]=first
+        if cmp(req.POST["result"],"all") != 0:
+            status_list=status_list.filter(result=req.POST["result"]).order_by('-id')
+        find=result_show.index(req.POST["result"])
+        first=result_show[0]
+        result_show[0]=req.POST["result"]
+        result_show[find]=first
+        if cmp(req.POST["user"],"") != 0:
+            status_list=status_list.filter(username=req.POST["user"]).order_by('-id')
+        user_show=req.POST["user"]
+        if req.POST.has_key("1"):
+            status_list=status_list[mystatus_pagenumber+100:mystatus_pagenumber+200]
+        if req.POST.has_key("2"):
+            status_list=status_list[mystatus_pagenumber+200:mystatus_pagenumber+300]
+        if req.POST.has_key("3"):
+            status_list=status_list[mystatus_pagenumber+300:mystatus_pagenumber+400]
+        if req.POST.has_key("4"):
+            status_list=status_list[mystatus_pagenumber+400:mystatus_pagenumber+500]
+        if req.POST.has_key("5"):
+            status_list=status_list[mystatus_pagenumber+500:mystatus_pagenumber+600]
+        if req.POST.has_key("nextpage"):
+            mystatus_pagenumber+=500
+        if req.POST.has_key("previouspage"):
+            if(mystatus_pagenumber>=500):
+               mystatus_pagenumber-=500
+        if req.POST.has_key("filter"):
+            mystatus_pagenumber=0
+        value1=str(mystatus_pagenumber+100)
+        value2=str(mystatus_pagenumber+200)
+        value3=str(mystatus_pagenumber+300)
+        value4=str(mystatus_pagenumber+400)
+        value5=str(mystatus_pagenumber+500)
     else:
-        status_list=status.objects.all()
-        
-    status_list = status_list.order_by('-id')
-    paginator = Paginator(status_list, 10) # Show 25 contacts per page
-
-    page = req.GET.get('page')
-    try:
-        contacts = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        contacts = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        contacts = paginator.page(paginator.num_pages)
-    
-    '''
-    postData = {'language': req.GET['language'], 
-                'oj': req.GET['oj'], 
-                'result': req.GET['result'], 
-                'user': req.GET['user']} # 构造POST
-    postData = urllib.urlencode(postData)
-    '''
-    return render_to_response('mystatus.html', 
-                              {'status_list' : contacts, 
-                               'username' : username}, 
-                              context_instance=RequestContext(req))
+        status_list=status.objects.all().order_by('-id')[0:100]
+        user_show=""
+        value1="100"
+        value2="200"
+        value3="300"
+        value4="400"
+        value5="500"
+        mystatus_pagenumber=0
+    return render_to_response('mystatus.html',{'status_list':status_list,'username':username,'oj_show':oj_show,'result_show':result_show,'language_show':language_show,'usershow':usershow,'value1':value1,'value2':value2,'value3':value3,'value4':value4,'value5':value5},context_instance=RequestContext(req))
 
 def myproblemshow(req):
     username = req.COOKIES.get('username','')
@@ -266,7 +411,7 @@ def mysubmitcode(req):
     if req.POST:
         page = req.POST
         new = status(submit_time = datetime.now(), 
-                     isprivate = True, 
+                     isprivate = req.POST["share"], 
                      username = username, 
                      language = page['language'], 
                      runID = sid, 
