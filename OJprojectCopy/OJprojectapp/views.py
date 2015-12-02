@@ -411,7 +411,7 @@ def mysubmitcode(req):
     if req.POST:
         page = req.POST
         new = status(submit_time = datetime.now(), 
-                     isprivate = req.POST["share"], 
+                     isprivate = (req.POST["share"] is 'Yes'), 
                      username = username, 
                      language = page['language'], 
                      runID = sid, 
@@ -433,6 +433,6 @@ def mysubmitcode(req):
 def codeshow(req):
     if req.GET:
         id = req.GET["id"]
-        code = CodeManager.GetFile(id)
-        print code
+        codes = CodeManager.GetFile(id)
+        code = codes.split("\n")
     return render_to_response('codeshow.html', {'code':code}, context_instance=RequestContext(req))
