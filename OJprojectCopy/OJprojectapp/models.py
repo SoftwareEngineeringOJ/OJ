@@ -25,6 +25,19 @@ class status(models.Model):
     contestID = models.CharField(max_length=10)
     isprivate = models.BooleanField()
 
+class contest(models.Model):
+    title = models.CharField(max_length = 50)
+    description = models.TextField()
+    announcement = models.TextField()
+    password = models.CharField(max_length = 50)
+    owner = models.CharField(max_length = 50)
+    pcnt = 0
+    ptitles = [models.CharField(max_length = 50)] * 26
+    pids = [models.CharField(max_length = 15)] * 26
+    sojs = [models.CharField(max_length = 20)] * 26
+    begintime = models.datetime()
+    endtime = models.datetime()
+
 class problemslist(models.Model):
     OJ = models.CharField(max_length=20)
     SID = models.CharField(max_length=20)

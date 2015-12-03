@@ -5,10 +5,9 @@ from django.template import RequestContext
 from datetime import date, datetime
 from django import forms
 from models import *
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import urllib
+
 #from spider import PojSpider, HojSpider
-from linker import CodeManager, Maneger, POJ
+from linker import Maneger, SubmitCode
 from django.templatetags.i18n import language
 
 check = Maneger.Judge()
@@ -402,33 +401,7 @@ def myusershow(req):
     return render_to_response('myusershow.html',{'auser':auser,'username':username},context_instance=RequestContext(req))
 
 def mysubmitcode(req):
-    username = req.COOKIES.get('username', '')
-    sid = req.GET["sid"]
-    oj = req.GET["oj"]
-    title = req.GET["title"]
-    lan = POJ.Submit().map()
-    
-    if req.POST:
-        page = req.POST
-        new = status(submit_time = datetime.now(), 
-                     isprivate = (req.POST["share"] is 'Yes'), 
-                     username = username, 
-                     language = page['language'], 
-                     runID = sid, 
-                     result = 'Pending', 
-                     OJ = oj, 
-                     contestID = 'hello')
-        code=req.POST["answer"]
-        new.save()
-        RunID = new.id
-        CodeManager.SaveFile(code, RunID)
-        check.push(new)
-        postData = {'user': username, 
-                    'oj': 'all'} # 构造POST
-        postData = urllib.urlencode(postData)
-        #print 'To', '/mystatus' + '?' + postData
-        return HttpResponseRedirect('/mystatus' + '?' + postData)
-    return render_to_response('mysubmitcode.html',{'username':username,'title':title, 'lan':lan},context_instance=RequestContext(req))
+    return SubmitCode.submit(req, check)
 
 def codeshow(req):
     if req.GET:
