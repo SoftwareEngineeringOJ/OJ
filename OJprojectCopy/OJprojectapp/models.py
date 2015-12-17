@@ -1,3 +1,4 @@
+#coding=utf-8
 from django.db import models
 from django.contrib import admin
 # Create your models here.
@@ -26,17 +27,17 @@ class status(models.Model):
     isprivate = models.BooleanField()
 
 class contest(models.Model):
-    title = models.CharField(max_length = 50)
-    description = models.TextField()
-    announcement = models.TextField()
-    password = models.CharField(max_length = 50)
-    owner = models.CharField(max_length = 50)
-    pcnt = 0
-    ptitles = [models.CharField(max_length = 50)] * 26
-    pids = [models.CharField(max_length = 15)] * 26
-    sojs = [models.CharField(max_length = 20)] * 26
-    begintime = models.datetime()
-    endtime = models.datetime()
+    title = models.CharField(max_length = 50) #比赛标题
+    description = models.TextField() #比赛介绍
+    announcement = models.TextField() #比赛申明
+    password = models.CharField(max_length = 50) #比赛密码，如果为空，则加入空串
+    owner = models.CharField(max_length = 50) #创建者ID
+    pcnt = 0 #题目数量统计
+    ptitles = [models.CharField(max_length = 50)] * 26 #修改的标题，注意和原来的题目可能不一样
+    pids = [models.CharField(max_length = 15)] * 26 #题目编号
+    sojs = [models.CharField(max_length = 20)] * 26 #来源OJ
+    begintime = models.datetime() #开始时间
+    endtime = models.datetime() #结束时间
 
 class problemslist(models.Model):
     OJ = models.CharField(max_length=20)
