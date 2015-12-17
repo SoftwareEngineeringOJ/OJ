@@ -36,8 +36,8 @@ class contest(models.Model):
     ptitles = [models.CharField(max_length = 50)] * 26 #修改的标题，注意和原来的题目可能不一样
     pids = [models.CharField(max_length = 15)] * 26 #题目编号
     sojs = [models.CharField(max_length = 20)] * 26 #来源OJ
-    begintime = models.datetime() #开始时间
-    endtime = models.datetime() #结束时间
+    begintime = models.DateTimeField() #开始时间
+    endtime = models.DateTimeField() #结束时间
 
 class problemslist(models.Model):
     OJ = models.CharField(max_length=20)

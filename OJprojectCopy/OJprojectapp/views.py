@@ -7,7 +7,7 @@ from django import forms
 from models import *
 
 #from spider import PojSpider, HojSpider
-from linker import Maneger, SubmitCode
+from linker import Maneger, SubmitCode, CodeManager
 from django.templatetags.i18n import language
 
 check = Maneger.Judge()
@@ -406,12 +406,6 @@ def mysubmitcode(req):
 def codeshow(req):
     if req.GET:
         id = req.GET["id"]
-<<<<<<< HEAD
         codes = CodeManager.GetFile(id)
         code = codes.split("\n")
     return render_to_response('codeshow.html', {'code':code}, context_instance=RequestContext(req))
-=======
-        code = CodeManager.GetFile(id)
-        codes = code.split("\n")
-    return render_to_response('codeshow.html', {'codes':codes}, context_instance=RequestContext(req))
->>>>>>> dev
