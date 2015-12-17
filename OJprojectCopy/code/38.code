@@ -1,0 +1,46 @@
+//144k  0ms
+
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <stack>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+struct Tree {
+  int p_st, p_end, in_st, in_end;
+};
+
+char pre[27], in[27];
+
+int main() {
+  while (scanf("%s %s", pre, in) != EOF) {
+    stack<char> post;
+    stack<Tree> tree_stack;
+    Tree tree = {0, strlen(pre) - 1, 0, strlen(in) - 1};
+    tree_stack.push(tree);
+    while (tree_stack.size()) {
+      tree = tree_stack.top();
+      tree_stack.pop();
+      if (tree.p_st <= tree.p_end && tree.in_st <= tree.in_end) {
+        post.push(pre[tree.p_st]);
+        for (int i = tree.in_st; i <= tree.in_end; ++i) {
+          if (in[i] == pre[tree.p_st]) {
+            Tree left = {tree.p_st + 1, tree.p_st + i - tree.in_st, 
+              tree.in_st, i - 1};
+            tree_stack.push(left);
+            Tree right = {tree.p_st + i - tree.in_st + 1, tree.p_end,
+              i + 1, tree.in_end}; 
+            tree_stack.push(right);
+            break;
+          }
+        }
+      }
+    }
+    for ( ; post.size(); post.pop())
+      printf("%c", post.top());
+    printf("\n");
+  }
+  return 0;
+}

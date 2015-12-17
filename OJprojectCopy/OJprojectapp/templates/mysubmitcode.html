@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head lang="en">
+        <link href="/t/static/css/bootstrap.min.css", rel="stylesheet"/>
+        <script src="/t/static/js/jquery-2.1.1.min.js"></script>
+        <script src="/t/static/js/bootstrap.min.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Book</title>
+        <style>
+            body{
+                padding-top:50px;
+            }
+            .starter{
+                padding:64px 150px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body background="/static/images/bg0.jpg">
+        <nav  class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="/myoj/" class="navbar-brand">HOME</a>
+                </div>
+                <div id="navbar1" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="/myproblems/">PROBLEM</a></li>
+                        <li><a href="/mystatus/">STATUS</a></li>
+                        <li><div class="dropdown" style="padding-top: 10px;">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                CONTEST
+                                <span class="caret"></span>
+                            </button>
+                            <ul  class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="#" class="btn btn-sm active" role="menuitem">Add Contest</a></li>
+                                <li><a href="#" class="btn btn-sm active" role="menuitem">Statistic</a></li>
+                            </ul>
+                        </div></li>
+                    </ul>
+                    <div style="padding-top: 10px;">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}！</p></li>
+                            <li><a href="/enter/">Enter MY OJ </a></li></li>
+                            <li><a href="/logout/"> Logout </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="starter">
+                <div class="formset">
+                    <form method="post" role="form">
+                        {% csrf_token %}
+                        <p class="text-left"><b>Problem : {{title}}</b></p>
+                        <p class="text-left"><b>Language : </b><select name="language">
+								{% for l in lan %}
+                                            <option value="{{ l }}">{{ l }}</option>
+								{% endfor %}
+                                        </select></p>
+                        <label class="text-left"><b>Share Code : </b><lanel>
+                            Yes<input type="radio" name="share" value="Yes" checked>
+                            No<input type="radio" name="share" value="No" >
+                        <h1 class="text-left text-info">Your Code </h1>
+                        <textarea name="answer" cols="120" rows="20"></textarea>
+                        <input type="submit" class="btn btn-lg active col-md-offset-5 col-md-2" name="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
