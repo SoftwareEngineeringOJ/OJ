@@ -406,6 +406,12 @@ def mysubmitcode(req):
 def codeshow(req):
     if req.GET:
         id = req.GET["id"]
+<<<<<<< HEAD
         codes = CodeManager.GetFile(id)
         code = codes.split("\n")
     return render_to_response('codeshow.html', {'code':code}, context_instance=RequestContext(req))
+=======
+        code = CodeManager.GetFile(id)
+        codes = code.split("\n")
+    return render_to_response('codeshow.html', {'codes':codes}, context_instance=RequestContext(req))
+>>>>>>> dev
