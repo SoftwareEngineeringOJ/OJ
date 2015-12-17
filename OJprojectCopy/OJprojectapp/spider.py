@@ -4,11 +4,11 @@ Created on Mon Nov 23 13:39:41 2015
 
 @author: 哲婷
 """
-from models import problems, problemslist
+from models import problems, problemslist, news
 import requests
 from lxml import etree
 import sys
-
+import xml.dom.minidom
 
 class PojSpider():
 
@@ -90,63 +90,29 @@ class PojSpider():
         problem.problemID = problem.id
 
 
-
-class HojSpider():
-
+class GetNews():
     def __init__(self):
-        pass
-
-    def save_allpage(self):
-        for page_number in range(1, 10): #总页数
-            self.save_prolst(page_number)
-
-    def save_prolst(self, page_number):
+        self.News = []
         reload(sys)
         sys.setdefaultencoding("utf-8")
-        url = "http://acm.hit.edu.cn/hoj/problem/volume?page=%d"%page_number
+        url = "http://contests.acmicpc.info/contests.rss"
         html = requests.get(url)
-        pro_lst_page = etree.HTML(html.text)
-        for i in range(1, 10):
-            ID = pro_lst_page.xpath('//*[@id="content"]/table//tr[%d]/td[2]/text()'%i)
-            href = pro_lst_page.xpath('//*[@id="content"]/table//tr[%d]/td[3]/a/@href'%i)
-            title = pro_lst_page.xpath('//*[@id="content"]/table//tr[%d]/td[3]/a/ins/text()'%i)
-            ratio = pro_lst_page.xpath('//*[@id="content"]/table//tr[%d]/td[5]'%i)
-            prolst_item = problemslist(OJ="HOJ",
-                                       SID=ID[0] if ID else "",
-                                       title=title[0] if title else "",
-                                       ratio=ratio[0].xpath('string(.)') if ratio else "",
-                                       source="")
-            prolst_item.save()
-            prolst_item.problemID = prolst_item.id
 
-            self.save_problem(str(prolst_item.SID), prolst_item.id)
+        f = open("test.xml",'w')
+        f.write(str(html.text))
 
-    def save_problem(self, SID, proid):
-        url = 'http://acm.hit.edu.cn/hoj/problem/view?id=%s'%SID
-        html = requests.get(url)
-        problem_page = etree.HTML(html.text, parser=etree.HTMLParser(encoding='utf-8'))
+    def get_news(self):
+        dom_tree = xml.dom.minidom.parse("test.xml")
+        collection = dom_tree.documentElement
 
-        title = problem_page.xpath('//*[@id="content"]/h1/text()')
-        time_limit = problem_page.xpath('//*[@id="request"]/table//tr[2]/td[2]')
-        mem_limit = problem_page.xpath('//*[@id="request"]/table//tr[2]/td[4]')
-        description = problem_page.xpath('//*[@id="problem-detail"]')
-        _input = ""
-        _output = ""
-        sample_input = ""
-        sample_output = ""
-        hint = ""
+        items = collection.getElementsByTagName("item")
 
-        problem = problems(problemID=proid, OJ="HOJ",
-                           SID=SID,
-                           title=title[0] if title else "",
-                           time_limit=time_limit[0].xpath('string(.)') if time_limit else "",
-                           mem_limit=mem_limit[0].xpath('string(.)') if mem_limit else "",
-                           description=description[0].xpath('string(.)') if description else "",
-                           inputs=_input,
-                           output=_output,
-                           sample_input=sample_input,
-                           sample_output=sample_output,
-                           hint=hint,
-                           pics="")
-        problem.save()
-        problem.problemID = problem.id
+        for item in items:
+            temp = news(title=(item.getElementsByTagName("title"))[0].childNodes[0].data,
+                       link=(item.getElementsByTagName('link')[0]).childNodes[0].data,
+                       description=(item.getElementsByTagName('description')[0]).childNodes[0].data,
+                       date=((item.getElementsByTagName('pubDate')[0]).childNodes[0].data)[:-5],
+                       guid=(item.getElementsByTagName('guid')[0]).childNodes[0].data)
+
+        self.News.append(temp)
+        return self.News

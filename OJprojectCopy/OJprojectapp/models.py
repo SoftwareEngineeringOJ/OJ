@@ -61,6 +61,13 @@ class problems(models.Model):
     hint = models.TextField()
     pics = models.TextField()
 
+class news(models.Model):
+    title = models.CharField(max_length=30)
+    link = models.TextField()
+    description = models.TextField()
+    data = models.CharField(max_length=20)
+    guid = models.CharField(max_length=20)
+
 class userdetail(models.Model): 
     username = models.CharField(max_length=50)
     precision = models.CharField(max_length=10)

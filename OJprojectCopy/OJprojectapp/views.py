@@ -23,10 +23,6 @@ problems.objects.filter(OJ="POJ").delete()
 problemslist.objects.filter(OJ="POJ").delete()
 poj.save_allpage()
 
-hoj = HojSpider()
-problems.objects.filter(OJ="HOJ").delete()
-problemslist.objects.filter(OJ="HOJ").delete()
-hoj.save_allpage()
 '''
 #用户表单
 class UserRegisterForm(forms.Form): 
