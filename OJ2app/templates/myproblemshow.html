@@ -65,34 +65,12 @@
 					<div class="panel panel-info">
 						<div class="panel-heading">
 							<h1 class="text-center"><b>{{problem.title}}</b></h1>
-                            <br><p><b>Time Limit : {{problem.time_limit}} Memory Limit : {{problem.mem_limit}}</b></p>
+                            <br><p>Time Limit : {{problem.time_limit}} &nbsp &nbsp &nbsp &nbsp &nbsp Memory Limit : {{problem.mem_limit}}</p>
 						</div>
 					</div>
-                    <h1 class="text-left text-info">Description </h1>
-                    <div class="panel panel-info">
-                        <div class="panel-body">
-                            <br/>
-                            {{problem.description}}
-                            <br/>
-                            <h3 class="text-left">Input  </h3>
-                            <br/>
-                            <p class="text-left">{{problem.inputs}}</p>
-                            <br/>
-                            <h3 class="text-left">Output  </h3>
-                            <br/>
-                            <p class="text-left">{{problem.output}}</p>
-                            <br/>
-                            <h3 class="text-left">Sample Intput  </h3>
-                            <br/>
-                            <p class="text-left">{{problem.sample_input}}</p>
-                            <br/>
-                            <h3 class="text-left">Sample Outtput  </h3>
-                            <br/>
-                            <p class="text-left">{{problem.sample_output}}</p>
-                            <br/>
-                        </div>
-				    </div>
+                    <pre class="text-left"><h1 class="text-left text-info">Description </h1><br>{{problem.description}}<br><h3 class="text-left">Input  </h3><br>{{problem.inputs}}<br><h3 class="text-left">Output  </h3><br>{{problem.output}}<br><h3 class="text-left">Sample Input  </h3><br>{{problem.sample_input}}<br><h3 class="text-left">Sample Output  </h3><br>{{problem.sample_output}}</pre>
                 </div>
+
 			</div>
 			<div class="formset">
                 <a href="/mysubmitcode/?sid={{problem.SID}}&oj={{problem.OJ}}&title={{problem.title}}&id={{problem.id}}" class="btn btn-lg active col-md-offset-5 col-md-2" role="menuitem"></b>Submit</b></a>

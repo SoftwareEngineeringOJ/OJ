@@ -12,6 +12,16 @@ myproblem_pagenumber=0
 status_pagenumber=0
 mystatus_pagenumber=0
 
+#from spider import PojSpider, HojSpider
+'''
+poj = PojSpider()
+problemslist.objects.filter(OJ="POJ").delete()
+poj.save_allpage()
+
+hoj = HojSpider()
+problemslist.objects.filter(OJ="HOJ").delete()
+hoj.save_allpage()
+'''
 
 
 #用户表单
@@ -98,40 +108,40 @@ def problemss(req):
             problems_list=problems_list.filter(source=req.POST["source"]).order_by('SID')
         source_show=req.POST["source"]
         if req.POST.has_key("1"):
-            problems_list=problems_list[problem_pagenumber+1000:problem_pagenumber+2000]
+            problems_list=problems_list[problem_pagenumber+20:problem_pagenumber+40]
         if req.POST.has_key("2"):
-            problems_list=problems_list[problem_pagenumber+2000:problem_pagenumber+3000]
+            problems_list=problems_list[problem_pagenumber+40:problem_pagenumber+60]
         if req.POST.has_key("3"):
-            problems_list=problems_list[problem_pagenumber+3000:problem_pagenumber+4000]
+            problems_list=problems_list[problem_pagenumber+60:problem_pagenumber+80]
         if req.POST.has_key("4"):
-            problems_list=problems_list[problem_pagenumber+4000:problem_pagenumber+5000]
+            problems_list=problems_list[problem_pagenumber+80:problem_pagenumber+100]
         if req.POST.has_key("5"):
-            problems_list=problems_list[problem_pagenumber+5000:problem_pagenumber+6000]
+            problems_list=problems_list[problem_pagenumber+100:problem_pagenumber+120]
         if req.POST.has_key("nextpage"):
-            problems_list=problems_list[problem_pagenumber+5000:problem_pagenumber+6000]
-            problem_pagenumber+=5000
+            problems_list=problems_list[problem_pagenumber+120:problem_pagenumber+140]
+            problem_pagenumber+=100
         if req.POST.has_key("previouspage"):
-            if(problem_pagenumber>=5000):
-               problem_pagenumber-=5000
-               problems_list=problems_list[problem_pagenumber:problem_pagenumber+1000]
+            if(problem_pagenumber>=100):
+               problem_pagenumber-=100
+               problems_list=problems_list[problem_pagenumber:problem_pagenumber+20]
         if req.POST.has_key("filter"):
-            problems_list=problems_list[0:1000]
+            problems_list=problems_list[0:20]
             problem_pagenumber=0
-        value1=str(problem_pagenumber+1000)
-        value2=str(problem_pagenumber+2000)
-        value3=str(problem_pagenumber+3000)
-        value4=str(problem_pagenumber+4000)
-        value5=str(problem_pagenumber+5000)
+        value1=str(problem_pagenumber+1020)
+        value2=str(problem_pagenumber+1040)
+        value3=str(problem_pagenumber+1060)
+        value4=str(problem_pagenumber+1080)
+        value5=str(problem_pagenumber+1100)
     else:
-        problems_list=problemslist.objects.all().order_by('SID')[0:1000]
+        problems_list=problemslist.objects.all().order_by('SID')[0:20]
         sid_show=""
         title_show=""
         source_show=""
-        value1="1000"
-        value2="2000"
-        value3="3000"
-        value4="4000"
-        value5="5000"
+        value1="1020"
+        value2="1040"
+        value3="1060"
+        value4="1080"
+        value5="1100"
         problem_pagenumber=0
     return render_to_response('problems.html',{'problems_list':problems_list,'oj_show':oj_show,'sid_show':sid_show,'title_show':title_show,'source_show':source_show,'value1':value1,'value2':value2,'value3':value3,'value4':value4,'value5':value5},context_instance=RequestContext(req))
 
@@ -165,38 +175,38 @@ def statuss(req):
             status_list=status_list.filter(username=req.POST["user"]).order_by('-id')
         user_show=req.POST["user"]
         if req.POST.has_key("1"):
-            status_list=status_list[status_pagenumber+1000:status_pagenumber+2000]
+            status_list=status_list[status_pagenumber+20:status_pagenumber+40]
         if req.POST.has_key("2"):
-            status_list=status_list[status_pagenumber+2000:status_pagenumber+3000]
+            status_list=status_list[status_pagenumber+40:status_pagenumber+60]
         if req.POST.has_key("3"):
-            status_list=status_list[status_pagenumber+3000:status_pagenumber+4000]
+            status_list=status_list[status_pagenumber+60:status_pagenumber+80]
         if req.POST.has_key("4"):
-            status_list=status_list[status_pagenumber+4000:status_pagenumber+5000]
+            status_list=status_list[status_pagenumber+80:status_pagenumber+100]
         if req.POST.has_key("5"):
-            status_list=status_list[status_pagenumber+5000:status_pagenumber+6000]
+            status_list=status_list[status_pagenumber+100:status_pagenumber+120]
         if req.POST.has_key("nextpage"):
-            status_list=status_list[status_pagenumber+5000:status_pagenumber+6000]
-            status_pagenumber+=5000
+            status_list=status_list[status_pagenumber+120:status_pagenumber+140]
+            status_pagenumber+=100
         if req.POST.has_key("previouspage"):
-            if(status_pagenumber>=5000):
-               status_pagenumber-=5000
-               status_list=status_list[status_pagenumber:status_pagenumber+1000]
+            if(status_pagenumber>=100):
+               status_pagenumber-=100
+               status_list=status_list[status_pagenumber:status_pagenumber+20]
         if req.POST.has_key("filter"):
-            status_list=status_list[0:1000]
+            status_list=status_list[0:100]
             status_pagenumber=0
-        value1=str(status_pagenumber+1000)
-        value2=str(status_pagenumber+2000)
-        value3=str(status_pagenumber+3000)
-        value4=str(status_pagenumber+4000)
-        value5=str(status_pagenumber+5000)
+        value1=str(status_pagenumber+1020)
+        value2=str(status_pagenumber+1040)
+        value3=str(status_pagenumber+1060)
+        value4=str(status_pagenumber+1080)
+        value5=str(status_pagenumber+1100)
     else:
-        status_list=user_status.objects.all().order_by('-id')[0:1000]
+        status_list=user_status.objects.all().order_by('-id')[0:20]
         user_show=""
-        value1="1000"
-        value2="2000"
-        value3="3000"
-        value4="4000"
-        value5="5000"
+        value1="1020"
+        value2="1040"
+        value3="1060"
+        value4="1080"
+        value5="1100"
         status_pagenumber=0
     return render_to_response('status.html',{'status_list':status_list,'oj_show':oj_show,'result_show':result_show,'language_show':language_show,'usershow':usershow,'value1':value1,'value2':value2,'value3':value3,'value4':value4,'value5':value5},context_instance=RequestContext(req))
 
@@ -257,40 +267,40 @@ def myproblemss(req):
             problems_list=problems_list.filter(source=req.POST["source"]).order_by('SID')
         source_show=req.POST["source"]
         if req.POST.has_key("1"):
-            problems_list=problems_list[myproblem_pagenumber+1000:myproblem_pagenumber+2000]
+            problems_list=problems_list[myproblem_pagenumber+20:myproblem_pagenumber+40]
         if req.POST.has_key("2"):
-            problems_list=problems_list[myproblem_pagenumber+2000:myproblem_pagenumber+3000]
+            problems_list=problems_list[myproblem_pagenumber+40:myproblem_pagenumber+60]
         if req.POST.has_key("3"):
-            problems_list=problems_list[myproblem_pagenumber+3000:myproblem_pagenumber+4000]
+            problems_list=problems_list[myproblem_pagenumber+60:myproblem_pagenumber+80]
         if req.POST.has_key("4"):
-            problems_list=problems_list[myproblem_pagenumber+4000:myproblem_pagenumber+5000]
+            problems_list=problems_list[myproblem_pagenumber+80:myproblem_pagenumber+100]
         if req.POST.has_key("5"):
-            problems_list=problems_list[myproblem_pagenumber+5000:myproblem_pagenumber+6000]
+            problems_list=problems_list[myproblem_pagenumber+100:myproblem_pagenumber+120]
         if req.POST.has_key("nextpage"):
-            problems_list=problems_list[myproblem_pagenumber+5000:myproblem_pagenumber+6000]
-            myproblem_pagenumber+=5000
+            problems_list=problems_list[myproblem_pagenumber+120:myproblem_pagenumber+140]
+            myproblem_pagenumber+=100
         if req.POST.has_key("previouspage"):
-            if(myproblem_pagenumber>=5000):
-               myproblem_pagenumber-=5000
-               problems_list=problems_list[myproblem_pagenumber:myproblem_pagenumber+1000]
+            if(myproblem_pagenumber>=100):
+               myproblem_pagenumber-=100
+               problems_list=problems_list[myproblem_pagenumber:myproblem_pagenumber+20]
         if req.POST.has_key("filter"):
-            problems_list=problems_list[0:1000]
+            problems_list=problems_list[0:100]
             myproblem_pagenumber=0
-        value1=str(myproblem_pagenumber+1000)
-        value2=str(myproblem_pagenumber+2000)
-        value3=str(myproblem_pagenumber+3000)
-        value4=str(myproblem_pagenumber+4000)
-        value5=str(myproblem_pagenumber+5000)
+        value1=str(myproblem_pagenumber+1020)
+        value2=str(myproblem_pagenumber+1040)
+        value3=str(myproblem_pagenumber+1060)
+        value4=str(myproblem_pagenumber+1080)
+        value5=str(myproblem_pagenumber+1100)
     else:
-        problems_list=problemslist.objects.all().order_by('SID')[0:1000]
+        problems_list=problemslist.objects.all().order_by('SID')[0:20]
         sid_show=""
         title_show=""
         source_show=""
-        value1="1000"
-        value2="2000"
-        value3="3000"
-        value4="4000"
-        value5="5000"
+        value1="1020"
+        value2="1040"
+        value3="1060"
+        value4="1080"
+        value5="1100"
         myproblem_pagenumber=0
     return render_to_response('myproblems.html',{'problems_list':problems_list,'username':username,'oj_show':oj_show,'sid_show':sid_show,'title_show':title_show,'source_show':source_show,'value1':value1,'value2':value2,'value3':value3,'value4':value4,'value5':value5},context_instance=RequestContext(req))
 
@@ -325,38 +335,38 @@ def mystatuss(req):
             status_list=status_list.filter(username=req.POST["user"]).order_by('-id')
         user_show=req.POST["user"]
         if req.POST.has_key("1"):
-            status_list=status_list[mystatus_pagenumber+1000:mystatus_pagenumber+2000]
+            status_list=status_list[mystatus_pagenumber+20:mystatus_pagenumber+40]
         if req.POST.has_key("2"):
-            status_list=status_list[mystatus_pagenumber+2000:mystatus_pagenumber+3000]
+            status_list=status_list[mystatus_pagenumber+40:mystatus_pagenumber+60]
         if req.POST.has_key("3"):
-            status_list=status_list[mystatus_pagenumber+3000:mystatus_pagenumber+4000]
+            status_list=status_list[mystatus_pagenumber+60:mystatus_pagenumber+80]
         if req.POST.has_key("4"):
-            status_list=status_list[mystatus_pagenumber+4000:mystatus_pagenumber+5000]
+            status_list=status_list[mystatus_pagenumber+80:mystatus_pagenumber+100]
         if req.POST.has_key("5"):
-            status_list=status_list[mystatus_pagenumber+5000:mystatus_pagenumber+6000]
+            status_list=status_list[mystatus_pagenumber+100:mystatus_pagenumber+120]
         if req.POST.has_key("nextpage"):
-            status_list=status_list[mystatus_pagenumber+5000:mystatus_pagenumber+6000]
-            mystatus_pagenumber+=5000
+            status_list=status_list[mystatus_pagenumber+120:mystatus_pagenumber+140]
+            mystatus_pagenumber+=100
         if req.POST.has_key("previouspage"):
-            if(mystatus_pagenumber>=5000):
-               mystatus_pagenumber-=5000
-               status_list=status_list[mystatus_pagenumber:mystatus_pagenumber+1000]
+            if(mystatus_pagenumber>=100):
+               mystatus_pagenumber-=100
+               status_list=status_list[mystatus_pagenumber:mystatus_pagenumber+20]
         if req.POST.has_key("filter"):
-            status_list=status_list[0:1000]
+            status_list=status_list[0:20]
             mystatus_pagenumber=0
-        value1=str(mystatus_pagenumber+1000)
-        value2=str(mystatus_pagenumber+2000)
-        value3=str(mystatus_pagenumber+3000)
-        value4=str(mystatus_pagenumber+4000)
-        value5=str(mystatus_pagenumber+5000)
+        value1=str(mystatus_pagenumber+1020)
+        value2=str(mystatus_pagenumber+1040)
+        value3=str(mystatus_pagenumber+1060)
+        value4=str(mystatus_pagenumber+1080)
+        value5=str(mystatus_pagenumber+1100)
     else:
-        status_list=user_status.objects.all().order_by('-id')[0:1000]
+        status_list=user_status.objects.all().order_by('-id')[0:20]
         user_show=""
-        value1="1000"
-        value2="2000"
-        value3="3000"
-        value4="4000"
-        value5="5000"
+        value1="1020"
+        value2="1040"
+        value3="1060"
+        value4="1080"
+        value5="1100"
         mystatus_pagenumber=0
     return render_to_response('mystatus.html',{'status_list':status_list,'username':username,'oj_show':oj_show,'result_show':result_show,'language_show':language_show,'usershow':usershow,'value1':value1,'value2':value2,'value3':value3,'value4':value4,'value5':value5},context_instance=RequestContext(req))
 
@@ -374,8 +384,7 @@ def myusershow(req):
 def mycodeshow(req):
     choice = req.GET["id"]
     astatus = user_status.objects.get(id=choice)
-    code = astatus.code
-    return render_to_response('mycodeshow.html',{'astatus':astatus,'code':code},context_instance=RequestContext(req))
+    return render_to_response('mycodeshow.html',{'astatus':astatus},context_instance=RequestContext(req))
 
 def mysubmitcode(req):
     username = req.COOKIES.get('username','')

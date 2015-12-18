@@ -95,8 +95,8 @@
                         <tbody>
                         {%for astatu in status_list%}
                             <tr>
-                                <td>{{ astatu.problemTitle }}</td>
-                                <td><a href="/usershow/?id={{astatu.userID}}">{{ astatu.username }}</a></td>
+                                <td><a href="/problemshow/?id={{astatu.problemID}}">{{ astatu.problemTitle }}</a></td>
+                                <td>{{ astatu.username }}</td>
                                 <td>{{ astatu.OJ }}</td>
                                 <td>{{ astatu.result }}</td>
                                 <td>{{ astatu.memory }}</td>
