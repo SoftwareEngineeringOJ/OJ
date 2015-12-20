@@ -5,7 +5,8 @@ Created on 2015年11月24日
 @author: Rhapsody
 '''
 import CodeManager
-from POJ import Submit
+import POJ
+import HOJ
 from Queue import Queue
 import threading
 from OJproject import *
@@ -16,14 +17,21 @@ class Worker(threading.Thread):
     def __init__(self, t_name, Q):
         threading.Thread.__init__(self, name = t_name)
         self.Q = Q
-        self.linker = Submit()
+        self.pojlinker = POJ.Submit()
+        self.hojlinker = HOJ.Submit()
         
+    def getOJ(self, oj):
+        if (oj == 'POJ'):
+            return self.pojlinker
+        if (oj == 'HOJ'):
+            return self.hojlinker
+    
     def run(self):
         while not self.Q.empty():
             T = self.Q.get()
-            print 'Process ', T.username
+            #print 'Process ', T.username
             code = CodeManager.GetFile(T.id)
-            res = self.linker.submit(T.runID, T.language, code)
+            res = self.getOJ(T.OJ).submit(T.runID, T.language, code)
             print 'res =', res
             rec = status.objects.get(id = T.id)
             rec.result = res[0]

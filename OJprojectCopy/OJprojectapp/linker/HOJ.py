@@ -43,7 +43,10 @@ class Submit(object):
                     'submit': 'Login'} # 构造POST数据
         postData = urllib.urlencode(postData)
         request = urllib2.Request(self.hostaddr + self.loginaddr, postData, self.header)
-        response = urllib2.urlopen(request, timeout=10)
+        try:
+            response = urllib2.urlopen(request, timeout=10)
+        except:
+            return False
         if response.getcode() != 200 and response.getcode() != 302:
             print 'login web error!'
             return False # 访问失败
@@ -59,7 +62,10 @@ class Submit(object):
         res = page.split('<tbody>')[2].split('</tbody>')[0]
         rec = res.split('</tr>')[0]
         rec = re.findall(r'<td(.*?)</td>', rec)
+        #self.html(rec)
         result = rec[2].split('>')[1]
+        if 'http' in result:
+            result = 'Compilation Error'
         time = rec[3].split('>')[1]
         memory = rec[4].split('>')[1]
         return [result, time, memory] # 寻找返回状态
@@ -68,7 +74,10 @@ class Submit(object):
         postData = {'author' : self.username} # 构造POST
         postData = urllib.urlencode(postData)
         request = urllib2.Request(self.hostaddr + self.statusaddr + '?' + postData, headers=self.header)
-        response = urllib2.urlopen(request, timeout=10)
+        try:
+            response = urllib2.urlopen(request, timeout=10)
+        except:
+            return ['Judge Error', '', '']
         if response.getcode() != 200 and response.getcode() != 302:
             print 'query web error!'
             return ['Judge Error', '', ''] # 查询失败
@@ -82,7 +91,8 @@ class Submit(object):
         return ans # 返回语言映射关系
     
     def submit(self, pid, lan, code):
-        self.login()
+        if not self.login():
+            return ['Judge Error', '', '']
         pid = pid.encode('utf-8')
         lan = self.map()[lan]
         #code = code.encode('utf-8')
@@ -90,9 +100,12 @@ class Submit(object):
                     'Language': lan,
                     'Source': code} # 构造POST， 代码部分是需要加密的
         postData = urllib.urlencode(postData)
-    
+
         request = urllib2.Request(self.hostaddr + self.submaddr, postData, self.header)
-        response = urllib2.urlopen(request, timeout=10)
+        try:
+            response = urllib2.urlopen(request, timeout=10)
+        except:
+            return ['Judge Error', '', '']
         if response.getcode() != 200 and response.getcode() != 302:
             print 'subbmit web error!'
             return ['Judge Error', '', ''] # 提交失败

@@ -48,7 +48,10 @@ class Submit(object):
                     'url' : '/'} # 构造POST数据
         postData = urllib.urlencode(postData)
         request = urllib2.Request(self.hostaddr + self.loginaddr, postData, self.header)
-        response = urllib2.urlopen(request, timeout=10)
+        try:
+            response = urllib2.urlopen(request, timeout=10)
+        except:
+            return False
         if response.getcode() != 200 and response.getcode() != 302:
             print 'login web error!'
             return False # 访问失败
@@ -60,7 +63,7 @@ class Submit(object):
         return True # 登录成功
     
     def find_status(self, page):
-        page = page.encode('utf-8')
+        #page = page.encode('utf-8')
         res = re.findall(r'user_id=raft_oj>raft_oj</a>(.*?)showsource', page)
         fout = open('res.html', 'wb')
         fout.write(page)
@@ -83,7 +86,10 @@ class Submit(object):
                     'language': ''} # 构造POST
         postData = urllib.urlencode(postData)
         request = urllib2.Request(self.hostaddr + self.statusaddr + '?' + postData, headers=self.header)
-        response = urllib2.urlopen(request, timeout=10)
+        try:
+            response = urllib2.urlopen(request, timeout=10)
+        except:
+            return ['Judge Error', '', '']
         if response.getcode() != 200 and response.getcode() != 302:
             print 'query web error!'
             return ['Judge Error', '', ''] # 查询失败
@@ -100,7 +106,8 @@ class Submit(object):
         return ans # 返回语言映射关系
     
     def submit(self, pid, lan, code):
-        self.login()
+        if not self.login():
+            return ['Judge Error', '', '']
         code = base64.b64encode(code) # encode
         pid = pid.encode('utf-8')
         lan = self.map()[lan]

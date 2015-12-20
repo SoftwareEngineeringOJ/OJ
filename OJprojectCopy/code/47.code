@@ -1,0 +1,26 @@
+光盘内容说明
+
+:
+src：源代码目录
+
+
+src.7z：源代码的压缩版本
+
+
+specification：NFC规范
+
+
+tools：一些反编译工具
+
+
+software：用于读写NFC标签的工具
+
+
+tomcat：Tomcat7，其中内置了27章使用的Servlet，可直接在Windows、Mac OS或Linux上启动tomcat，但要设置JAVA_HOME环境变量，并且将<jdk安装目录>/bin路径设到PATH环境变量中
+
+完整的Android4.2.2源代码到Google官方网站或作者的博客（http://blog.csdn.net/nokiaguy）下载
+
+编译方法见http://source.android.com/source/building.html
+
+
+注意，测试本书示例需要使用Android4.0、Android4.1或Android4.2，所以安装Android SDK时至少需要安装Android4.x。当然，也可以在Eclipse中将Android SDK版本修改成低于Android4.x的版本，不过，可能有一些示例无法在低版本Android上运行。

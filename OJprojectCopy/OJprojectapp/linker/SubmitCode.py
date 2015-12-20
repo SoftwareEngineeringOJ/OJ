@@ -7,7 +7,6 @@ from datetime import datetime
 from OJprojectapp.models import status
 import CodeManager
 import SubmitCode
-import POJ
 import urllib
 
 def submit(req, check):
@@ -15,7 +14,7 @@ def submit(req, check):
     sid = req.GET["sid"]
     oj = req.GET["oj"]
     title = req.GET["title"]
-    lan = POJ.Submit().map()
+    lan = CodeManager.GetOJ(oj).map()
     
     if req.POST:
         page = req.POST
