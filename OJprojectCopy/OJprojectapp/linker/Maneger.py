@@ -31,7 +31,10 @@ class Worker(threading.Thread):
             T = self.Q.get()
             #print 'Process ', T.username
             code = CodeManager.GetFile(T.id)
-            res = self.getOJ(T.OJ).submit(T.runID, T.language, code)
+            try:
+                res = self.getOJ(T.OJ).submit(T.runID, T.language, code)
+            except:
+                res = ['Judge Error', '', '']
             print 'res =', res
             rec = status.objects.get(id = T.id)
             rec.result = res[0]
