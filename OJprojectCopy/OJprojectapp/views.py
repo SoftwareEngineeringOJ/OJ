@@ -5,11 +5,9 @@ from django.template import RequestContext
 from datetime import date, datetime
 from django import forms
 from models import *
-
-#from spider import PojSpider, HojSpider
 from linker import Maneger, SubmitCode, CodeManager
 from UserManager import UserManager
-from PagesManager import *
+#from PagesManager import PagesManagerOthers
 from django.templatetags.i18n import language
 
 check = Maneger.Judge()
@@ -32,7 +30,10 @@ def login(req):
 
 #退出
 def logout(req):
-    return UserManager.logout()
+    return UserManager.logout(req)
+
+def enter(req):
+    return UserManager.enter(req)
 
 def problemss(req):
     oj_show=["all","POJ","HOJ","NOJ","ZOJ","TYVJ"]
@@ -186,9 +187,6 @@ def usershow(req):
     choice = req.GET["id"]
     auser = user.objects.get(userID=choice)
     return render_to_response('usershow.html', {'auser': auser}, context_instance=RequestContext(req))
-
-def enter(req):
-    return PagesManagerOthers.enter(req)
     
 def myoj(req):
     username = req.COOKIES.get('username','')
