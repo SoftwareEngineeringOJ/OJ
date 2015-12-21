@@ -41,10 +41,20 @@
                             </ul>
                         </div></li>
                     </ul>
+					{% if Flag %}
+                    <div style="padding-top: 10px;">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}！</p></li>
+                            <li><a href="/enter/">Enter MY OJ </a></li></li>
+                            <li><a href="/logout/"> Logout </a></li>
+                        </ul>
+                    </div>
+					{% else %}
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/login/">LOGIN</a></li>
                         <li><a href="/regist/">REGISTER</a></li>
                     </ul>
+					{% endif %}
                 </div>
             </div>
         </nav>
@@ -83,6 +93,10 @@
                                         {% endfor %}
                                         </select></td>
                                     <td>memory </td>
+									{% if Flag %}
+									<td>User private </td>
+                                    <td>Code private </td>
+									{% endif %}
                                     <td>time </td>
                                     <td>language <br><select name="language">
                                         {% for i in language_show %}
@@ -105,6 +119,18 @@
                                 <td>{{ astatu.time }}</td>
                                 <td>{{ astatu.language }}</td>
                                 <td>{{ astatu.submit_time }}</td>
+								{% if Flag %}
+                                {% if astatu.is_user_private %}
+                                    <td><a href="/myusershow/?id={{astatu.userID}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.is_user_private }}</a></td>
+                                {% else %}
+                                    <td>{{ astatu.is_user_private }}</td>
+                                {% endif %}
+                                {% if astatu.is_code_private %}
+                                    <td><a href="/mycodeshow/?id={{astatu.id}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.is_code_private }}</a></td>
+                                {% else %}
+                                    <td>{{ astatu.is_code_private }}</td>
+                                {% endif %}
+								{% endif %}
                                 <td><a href="/discuss/?id={{astatu.problemID}}&addid=-1">ENTER</a></td>
                             </tr>
                         {% endfor %}

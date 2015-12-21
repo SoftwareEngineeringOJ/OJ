@@ -17,6 +17,11 @@ class UserLoginForm(forms.Form):
     username = forms.CharField(label='Username',max_length=100)
     password = forms.CharField(label='Password',widget=forms.PasswordInput())
 
+def usershow(req):
+    choice = req.GET["id"]
+    auser = user.objects.get(id=choice)
+    return render_to_response('usershow.html',{'auser':auser},context_instance=RequestContext(req))
+
 #注册
 def regist(req):
     if req.method == 'POST':
@@ -75,6 +80,14 @@ def logout(req):
     #清理cookie里保存username
     response.delete_cookie('username')
     return response
+
+def index(req):
+    username = req.COOKIES.get('username','')
+    Flag = True
+    if username == None or username is "":
+        Flag = False
+    return render_to_response('oj.html',{'username' : username, 
+                                           'Flag' : Flag})
 
 def enter(req):
     username = req.COOKIES.get('username','')

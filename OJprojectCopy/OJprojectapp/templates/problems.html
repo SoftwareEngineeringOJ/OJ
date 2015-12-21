@@ -41,10 +41,20 @@
                             </ul>
                         </div></li>
                     </ul>
+					{% if Flag %}
+                    <div style="padding-top: 10px;">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}！</p></li>
+                            <li><a href="/enter/">Enter MY OJ </a></li></li>
+                            <li><a href="/logout/"> Logout </a></li>
+                        </ul>
+                    </div>
+					{% else %}
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/login/">LOGIN</a></li>
                         <li><a href="/regist/">REGISTER</a></li>
                     </ul>
+					{% endif %}
                 </div>
             </div>
         </nav>

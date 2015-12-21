@@ -9,13 +9,13 @@ import CodeManager
 import SubmitCode
 import urllib
 
-def submit(req, check):
+def submit(req):
     username = req.COOKIES.get('username', '')
     sid = req.GET["sid"]
     oj = req.GET["oj"]
     title = req.GET["title"]
     lan = CodeManager.GetOJ(oj).map()
-    
+    global check
     if req.POST:
         page = req.POST
         new = user_status(submit_time = datetime.now(), 
