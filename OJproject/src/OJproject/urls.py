@@ -20,25 +20,24 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^t/(?P<path>.*)$', 'django.views.static.serve',{ 'document_root': 'OJprojectapp' }),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'OJprojectapp.views.oj'),
-    url(r'^oj/$', 'OJprojectapp.views.oj'),
+    url(r'^t/(?P<path>.*)$', 'django.views.static.serve',{ 'document_root': 'OJprojectapp' }), 
+    url(r'^admin/', include(admin.site.urls)), 
+    url(r'^$', 'OJprojectapp.views.oj'), 
+    url(r'^oj/$', 'OJprojectapp.views.oj'), 
     
-    url(r'^login/$','OJprojectapp.views.login'),
-    url(r'^regist/$', 'OJprojectapp.views.regist'),
-    url(r'^enter/$', 'OJprojectapp.views.enter'),
-    url(r'^logout/$', 'OJprojectapp.views.logout'),
+    url(r'^login/$','OJprojectapp.views.login'), 
+    url(r'^regist/$', 'OJprojectapp.views.regist'), 
+    url(r'^enter/$', 'OJprojectapp.views.enter'), 
+    url(r'^logout/$', 'OJprojectapp.views.logout'), 
     
-    url(r'^problems/$', 'OJprojectapp.views.problemss'),
+    url(r'^problems/$', 'OJprojectapp.views.problemss'), 
     
-    url(r'^discuss/$', 'OJprojectapp.views.discuss'),
-    #url(r'^mydiscuss/$', 'OJprojectapp.views.mydiscuss'),
-    url(r'^status/$', 'OJprojectapp.views.statuss'),
+    url(r'^discuss/$', 'OJprojectapp.views.discuss'), 
+    url(r'^status/$', 'OJprojectapp.views.statuss'), 
     
-    url(r'^problemshow/$', 'OJprojectapp.views.problemshow'),
-    url(r'^usershow/$', 'OJprojectapp.views.usershow'),
+    url(r'^problemshow/$', 'OJprojectapp.views.problemshow'), 
+    url(r'^usershow/$', 'OJprojectapp.views.usershow'), 
     #url(r'^mycodeshow/$', 'OJprojectapp.views.mycodeshow'),
-    url(r'^mysubmitcode/$', 'OJprojectapp.views.mysubmitcode'),
+    url(r'^mysubmitcode/$', 'OJprojectapp.views.mysubmitcode'), 
 ]
 urlpatterns += staticfiles_urlpatterns()

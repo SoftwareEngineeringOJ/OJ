@@ -14,7 +14,6 @@ from django.templatetags.i18n import language
 
 def discuss(req):
     username = req.COOKIES.get('username','')
-    print 'Username =', username
     Flag = True
     if username == None or username is "":
         Flag = False
@@ -23,6 +22,7 @@ def discuss(req):
         problem = problemslist.objects.get(id=problemid)
         discussion_list = discussion.objects.filter(problemID=problemid)
         return render_to_response('discussion.html',{'username':username,'discussion_list':discussion_list,'problem':problem},context_instance=RequestContext(req))
+
     if req.GET:
         problemid = req.GET["id"]
         problem = problemslist.objects.get(id=problemid)
@@ -32,8 +32,21 @@ def discuss(req):
             discussion.objects.filter(id=addid).update(like=(int(add_discussion.like) + 1))
     if req.POST:
         speak=req.POST["speak"]
-        auser = user.objects.get(username=username)
-        discussion.objects.create(userID= auser.id,username=username,problemID=problemid,problemTitle=problem.title,speak=speak,submit_time=datetime.now(),like=0)
-    discussion_list = discussion.objects.filter(problemID=problemid)
+        auser = user.objects.get(username = username)
+        discussion.objects.create(userID = auser.id, 
+                                  username = username, 
+                                  problemID = problemid, 
+                                  problemTitle = problem.title, 
+                                  speak = speak, 
+                                  submit_time = datetime.now(), 
+                                  like = 0, )
+    discussion_list = discussion.objects.filter(problemID = problemid)
 
-    return render_to_response('discussion.html',{'problemid':problemid,'username':username,'discussion_list':discussion_list,'problem':problem},context_instance=RequestContext(req))
+    print 'Username =', username
+    return render_to_response('discussion.html', 
+                              {'problemid' : problemid, 
+                               'Flag' : Flag, 
+                               'username' : username, 
+                               'discussion_list' : discussion_list, 
+                               'problem' : problem}, 
+                              context_instance = RequestContext(req))
