@@ -10,7 +10,7 @@ import HOJ
 from Queue import Queue
 import threading
 from OJproject import *
-from OJprojectapp.models import *
+#from OJprojectapp.models import *
 
 class Worker(threading.Thread):
     
@@ -36,12 +36,12 @@ class Worker(threading.Thread):
             except:
                 res = ['Judge Error', '', '']
             print 'res =', res
-            rec = status.objects.get(id = T.id)
+            rec = user_status.objects.get(id = T.id)
             rec.result = res[0]
             rec.time = res[1]
             rec.memory = res[2]
             rec.save()
-            list = status.objects.all()
+            list = user_status.objects.all()
             #list.sort(reversed = False)
         print 'All done'
 

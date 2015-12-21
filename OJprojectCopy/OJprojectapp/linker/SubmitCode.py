@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from datetime import datetime
-from OJprojectapp.models import status
+from OJprojectapp.models import user_status
 import CodeManager
 import SubmitCode
 import urllib
@@ -18,7 +18,7 @@ def submit(req, check):
     
     if req.POST:
         page = req.POST
-        new = status(submit_time = datetime.now(), 
+        new = user_status(submit_time = datetime.now(), 
                      isprivate = (req.POST["share"] is 'Yes'), 
                      username = username, 
                      language = page['language'], 

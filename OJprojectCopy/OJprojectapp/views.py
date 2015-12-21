@@ -8,6 +8,8 @@ from models import *
 
 #from spider import PojSpider, HojSpider
 from linker import Maneger, SubmitCode, CodeManager
+from UserManager import UserManager
+from PagesManager import *
 from django.templatetags.i18n import language
 
 check = Maneger.Judge()
@@ -16,77 +18,21 @@ myproblem_pagenumber=0
 status_pagenumber=0
 mystatus_pagenumber=0
 
-#from spider import PojSpider, HojSpider
-'''
-poj = PojSpider()
-problems.objects.filter(OJ="POJ").delete()
-problemslist.objects.filter(OJ="POJ").delete()
-poj.save_allpage()
-
-hoj = HojSpider()
-problems.objects.filter(OJ="HOJ").delete()
-problemslist.objects.filter(OJ="HOJ").delete()
-hoj.save_allpage()
-'''
-#用户表单
-class UserRegisterForm(forms.Form): 
-    username = forms.CharField(label='Username',max_length=100)
-    password = forms.CharField(label='Password',widget=forms.PasswordInput())
-    signature = forms.CharField(label='Signature',max_length=100)
-    school = forms.CharField(label='School',max_length=100)
-    email = forms.EmailField(max_length=50)
-    register_time = forms.DateTimeField()
-class UserLoginForm(forms.Form): 
-    username = forms.CharField(label='Username',max_length=100)
-    password = forms.CharField(label='Password',widget=forms.PasswordInput())
-
 #首页
 def oj(req):
     return render_to_response('oj.html')
 
 #注册
 def regist(req):
-    if req.method == 'POST':
-        uf = UserRegisterForm(req.POST)
-        if uf.is_valid():
-            #获得表单数据
-            username = uf.cleaned_data['username']
-            password = uf.cleaned_data['password']
-            signature = uf.cleaned_data['signature']
-            school = uf.cleaned_data['school']
-            email = uf.cleaned_data['email']
-            register_time = uf.cleaned_data['register_time']
-            #添加到数据库
-            user.objects.create(username= username,password=password,signature=signature,school=school,email=email,register_time=register_time)
-            response = HttpResponseRedirect('/enter/')
-            response.set_cookie('username',username,3600)
-            return response
-    else:
-        uf = UserRegisterForm()
-    return render_to_response('regist.html',{'uf':uf}, context_instance=RequestContext(req))
+    return UserManager.regist(req)
 
 #登陆
 def login(req):
-    if req.method == 'POST':
-        uf = UserLoginForm(req.POST)
-        if uf.is_valid():
-            #获取表单用户密码
-            username = uf.cleaned_data['username']
-            password = uf.cleaned_data['password']
-            #获取的表单数据与数据库进行比较
-            auser = user.objects.filter(username= username,password= password)
-            if auser:
-                #比较成功，跳转index
-                response = HttpResponseRedirect('/enter/')
-                #将username写入浏览器cookie,失效时间为3600
-                response.set_cookie('username',username,3600)
-                return response
-            else:
-                #比较失败，还在login
-                return HttpResponseRedirect('/login/')
-    else:
-        uf = UserLoginForm()
-    return render_to_response('login.html',{'uf':uf},context_instance=RequestContext(req))
+    return UserManager.login(req)
+
+#退出
+def logout(req):
+    return UserManager.logout()
 
 def problemss(req):
     oj_show=["all","POJ","HOJ","NOJ","ZOJ","TYVJ"]
@@ -229,24 +175,21 @@ def problemshow(req):
                                                    "outputs": outputs}
                               , context_instance=RequestContext(req))
 
+def discuss(req):
+    username = req.COOKIES.get('username','')
+    problemid = req.GET["id"]
+    problem = problemslist.objects.get(id=problemid)
+    discussion_list = discussion.objects.filter(problemID=problemid)
+    return render_to_response('discussion.html',{'username':username,'discussion_list':discussion_list,'problem':problem},context_instance=RequestContext(req))
+
 def usershow(req):
     choice = req.GET["id"]
     auser = user.objects.get(userID=choice)
     return render_to_response('usershow.html', {'auser': auser}, context_instance=RequestContext(req))
 
-def logout(req):
-    response = HttpResponseRedirect('/oj/')
-    #清理cookie里保存username
-    response.delete_cookie('username')
-    return response
-
 def enter(req):
-    username = req.COOKIES.get('username','')
-    if cmp("",username)==0:
-        return render_to_response('oj.html')
-    else:
-       return render_to_response('enter.html' ,{'username':username})
-
+    return PagesManagerOthers.enter(req)
+    
 def myoj(req):
     username = req.COOKIES.get('username','')
     return render_to_response('myoj.html',{'username':username})

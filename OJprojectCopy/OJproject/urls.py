@@ -27,17 +27,19 @@ urlpatterns = [
     url(r'^login/$','OJprojectapp.views.login'),
     url(r'^regist/$', 'OJprojectapp.views.regist'),
     url(r'^problems/$', 'OJprojectapp.views.problemss'),
+    url(r'^myproblems/$', 'OJprojectapp.views.myproblemss'),
+    url(r'^discuss/$', 'OJprojectapp.views.discuss'),
     url(r'^status/$', 'OJprojectapp.views.statuss'),
     url(r'^problemshow/$', 'OJprojectapp.views.problemshow'),
     url(r'^usershow/$', 'OJprojectapp.views.usershow'),
     url(r'^enter/$', 'OJprojectapp.views.enter'),
     url(r'^logout/$', 'OJprojectapp.views.logout'),
     url(r'^myoj/$', 'OJprojectapp.views.myoj'),
-    url(r'^myproblems/$', 'OJprojectapp.views.myproblemss'),
     url(r'^mystatus/$', 'OJprojectapp.views.mystatuss'),
     url(r'^myproblemshow/$', 'OJprojectapp.views.myproblemshow'),
     url(r'^myusershow/$', 'OJprojectapp.views.myusershow'),
+    url(r'^mycodeshow/$', 'OJprojectapp.views.mycodeshow'),
     url(r'^mysubmitcode/$', 'OJprojectapp.views.mysubmitcode'),
-    url(r'^codeshow/$','OJprojectapp.views.codeshow')
+    url(r'^mydiscuss/$', 'OJprojectapp.views.mydiscuss'),
 ]
 urlpatterns += staticfiles_urlpatterns()
