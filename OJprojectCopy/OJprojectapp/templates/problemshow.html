@@ -11,6 +11,8 @@
         <style>
             body{
                 padding-top:30px;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
             }
             .panelset{
                 width: 800px;
@@ -62,46 +64,10 @@
 					<div class="panel panel-info">
 						<div class="panel-heading">
 							<h1 class="text-center"><b>{{problem.title}}</b></h1>
-                            <br><p><b>Time Limit : {{problem.time_limit}} Memory Limit : {{problem.mem_limit}}</b></p>
+                            <br><p>Time Limit : {{problem.time_limit}} &nbsp &nbsp &nbsp &nbsp &nbsp Memory Limit : {{problem.mem_limit}}</p>
 						</div>
 					</div>
-                    <h1 class="text-left text-info">Description </h1>
-                    <div class="panel panel-info">
-                        <div class="panel-body">
-                            <br/>
-                            {% for des in descriptions %}
-                                <p class="text-left">{{des}}</p>
-                            {% endfor %}
-                            {% for pic in pic_addr %}
-                                <img src={{pic}} >
-                            {% endfor %}
-                            <br/>
-                            <h3 class="text-left">Input  </h3>
-                            <br/>
-                            {% for input in inputs %}
-                                <p class="text-left">{{input}}</p>
-                            {% endfor %}
-                            <br/>
-                            <h3 class="text-left">Output  </h3>
-                            <br/>
-                            {% for output in outputs %}
-                                <p class="text-left">{{output}}</p>
-                            {% endfor %}
-                            <br/>
-                            <h3 class="text-left">Sample Intput  </h3>
-                            <br/>
-                            {% for input in sam_inputs %}
-                                <p class="text-left">{{input}}</p>
-                            {% endfor %}
-                            <br/>
-                            <h3 class="text-left">Sample Output  </h3>
-                            <br/>
-                            {% for output in sam_outputs %}
-                                <p class="text-left">{{output}}</p>
-                            {% endfor %}
-                            <br/>
-                        </div>
-				    </div>
+                    <pre class="text-left"><h1 class="text-left text-info">Description </h1><br>{{problem.description}}<br>{% for pic in pic_addr %}<img src={{pic}} >{% endfor %}<br><h3 class="text-left">Input  </h3><br>{{problem.inputs}}<br><h3 class="text-left">Output  </h3><br>{{problem.output}}<br><h3 class="text-left">Sample Input  </h3><br>{{problem.sample_input}}<br><h3 class="text-left">Sample Output  </h3><br>{{problem.sample_output}}</pre>
                 </div>
 			</div>
 			<div class="formset">
@@ -110,3 +76,14 @@
 		</div>
 	</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+

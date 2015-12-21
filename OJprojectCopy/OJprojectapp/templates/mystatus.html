@@ -11,6 +11,8 @@
         <style>
             body{
                 padding-top:50px;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
             }
             .starter{
                 padding:14px 50px;
@@ -41,7 +43,7 @@
                     </ul>
                     <div style="padding-top: 10px;">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}!</p></li>
+                            <li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}！</p></li>
                             <li><a href="/enter/">Enter MY OJ </a></li></li>
                             <li><a href="/logout/"> Logout </a></li>
                         </ul>
@@ -71,7 +73,7 @@
                                     <input type="reset" class="btn" name="reset" value="Reset">
                                 </div>
                                 <tr class="info">
-                                    <td>runID </td>
+                                    <td>problem Title</td>
                                     <td>user <br><input type="text" name="user" valus="{{user_show}}"></td>
                                     <td>OJ <br><select name="oj">
                                         {% for i in oj_show %}
@@ -91,30 +93,34 @@
                                         {% endfor %}
                                         </select></td>
                                     <td>submit time </td>
-                                    <td>code file </td>
-                                    <td><a>isprivate </td>
+                                    <td>User private </td>
+                                    <td>Code private </td>
+                                    <td>discussion</td>
                                 </tr>
                             </form>
                         </thead>
                         <tbody>
                         {%for astatu in status_list%}
                             <tr>
-                                <td>{{ astatu.id }}</td>
-                                <td><a href="/myusershow/?id={{astatu.userID}}">{{ astatu.username }}</a></td>
+                                <td><a href="/myproblemshow/?id={{astatu.problemID}}">{{ astatu.problemTitle }}</a></td>
+                                <td>{{ astatu.username }}</td>
                                 <td>{{ astatu.OJ }}</td>
                                 <td>{{ astatu.result }}</td>
                                 <td>{{ astatu.memory }}</td>
                                 <td>{{ astatu.time }}</td>
                                 <td>{{ astatu.language }}</td>
                                 <td>{{ astatu.submit_time }}</td>
-                                <td>{{ astatu.code_file }}</td>
-                                {% if astatu.username = username %}
-                                	<td><a href="/codeshow/?id={{astatu.id}}">{{ astatu.isprivate }}</a></td>
-                                {% elif astatu.isprivate = False %}
-                                	<td><a href="/codeshow/?id={{astatu.id}}">{{ astatu.isprivate }}</a></td>
+                                {% if astatu.is_user_private %}
+                                    <td><a href="/myusershow/?id={{astatu.userID}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.is_user_private }}</a></td>
                                 {% else %}
-                                	<td>{{ astatu.isprivate }}</td>
+                                    <td>{{ astatu.is_user_private }}</td>
                                 {% endif %}
+                                {% if astatu.is_code_private %}
+                                    <td><a href="/mycodeshow/?id={{astatu.id}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.is_code_private }}</a></td>
+                                {% else %}
+                                    <td>{{ astatu.is_code_private }}</td>
+                                {% endif %}
+                                <td><a href="/mydiscuss/?id={{astatu.problemID}}&addid=-1">ENTER</a></td>
                             </tr>
                         {% endfor %}
                         </tbody>

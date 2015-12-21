@@ -10,6 +10,8 @@
         <style>
             body{
                 padding-top:50px;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
             }
             .starter{
                 padding:64px 150px;
@@ -55,16 +57,28 @@
                         {% csrf_token %}
                         <p class="text-left"><b>Problem : {{title}}</b></p>
                         <p class="text-left"><b>Language : </b><select name="language">
-								{% for l in lan %}
-                                            <option value="{{ l }}">{{ l }}</option>
-								{% endfor %}
+                                            <option value="all">All</option>
+                                            <option value="c">C</option>
+                                            <option value="c++">C++</option>
+                                            <option value="c#">C#</option>
+                                            <option value="python">Python</option>
+                                            <option value="java">Java</option>
+                                            <option value="pascal">Pascal</option>
+                                            <option value="ruby">Ruby</option>
                                         </select></p>
                         <label class="text-left"><b>Share Code : </b><lanel>
-                            Yes<input type="radio" name="share" value="Yes" checked>
-                            No<input type="radio" name="share" value="No" >
+                            Yes <input type="radio" name="sharecode" value="Yes" checked>
+                            No <input type="radio" name="sharecode" value="No" >
+                        <label class="text-left"><b>Share Your personal information : </b><lanel>
+                            Yes <input type="radio" name="shareuser" value="Yes" >
+                            No <input type="radio" name="shareuser" value="No" checked>
                         <h1 class="text-left text-info">Your Code </h1>
                         <textarea name="answer" cols="120" rows="20"></textarea>
-                        <input type="submit" class="btn btn-lg active col-md-offset-5 col-md-2" name="submit" value="Submit">
+                        <div style="display:inline" >
+                            <a href="/mydiscuss/?id={{problemid}}&addid=-1" class="btn-lg active col-md-offset-0.5 col-md-4" role="menuitem"></b>Enter Discussion area of the "{{title}}"</b></a>
+                            <input type="submit" class="btn btn-lg active col-md-offset-1 col-md-2" name="submit" value="Submit">
+                            <a href="/mystatus/" class="btn-lg active col-md-offset-1 col-md-4" role="menuitem"></b>Go To See the code status</b></a>
+                        </div>
                     </form>
                 </div>
             </div>

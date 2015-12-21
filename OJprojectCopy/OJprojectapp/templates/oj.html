@@ -1,151 +1,176 @@
 <!DOCTYPE html>
 <html>
-    <head lang="en">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <link href="/t/static/css/bootstrap.min.css", rel="stylesheet"/>
-        <script src="/t/static/js/jquery-2.1.1.min.js"></script>
-        <script src="/t/static/js/bootstrap.min.js"></script>
+    <head>
         <title>HOME</title>
-        <style>
-            body{
-                padding-top:50px;
-            }
-            .starter{
-                padding:44px 50px;
-                text-align: center;
-            }
-            .panelset{
-                width: 800px;
-                text-align: center;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .panelset1{
-                padding-top:50px;
-            }
-            .panelset2{
-                padding-top:50px;
-            }
-            .panelset3{
-                padding-top:50px;
-            }
-        </style>
+        <link href="/t/static/css/bootstrap.css" rel='stylesheet' type='text/css' />
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="/t/static/js/jquery.min.js"></script>
+        <!-- Custom Theme files -->
+        <link href="/t/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
+        <!-- Custom Theme files -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+        <!-- Owl Stylesheets -->
+        <link rel="stylesheet" href="/t/static/css/flexslider.css" type="text/css" media="screen" />
     </head>
-
-    <body background="/static/images/bg0.jpg">
-        <nav  class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <body>
+        <nav  class="navbar navbar-fixed-top" role="navigation">
             <div class="container">
-                <div class="navbar-header">
-                    <a href="/" class="navbar-brand">HOME</a>
-                </div>
-                <div id="navbar1" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-left">
-                        <li><a href="/problems/">PROBLEM</a></li>
-                        <li><a href="/status/">STATUS</a></li>
-                        <li><div class="dropdown" style="padding-top: 10px;">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                                CONTEST
-                                <span class="caret"></span>
-                            </button>
-                            <ul  class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-                                <li><a href="#" class="btn btn-sm active" role="menuitem">Add Contest</a></li>
-                                <li><a href="#" class="btn btn-sm active" role="menuitem">Statistic</a></li>
-                            </ul>
-                        </div></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/login/">LOGIN</a></li>
-                        <li><a href="/regist/">REGISTER</a></li>
-                    </ul>
-                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/login/" class="btn btn-sm active">LOGIN</a></li>
+                    <li><a href="/regist/" class="btn btn-sm active">REGISTER</a></li>
+                </ul>
             </div>
         </nav>
-        <div class="container">
-            <div class="starter">
-                <h1>Welcome To Online Judge!</h1>
+        <!-- header-section-starts -->
+        <div class="header">
+            <div class="container">
+                <div class="strip">
+                    <div class="logo">
+                        <a class="active" href="/"><h1>OJ Home</h1></a>
+                    </div>
+                    <div class="top-menu">
+                    <span class="menu"> </span>
+                        <ul>
+                            <li><a href="/problems/">Problem</a></li>
+                            <li><a href="/status/">Status</a></li>
+                            <li><a href="/#/">Contest</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mail">
+                    <ul>
+                        <li><i class="msg"></i></li>
+                        <li><a href="mail-to:info@untitledsite.com">12345678900@163.com </a></li>
+                        <li>/</li>
+                        <li>123 456 7890</li>
+                        <li><i class="phone"></i></li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="container">
-            <div class="panelset">
-                <div class="panelset1">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h4><b>INTRODUCTION</b></h4>
+        <div class="slider-bg">
+            <div class="container">
+                <div class="grid-1">
+                    <div class="col-md-6 left-grid-1">
+                        <h3>Welcome To Online Judge ! </h3>
+                        <p>“ The most splendid achievement of all is the constant striving to
+                            surpass yourself and to be worthy of your own approval. This is how happiness blooms. ”</p>
+                        <h3>- to youth </h3>
+                    </div>
+                    <div class="col-md-6 right-grid-1">
+                        <section class="slider">
+                                <div class="flexslider">
+                                  <ul class="slides">
+                                    <li>
+                                        <img src="/t/static/images/pic1.jpg" class="img-responsive" alt="" />
+                                        </li>
+                                        <li>
+                                        <img src="/t/static/images/pic2.jpg" class="img-responsive" alt="" />
+                                        </li>
+                                        <li>
+                                        <img src="/t/static/images/pic3.jpg" class="img-responsive" alt="" />
+                                        </li>
+                                        <li>
+                                        <img src="/t/static/images/pic1.jpg" class="img-responsive" alt="" />
+                                        </li>
+                                  </ul>
+                                </div>
+                              </section>
+                              <!-- FlexSlider -->
+                              <script defer src="/t/static/js/jquery.flexslider.js"></script>
+                              <script type="text/javascript">
+                                $(function(){
+                                  SyntaxHighlighter.all();
+                                });
+                                $(window).load(function(){
+                                  $('.flexslider').flexslider({
+                                    animation: "slide",
+                                    start: function(slider){
+                                      $('body').removeClass('loading');
+                                    }
+                                  });
+                                });
+                              </script>
                         </div>
-                        <div class="panel-body">
-                            <br/>
-                            <p>网站功能介绍，帮助了解如何操作网站</p>
-                            <br/>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="grid-2">
+            <div class="grid-2grids">
+                <div class="container">
+                    <div class="col-md-5 grid-2grid left-grid-2">
+                        <h3>INTRODUCTION</h3>
+                        <p>网站整体介绍</p>
+                    </div>
+                    <div class="col-md-2 middle-grid-2">
+                        <img src="/t/static/images/more-bg.png" alt="" />
+                        <div class="more">
+                            <div class="info">
+                                <a href="/">About Us</a>
+                            </div>
                         </div>
+                    </div>
+                    <div class="col-md-5 grid-2grid right-grid-2">
+                        <h3>FUNCTION</h3>
+                        <p>网站功能介绍，帮助了解如何操作网站 </p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="grid-3">
+            <div class="container">
+                <div class="grid-3-head text-center">
+                    <h3>NEWS </h3>
+                </div>
+                <div >
+                    <div class="col-md-12 grid-3grid text-center">
+                        <h4>Sed Actellus</h4>
+                        <p>网站最新动态，如：系统新通知，比赛通知，系统新功能加入通知等</p>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="panelset2">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h4><b>NEWS</b></h4>
-                        </div>
-                        <div class="panel-body">
-                            <br/>
-                            <p>网站最新动态，如：系统新通知，比赛通知，系统新功能加入通知等</p>
-                            <br/>
-                        </div>
-                    </div>
-                </div>
+        <div class="grid-4">
+            <div class="container">
+                <h3>OJ TOP 10 RANK</h3>
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr class="info">
+                            <td>rank </td>
+                                <td>username </td>
+                        </tr>
+                        <form role="form" method="post">
+                        {% csrf_token %}
+                            <div class="form-group">
+                                <input type="submit" class="vbutton blue" name="Update" value="Newest Data">
+                            </div>
+                        </form>
+                    </thead>
+                    <tbody>            
+                        {%for arank in rank_list%}
+                            <tr>
+                            {% for content in arank %}
+                                <td>{{ content }} </td>
+                            {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>   
+                </table>
+                <a href="/status/">More Info</a>
+            </div>
+        </div>
 
-                <div class="panelset3">
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <h4><b>OJ TOP 10 RANK</b></h4>
-                        </div>
-                        <div class="panel-body">
-                            <br/>
-                            <p>OJ TOP10最新排名标准等,下面仅随意编写三组数据，我们将在第二次迭代具体实现下面的table</p>
-                            <br/>
-                        </div>
-                        <table class="table table-bordered table-striped table-hover">
-                            <thead>
-                                <tr class="bg-danger">
-                                    <th class="text-center">rank</th>
-                                    <th class="text-center">username</th>
-                                    <th class="text-center">answer</th>
-                                    <th class="text-center">precision</th>
-                                    <th class="text-center">score</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Tom</td>
-                                    <td>100</td>
-                                    <td>98%</td>
-                                    <td>95</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Tina</td>
-                                    <td>84</td>
-                                    <td>48%</td>
-                                    <td>89</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Kim</td>
-                                    <td>33</td>
-                                    <td>78%</td>
-                                    <td>85</td>
-                                </tr>
-                                <tr>
-                                    <td>......</td>
-                                    <td>......</td>
-                                    <td>......</td>
-                                    <td>......</td>
-                                    <td>......</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="footer">
+            <div class="container">
+                <div class="copyright text-center">
+                        <p>OJ Project - made by team 8 - finish in 2005 . 12 . 18</p>
                 </div>
             </div>
         </div>
