@@ -6,6 +6,7 @@ from datetime import date, datetime
 from OJprojectapp.UserManager import UserManager
 from django import forms
 from OJprojectapp.models import *
+from OJprojectapp.UserManager.UserManager import usershow
 
 def mystatuss(req):
     username = req.COOKIES.get('username','')
@@ -146,7 +147,7 @@ def statuss(req):
                                              'oj_show' : oj_show, 
                                              'result_show' : result_show, 
                                              'language_show' : language_show, 
-                                             'usershow' : UserManager.usershow, 
+                                             'usershow' : usershow, 
                                              'value1' : value1, 
                                              'value2' : value2, 
                                              'value3' : value3, 

@@ -35,12 +35,9 @@ urlpatterns = [
     #url(r'^discuss/$', 'OJprojectapp.views.discuss'),
     #url(r'^mydiscuss/$', 'OJprojectapp.views.mydiscuss'),
     url(r'^status/$', 'OJprojectapp.views.statuss'),
-    #url(r'^mystatus/$', 'OJprojectapp.views.mystatuss'),
     
-    #url(r'^problemshow/$', 'OJprojectapp.views.problemshow'),
+    url(r'^problemshow/$', 'OJprojectapp.views.problemshow'),
     url(r'^usershow/$', 'OJprojectapp.views.usershow'),
-    #url(r'^myproblemshow/$', 'OJprojectapp.views.myproblemshow'),
-    url(r'^myusershow/$', 'OJprojectapp.views.myusershow'),
     #url(r'^mycodeshow/$', 'OJprojectapp.views.mycodeshow'),
     url(r'^mysubmitcode/$', 'OJprojectapp.views.mysubmitcode'),
 ]

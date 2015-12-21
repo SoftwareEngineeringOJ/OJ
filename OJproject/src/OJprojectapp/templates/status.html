@@ -121,12 +121,12 @@
                                 <td>{{ astatu.submit_time }}</td>
 								{% if Flag %}
                                 {% if astatu.is_user_private %}
-                                    <td><a href="/myusershow/?id={{astatu.userID}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.is_user_private }}</a></td>
+                                    <td><a href="/usershow/?id={{astatu.userID}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.is_user_private }}</a></td>
                                 {% else %}
                                     <td>{{ astatu.is_user_private }}</td>
                                 {% endif %}
                                 {% if astatu.is_code_private %}
-                                    <td><a href="/mycodeshow/?id={{astatu.id}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.is_code_private }}</a></td>
+                                    <td><a href="/codeshow/?id={{astatu.id}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.is_code_private }}</a></td>
                                 {% else %}
                                     <td>{{ astatu.is_code_private }}</td>
                                 {% endif %}

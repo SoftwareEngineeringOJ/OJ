@@ -19,6 +19,15 @@
             }
         </style>
     </head>
+					{% if Flag %}
+    <body background="/static/images/bg0.jpg">
+        <h1 class="alert-danger text-center">Code Details</h1>
+        <p class="text-center">Title : {{astatus.problemTitle}} , language : {{astatus.language}} , Result : {{astatus.result}} , SubmitTime : {{astatus.submit_time}}</p>
+        <div class="container">
+            <pre>{{astatus.code}}</pre>
+        </div>
+    </body>
+					{% else %}
     <body background="/static/images/bg0.jpg">
         <nav  class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
@@ -77,4 +86,5 @@
             </div>
        </div>  
     </body>
+					{% endif %}
 </html>

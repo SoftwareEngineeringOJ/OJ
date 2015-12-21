@@ -18,9 +18,16 @@ class UserLoginForm(forms.Form):
     password = forms.CharField(label='Password',widget=forms.PasswordInput())
 
 def usershow(req):
+    username = req.COOKIES.get('username','')
+    Flag = True
+    if username == None or username is "":
+        Flag = False
     choice = req.GET["id"]
     auser = user.objects.get(id=choice)
-    return render_to_response('usershow.html',{'auser':auser},context_instance=RequestContext(req))
+    return render_to_response('usershow.html',{'auser' : auser, 
+                                               'username' : username, 
+                                               'Flag' : Flag}, 
+                              context_instance=RequestContext(req))
 
 #注册
 def regist(req):
@@ -146,3 +153,4 @@ def enter(req):
         else:
             ac_others=[]
         return render_to_response('enter.html' ,{'username':username,'theuser':theuser,'problems1':problems1,'problems2':problems2,'problems3':problems3,'problems4':problems4,'problems5':problems5,'problems_others':problems_others,'ac1':ac1,'ac2':ac2,'ac3':ac3,'ac4':ac4,'ac5':ac5,'ac_others':ac_others})
+    

@@ -80,9 +80,15 @@
                     <pre class="text-left"><h1 class="text-left text-info">Description </h1><br>{{problem.description}}<br>{% for pic in pic_addr %}<img src={{pic}} >{% endfor %}<br><h3 class="text-left">Input  </h3><br>{{problem.inputs}}<br><h3 class="text-left">Output  </h3><br>{{problem.output}}<br><h3 class="text-left">Sample Input  </h3><br>{{problem.sample_input}}<br><h3 class="text-left">Sample Output  </h3><br>{{problem.sample_output}}</pre>
                 </div>
 			</div>
+			{% if Flag %}
+			<div class="formset">
+                <a href="/mysubmitcode/?sid={{problem.SID}}&oj={{problem.OJ}}&title={{problem.title}}&id={{problem.id}}" class="btn btn-lg active col-md-offset-5 col-md-2" role="menuitem"></b>Submit</b></a>
+			</div>
+			{% else %}
 			<div class="formset">
                 <a href="/login/" class="btn btn-lg active col-md-offset-5 col-md-2" role="menuitem"></b>Submit</b></a>
 			</div>
+			{% endif %}
 		</div>
 	</body>
 </html>

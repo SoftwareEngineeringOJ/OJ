@@ -1,3 +1,10 @@
 eclipse.preferences.version=1
+encoding//src/OJprojectapp/ProblemManager/Display.py=utf-8
+encoding//src/OJprojectapp/ProblemManager/ProblemList.py=utf-8
+encoding//src/OJprojectapp/ProblemManager/StatusList.py=utf-8
+encoding//src/OJprojectapp/UserManager/UserManager.py=utf-8
+encoding//src/OJprojectapp/linker/CodeManager.py=utf-8
+encoding//src/OJprojectapp/linker/Maneger.py=utf-8
+encoding//src/OJprojectapp/linker/SubmitCode.py=utf-8
 encoding//src/OJprojectapp/models.py=utf-8
 encoding//src/OJprojectapp/views.py=utf-8

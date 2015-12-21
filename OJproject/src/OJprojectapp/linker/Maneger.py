@@ -9,8 +9,7 @@ import POJ
 import HOJ
 from Queue import Queue
 import threading
-from OJproject import *
-#from OJprojectapp.models import *
+from OJprojectapp.models import user_status
 
 class Worker(threading.Thread):
     
@@ -32,7 +31,7 @@ class Worker(threading.Thread):
             #print 'Process ', T.username
             code = CodeManager.GetFile(T.id)
             try:
-                res = self.getOJ(T.OJ).submit(T.runID, T.language, code)
+                res = self.getOJ(T.OJ).submit(T.problemID, T.language, code)
             except:
                 res = ['Judge Error', '', '']
             print 'res =', res
@@ -41,7 +40,6 @@ class Worker(threading.Thread):
             rec.time = res[1]
             rec.memory = res[2]
             rec.save()
-            list = user_status.objects.all()
             #list.sort(reversed = False)
         print 'All done'
 
