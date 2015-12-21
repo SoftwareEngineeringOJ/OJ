@@ -32,7 +32,7 @@ urlpatterns = [
     
     url(r'^problems/$', 'OJprojectapp.views.problemss'),
     
-    #url(r'^discuss/$', 'OJprojectapp.views.discuss'),
+    url(r'^discuss/$', 'OJprojectapp.views.discuss'),
     #url(r'^mydiscuss/$', 'OJprojectapp.views.mydiscuss'),
     url(r'^status/$', 'OJprojectapp.views.statuss'),
     

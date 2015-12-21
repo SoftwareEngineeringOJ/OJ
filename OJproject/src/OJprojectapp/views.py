@@ -9,6 +9,7 @@ from linker import Maneger, SubmitCode, CodeManager
 from UserManager import UserManager
 from django.templatetags.i18n import language
 from ProblemManager import ProblemList, StatusList, Display
+from OJprojectapp.Discuss import Discuss
 
 import linker.Maneger
 check = linker.Maneger.Judge()
@@ -38,11 +39,7 @@ def problemshow(req):
     return Display.problemshow(req)
 
 def discuss(req):
-    username = req.COOKIES.get('username','')
-    problemid = req.GET["id"]
-    problem = problemslist.objects.get(id=problemid)
-    discussion_list = discussion.objects.filter(problemID=problemid)
-    return render_to_response('discussion.html',{'username':username,'discussion_list':discussion_list,'problem':problem},context_instance=RequestContext(req))
+    return Discuss.discuss(req)
 
 def usershow(req):
     return UserManager.usershow(req)

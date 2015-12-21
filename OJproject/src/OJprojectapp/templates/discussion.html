@@ -52,10 +52,20 @@
                             </ul>
                         </div></li>
                     </ul>
+					{% if Flag %}
+                    <div style="padding-top: 10px;">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}！</p></li>
+                            <li><a href="/enter/">Enter MY OJ </a></li></li>
+                            <li><a href="/logout/"> Logout </a></li>
+                        </ul>
+                    </div>
+					{% else %}
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/login/">LOGIN</a></li>
                         <li><a href="/regist/">REGISTER</a></li>
                     </ul>
+					{% endif %}
                 </div>
             </div>
         </nav>
@@ -73,13 +83,42 @@
                             <div class="panel-heading">
                                 <h4><b>User : {{adiscuss.username}}</b></h4>
                             </div>
+{% if Flag %}
+                            <div class="panel-body">
+                                <pre>{{adiscuss.speak}}</pre>
+                                <br>
+                                <a href="/mydiscuss/?id={{problemid}}&addid={{adiscuss.id}}"><img src="/t/static/images/good.jpg"></a>{{adiscuss.like}}
+                            </div>
+{% else %}
                             <div class="panel-body">
                                 <pre>{{adiscuss.speak}}</pre>
                             </div>
+{% endif %}
                         </div>
                     </div>
                 {% endfor %}
             </div>
         </div>
+{% if Flag %}
+        <div class="container">
+            <div class="starter1">
+                <div class="formset">
+                    <form method="post" role="form" neme="form1">
+                        {% csrf_token %}
+                        <h1 class="text-left text-info">Your speak </h1>
+                        <textarea name="speak" cols="130" rows="5"></textarea>
+                        <input type="submit" name="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+        </div>
+{% endif %}
     </body>
 </html>
+{% if Flag %}
+<script type="text/javascript">
+ function add(){
+    
+ }
+</script>
+{% endif %}
