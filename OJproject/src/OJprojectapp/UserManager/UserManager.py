@@ -97,6 +97,36 @@ def index(req):
     return render_to_response('oj.html',{'username' : username, 
                                            'Flag' : Flag})
 
+#修改
+def modify(req):
+    username = req.COOKIES.get('username','')
+    user_ = user.objects.get(username = username)
+
+    if req.method == 'POST':
+        uf = UserRegisterForm(req.POST)
+        if uf.is_valid():
+            #获得表单数据
+
+            username = uf.cleaned_data['username']
+            password = uf.cleaned_data['password']
+            signature = uf.cleaned_data['signature']
+            school = uf.cleaned_data['school']
+            email = uf.cleaned_data['email']
+
+            user_.username = username
+            user_.password = password
+            user_.signature = signature
+            user_.school = school
+            user_.email = email
+            user_.save()
+
+            response = HttpResponseRedirect('/enter/')
+            response.set_cookie('username',user_.username,3600)
+            return response
+    else:
+        uf = UserRegisterForm()
+    return render_to_response('regist.html',{'uf':uf, 'user':user_}, context_instance=RequestContext(req))
+
 def enter(req):
     username = req.COOKIES.get('username','')
     if cmp("",username)==0:

@@ -25,7 +25,9 @@ def login(req):
 #退出
 def logout(req):
     return UserManager.logout(req)
-
+#修改
+def modify(req):
+    return UserManager.modify(req);
 def enter(req):
     return UserManager.enter(req)
 

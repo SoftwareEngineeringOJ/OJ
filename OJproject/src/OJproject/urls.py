@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^regist/$', 'OJprojectapp.views.regist'), 
     url(r'^enter/$', 'OJprojectapp.views.enter'), 
     url(r'^logout/$', 'OJprojectapp.views.logout'), 
+    url(r'^modify/$', 'OJprojectapp.views.modify'), 
     
     url(r'^problems/$', 'OJprojectapp.views.problemss'), 
     

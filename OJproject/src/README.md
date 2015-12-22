@@ -1,5 +1,5 @@
-##¹ØÓÚmysubmitcode.html
-###ĞŞ¸ÄÇ°
+##å…³äºmysubmitcode.html
+###ä¿®æ”¹å‰
 <option value="all">All</option>
 <option value="c">C</option>
 <option value="c++">C++</option>
@@ -8,10 +8,10 @@
 <option value="java">Java</option>
 <option value="pascal">Pascal</option>
 <option value="ruby">Ruby</option>
-###ĞŞ¸Äºó
+###ä¿®æ”¹å
 {% for l in lan %}
 <option value="{{ l }}">{{ l }}</option>
 {% endfor %}
 
 ##mycodeshow
-###·ÃÎÊ¸ÃÒ³Ãæ±ØĞëµÇÂ¼
+###è®¿é—®è¯¥é¡µé¢å¿…é¡»ç™»å½•
