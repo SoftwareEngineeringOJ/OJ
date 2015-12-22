@@ -24,7 +24,6 @@ hduSpider = HDUSpider()
 hduSpider.save_allpage()
 '''
 
-
 check = linker.Maneger.Judge()
 #首页
 def oj(req):

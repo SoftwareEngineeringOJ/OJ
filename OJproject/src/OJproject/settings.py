@@ -25,7 +25,7 @@ SECRET_KEY = 'dmd=)1jpzn#zs8kjn&^^&urzkcn$srb(t(2=mu(u9f&-vn(0lx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -77,9 +77,14 @@ WSGI_APPLICATION = 'OJproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ojs',
+        'USER':'root',
+        'PASSWORD':'1234',
+        'HOST':'',
+        'PORT':'',
     }
+
 }
 
 # Internationalization
