@@ -1,0 +1,1 @@
+更新spider，url加了modify，UserManager和Views都加了一个modify的函数，views最上面加了爬虫的代码，但是注释了，需要爬的时候，解开注释
