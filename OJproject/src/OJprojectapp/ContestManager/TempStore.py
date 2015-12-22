@@ -15,8 +15,8 @@ from OJprojectapp.DataManager import DataManager
 #from django.templatetags.i18n import language
 
 def createcontest(username):
-    tmp = contest_tmp.objects.get(owner = username)
-    tmp.owner = tmp.owner + '$+pass'
+    tmp = contest.objects.get(owner = username, IsReady = False)
+    tmp.IsReady = True
     tmp.save()
 
 class LoadForm():
@@ -44,14 +44,15 @@ class ProblemShow():
         self.merge = sojs + '$' + pids
 
 def loaddata(username):
-    tmp = contest_tmp.objects.filter(owner = username)
+    tmp = contest.objects.filter(owner = username, IsReady = False)
     if len(tmp) == 0:
-        tmp = contest_tmp(owner = username, 
+        tmp = contest(owner = username, 
                           begintime = datetime.now(), 
                           endtime = datetime.now(), 
+                          IsReady = False, 
                           )
         tmp.save()
-    tmp = contest_tmp.objects.get(owner = username)
+    tmp = contest.objects.get(owner = username, IsReady = False)
     #print tmp.owner
     Ans = LoadForm()
     Ans.title = tmp.title
@@ -67,14 +68,15 @@ def loaddata(username):
     
 def savedata(username, Data):
     print 'Save data'
-    tmp = contest_tmp.objects.filter(owner = username)
+    tmp = contest.objects.filter(owner = username, IsReady = False)
     if len(tmp) == 0:
-        tmp = contest_tmp(owner = username, 
-                          begintime = datetime.now(), 
-                          endtime = datetime.now(), 
-                          )
+        tmp = contest(owner = username, 
+                      begintime = datetime.now(), 
+                      endtime = datetime.now(), 
+                      IsReady = False, 
+                      )
         tmp.save()
-    tmp = contest_tmp.objects.get(owner = username)
+    tmp = contest.objects.get(owner = username, IsReady = False)
     #print tmp.owner
     tmp.title = Data.title
     tmp.description = Data.description

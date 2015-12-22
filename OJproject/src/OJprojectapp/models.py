@@ -76,18 +76,7 @@ class contest(models.Model):
     list = models.ManyToManyField(contest_problem)
     begintime = models.DateTimeField() #开始时间
     endtime = models.DateTimeField() #结束时间
-
-class contest_tmp(models.Model):
-    title = models.CharField(max_length = 50) #比赛标题
-    description = models.TextField() #比赛介绍
-    announcement = models.TextField() #比赛申明
-    password = models.CharField(max_length = 50) #比赛密码，如果为空，则加入空串
-    owner = models.CharField(max_length = 50) #创建者ID
-    #total = models.CharField(max_length = 50) #题目数量记录
-    list = models.ManyToManyField(contest_problem)
-    begintime = models.DateTimeField() #开始时间
-    endtime = models.DateTimeField() #结束时间
-
+    IsReady = models.BooleanField()
 
 class group(models.Model):
     groupname = models.CharField(max_length=50)
@@ -120,8 +109,6 @@ class discussionadmin(admin.ModelAdmin):
     list_display = ('problemTitle','submit_time')
 class contestadmin(admin.ModelAdmin):
     list_display = ('title','owner')
-class contest_tmpadmin(admin.ModelAdmin):
-    list_display = ('title','owner')
 class contest_problemadmin(admin.ModelAdmin):
     list_display = ('titles','pids')
 
@@ -133,5 +120,4 @@ admin.site.register(group_status,group_statusadmin)
 admin.site.register(problemslist,problemslistadmin)
 admin.site.register(discussion,discussionadmin)
 admin.site.register(contest,contestadmin)
-admin.site.register(contest_tmp,contest_tmpadmin)
 admin.site.register(contest_problem,contest_problemadmin)
