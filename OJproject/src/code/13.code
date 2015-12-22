@@ -1,0 +1,12 @@
+
+    Share = req.POST["sharecode"]
+    print 'Share =', Share
+
+    Share = req.POST["sharecode"]
+    print 'Share =', Share
+
+    Share = req.POST["sharecode"]
+    print 'Share =', Share
+
+    Share = req.POST["sharecode"]
+    print 'Share =', Share

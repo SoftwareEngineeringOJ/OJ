@@ -1,8 +1,8 @@
-program p1000(Input,Output);
-
-var
-  a,b:Integer;
-begin
-   Readln(a,b);
-   Writeln(a+b);
-end.
+#include <stdio.h>
+int main(void)
+{
+    int a, b;
+    while (scanf("%d %d", &a, &b)==2)
+        printf("%d\n",a+b);
+    return 0;
+}

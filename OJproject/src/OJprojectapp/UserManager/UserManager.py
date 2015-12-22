@@ -8,11 +8,12 @@ from OJprojectapp.models import *
 
 #用户表单
 class UserRegisterForm(forms.Form): 
-    username = forms.CharField(label='Username',max_length=100)
-    password = forms.CharField(label='Password',widget=forms.PasswordInput())
+    username = forms.CharField(label= 'Username ',max_length=100)
+    password = forms.CharField(label= 'Password ',widget=forms.PasswordInput())
     signature = forms.CharField(label='Signature',max_length=100)
-    school = forms.CharField(label='School ',max_length=100)
-    email = forms.EmailField(label='Email ',max_length=50)
+    school = forms.CharField(label=   'School',max_length=100)
+    email = forms.EmailField(label=   'Email',max_length=50)
+
 class UserLoginForm(forms.Form): 
     username = forms.CharField(label='Username',max_length=100)
     password = forms.CharField(label='Password',widget=forms.PasswordInput())

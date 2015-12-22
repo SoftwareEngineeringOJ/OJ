@@ -10,7 +10,7 @@ from OJprojectapp.UserManager.UserManager import usershow
 
 def mystatuss(req):
     username = req.COOKIES.get('username','')
-    oj_show=["all","POJ","HOJ","NOJ","ZOJ","TYVJ"]
+    oj_show=["all","POJ","HOJ","NOJ","ZOJ","HDU"]
     result_show=["all","Accept","Wrong answer","Compilation Error","Presentation Error","Submit Failed","Memory limit exceeded","Time Limit Exceeded","Output Limit Exceeded"]
     language_show=["all","C","C++","C#","Python","Java"]
     global mystatus_pagenumber

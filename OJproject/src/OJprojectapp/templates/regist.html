@@ -1,33 +1,71 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8">
-    <title>REGISTER</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link href="/t/static/css/bootstrap.min.css", rel="stylesheet"/>
-    <link href="/t/static/css/yellow_button.css", rel="stylesheet"/>
-    <style>
-      .container{
-        border-top-left-radius: 50px;
-        border-top-right-radius: 50px;
-        border-bottom-left-radius: 50px;
-        border-bottom-right-radius: 50px;
-        border: 1px solid #000000;
-        height: 420px;
-        width: 450px;
-        margin: 100px 0px 0px 420px;
-      }
-    </style>
-  </head>
+    <head lang="en">
+        <link href="/t/static/css/bootstrap.min.css", rel="stylesheet"/>
+        <link href="/t/static/css/various_button.css", rel="stylesheet"/>
+        <script src="/t/static/js/jquery-2.1.1.min.js"></script>
+        <script src="/t/static/js/bootstrap.min.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Register</title>
+        <style>
+            body{
+                padding-top:50px;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+            }
+            .starter{
+                padding:14px 50px;
+                text-align: center;
+            }
+        </style>
+    </head>
   <body background="/static/images/bg0.jpg">
+        <nav  class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="/" class="navbar-brand">HOME</a>
+                </div>
+                <div id="navbar1" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="/problems/">PROBLEM</a></li>
+                        <li><a href="/status/">STATUS</a></li>
+                        <li><div class="dropdown" style="padding-top: 10px;">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                CONTEST
+                                <span class="caret"></span>
+                            </button>
+                            <ul  class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="#" class="btn btn-sm active" role="menuitem">Add Contest</a></li>
+                                <li><a href="#" class="btn btn-sm active" role="menuitem">Statistic</a></li>
+                            </ul>
+                        </div></li>
+                    </ul>
+					{% if Flag %}
+                    <div style="padding-top: 10px;">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}！</p></li>
+                            <li><a href="/enter/">Enter MY OJ </a></li></li>
+                            <li><a href="/logout/"> Logout </a></li>
+                        </ul>
+                    </div>
+					{% else %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/login/">LOGIN</a></li>
+                        <li><a href="/regist/">REGISTER</a></li>
+                    </ul>
+					{% endif %}
+                </div>
+            </div>
+        </nav>
     <div class="container">
     	<h1 align="center" class="">Register Page</h1>
-		<form method = 'post' enctype="multipart/form-data" style="margin:45px">
+		<form align="center" method = 'post' enctype="multipart/form-data" style="margin:45px">
       <div style="padding-left: 20px">
 			{% csrf_token %}
 		    {{uf.as_p}}
       </div>
-		  <div class="span1" style="padding-left: 55px;padding-top:15px;">
+	  <div class="span1" style="padding-left: 55px;padding-top:15px;">
         <div>
            <input type="submit" value="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Register" class="y-btn">
         </div>

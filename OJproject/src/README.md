@@ -12,3 +12,6 @@
 {% for l in lan %}
 <option value="{{ l }}">{{ l }}</option>
 {% endfor %}
+
+##mycodeshow
+###访问该页面必须登录

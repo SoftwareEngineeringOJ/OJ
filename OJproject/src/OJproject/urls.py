@@ -37,7 +37,7 @@ urlpatterns = [
     
     url(r'^problemshow/$', 'OJprojectapp.views.problemshow'), 
     url(r'^usershow/$', 'OJprojectapp.views.usershow'), 
-    #url(r'^mycodeshow/$', 'OJprojectapp.views.mycodeshow'),
+    url(r'^codeshow/$', 'OJprojectapp.views.mycodeshow'),
     url(r'^mysubmitcode/$', 'OJprojectapp.views.mysubmitcode'), 
 ]
 urlpatterns += staticfiles_urlpatterns()
