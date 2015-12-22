@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib import admin
 # Create your models here.
 
-
 class problemslist(models.Model):
     OJ = models.CharField(max_length=20)
     SID = models.CharField(max_length=20)
@@ -62,21 +61,21 @@ class user(models.Model):
     problems = models.ManyToManyField(user_status)
     contests = models.ManyToManyField(group_status)
 
+class contest_problem(models.Model):
+    titles = models.CharField(max_length = 50) #修改的标题，注意和原来的题目可能不一样
+    pids = models.CharField(max_length = 15) #题目编号
+    sojs = models.CharField(max_length = 20) #来源OJ
+
 class contest(models.Model):
     title = models.CharField(max_length = 50) #比赛标题
     description = models.TextField() #比赛介绍
     announcement = models.TextField() #比赛申明
     password = models.CharField(max_length = 50) #比赛密码，如果为空，则加入空串
     owner = models.CharField(max_length = 50) #创建者ID
-    #pcnt = 0 #题目数量统计
-    ptitles = [models.CharField(max_length = 50)] * 26 #修改的标题，注意和原来的题目可能不一样
-    pids = [models.CharField(max_length = 15)] * 26 #题目编号
-    sojs = [models.CharField(max_length = 20)] * 26 #来源OJ
+    #total = models.CharField(max_length = 50) #题目数量记录
+    list = models.ManyToManyField(contest_problem)
     begintime = models.DateTimeField() #开始时间
     endtime = models.DateTimeField() #结束时间
-
-class contest_ext(models.Model):
-    count = models.IntegerField()
 
 class contest_tmp(models.Model):
     title = models.CharField(max_length = 50) #比赛标题
@@ -84,12 +83,11 @@ class contest_tmp(models.Model):
     announcement = models.TextField() #比赛申明
     password = models.CharField(max_length = 50) #比赛密码，如果为空，则加入空串
     owner = models.CharField(max_length = 50) #创建者ID
-    count = models.IntegerField()
-    ptitles = [models.CharField(max_length = 50)] * 26 #修改的标题，注意和原来的题目可能不一样
-    pids = [models.CharField(max_length = 15)] * 26 #题目编号
-    sojs = [models.CharField(max_length = 20)] * 26 #来源OJ
+    #total = models.CharField(max_length = 50) #题目数量记录
+    list = models.ManyToManyField(contest_problem)
     begintime = models.DateTimeField() #开始时间
     endtime = models.DateTimeField() #结束时间
+
 
 class group(models.Model):
     groupname = models.CharField(max_length=50)
@@ -120,6 +118,12 @@ class problemslistadmin(admin.ModelAdmin):
     list_display = ('OJ','title')
 class discussionadmin(admin.ModelAdmin):
     list_display = ('problemTitle','submit_time')
+class contestadmin(admin.ModelAdmin):
+    list_display = ('title','owner')
+class contest_tmpadmin(admin.ModelAdmin):
+    list_display = ('title','owner')
+class contest_problemadmin(admin.ModelAdmin):
+    list_display = ('titles','pids')
 
 
 admin.site.register(user,useradmin)
@@ -128,3 +132,6 @@ admin.site.register(user_status,user_statusadmin)
 admin.site.register(group_status,group_statusadmin)
 admin.site.register(problemslist,problemslistadmin)
 admin.site.register(discussion,discussionadmin)
+admin.site.register(contest,contestadmin)
+admin.site.register(contest_tmp,contest_tmpadmin)
+admin.site.register(contest_problem,contest_problemadmin)
