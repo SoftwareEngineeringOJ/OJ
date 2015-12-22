@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/OJprojectapp/ContestManager/ContestEditor.py=utf-8
 encoding//src/OJprojectapp/ContestManager/ContestManager.py=utf-8
+encoding//src/OJprojectapp/ContestManager/TempStore.py=utf-8
 encoding//src/OJprojectapp/DataManager/DataManager.py=utf-8
 encoding//src/OJprojectapp/Discuss/Discuss.py=utf-8
 encoding//src/OJprojectapp/ProblemManager/Display.py=utf-8

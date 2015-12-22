@@ -72,18 +72,18 @@
 			{% endif %}
             <div>
                 <label class=" text-primary"><h3><b>Title &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b></h3></label>
-                <input type="text" name="title" size="70" value="{{req.title}}"><br>
+                <input type="text" name="title" size="70" value="{{data.title}}"><br>
                 <label class=" text-primary"><h3><b>Begin Time &nbsp</b></h3></label>
-				<input type="date" name="_beginTime" size="18" value="{{req.date}}" id="_beginTime"/>
-				<input type="text" name="hour" size="2" maxlength="2" value="{{req.hour}}" id="hour" class="clk_select"/>:<input type="text" name="minute" size="2" maxlength="2" value="{{req.minute}}" id="minute" class="clk_select"/>:00<br>
+				<input type="date" name="beginTime" size="18" value="{{beginTime}}" id="beginTime"/>
+				<input type="text" name="hour" size="2" maxlength="2" value="{{hour}}" id="hour" class="clk_select"/>:<input type="text" name="minute" size="2" maxlength="2" value="{{minute}}" id="minute" class="clk_select"/>:00<br>
                 <label class=" text-primary"><h3><b>End Time &nbsp&nbsp&nbsp&nbsp</b></h3></label>
-				<input type="text" name="d_day" value="{{req.day}}" id="d_day" class="clk_select" style="width:63px"/>天 <input type="text" name="d_hour" maxlength="2" value="{{req.time}}" id="d_hour" class="clk_select" style="width:25px"/>:<input type="text" name="d_minute" maxlength="2" value="0" id="d_minute" class="clk_select" style="width:25px"/>:00<br>
+				<input type="text" name="d_day" value="{{d_day}}" id="d_day" class="clk_select" style="width:63px"/>天 <input type="text" name="d_hour" maxlength="2" value="{{d_hour}}" id="d_hour" class="clk_select" style="width:25px"/>:<input type="text" name="d_minute" maxlength="2" value="{{d_minute}}" id="d_minute" class="clk_select" style="width:25px"/>:00<br>
                 <label class=" text-primary"><h3><b>Description </b></h3></label>
-                <textarea name="description" cols="100" rows="8" value = "req.description"/></textarea>
+                <textarea name="description" cols="100" rows="8" value = "{{data.description}}"/></textarea>
                 <label class=" text-primary"><h3><b>Announcement </b></h3></label>
-                <textarea name="announcement" cols="100" rows="8" value = "req.announcement"/></textarea>
+                <textarea name="announcement" cols="100" rows="8" value = "{{data.announcement}}"/></textarea>
                 <label class=" text-primary"><h3><b>Password &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b></h3></label>
-                <input type="password" name="password" value="{{req.password}}"><br>
+                <input type="password" name="password" value=""><br>
                 <input type="submit" class="btn col-md-offset-5 btn-danger" name="submit" value="SUBMIT">
             </div>
         </form>
@@ -125,10 +125,10 @@
                     <tbody>
                     {%for aproblem in problems_list%}
                     <tr>
-                        <td>{{ aproblem.OJ }}</td>
-                        <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.SID }}</a></td>
-                        <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.title }}</a></td>
-                        <td><input type="submit" class="btn btn-primary" name="delete" value="x"></td>
+                        <td>{{ aproblem.sojs }}</td>
+                        <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.pids }}</a></td>
+                        <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.titles }}</a></td>
+                        <td><a type="submit" class="btn btn-primary" name="delete" value="x"/></td>
                     </tr>
                     {% endfor %}
                     </tbody>

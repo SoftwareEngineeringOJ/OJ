@@ -7,90 +7,114 @@ Created on 2015年12月22日
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 #from django import forms
 from OJprojectapp.UserManager import UserInit
 from OJprojectapp.models import *
 from OJprojectapp.DataManager import DataManager
+from TempStore import *
+from django.db.models.lookups import Year
+from matplotlib.dates import minutes
+from OJprojectapp.ContestManager import TempStore
 #from django.templatetags.i18n import language
-
-def contestlist(req):
-    return render_to_response('contestlist.html')
-
-class LoadForm():
-    def __init__(self):
-        self.title = ""
-        self.description = ""
-        self.announcement = ""
-        self.password = ""
-        self.owner = ""
-        self.list = []
-        self.begintime = ""
-        self.endtime = ""
-
-class ProblemForm():
-    def __init__(self, titles, pids, sojs):
-        self.titles = titles
-        self.pids = pids
-        self.sojs = sojs
-
-def loaddata(username):
-    tmp = contest_tmp.objects.filter(owner = username)
-    if len(tmp) == 0:
-        tmp = contest_tmp(owner = username, 
-                          begintime = datetime.now(), 
-                          endtime = datetime.now(), 
-                          )
-        tmp.save()
-    tmp = contest_tmp.objects.get(owner = username)
-    #print tmp.owner
-    Ans = LoadForm()
-    Ans.title = tmp.title
-    Ans.description = tmp.description
-    Ans.announcement = tmp.announcement
-    Ans.password = tmp.password
-    Ans.owner = tmp.owner
-    for problem in tmp.list.all():
-        Ans.list.append(ProblemForm(problem.titles, problem.pids, problem.sojs))
-    Ans.begintime = tmp.begintime
-    Ans.endtime = tmp.endtime
-    return Ans
-    
-def savedata(username, Data):
-    pass
-
-def check(add):
-    tmp = problemslist.objects.filter(OJ = add.OJ, SID = add.SID)
-    return len(tmp) > 0
 
 def addcontest(req):
     username, Flag = UserInit.init(req)
     Data = loaddata(username)
-    problems_list = []
+    problems_list = Data.list[ : ]
+    print 'Length =', len(Data.list)
     warning = ""
     show = False
+    TimeError = False
     OJList = DataManager.SuportOJList()
+    beginTime = datetime.now().strftime('%Y-%m-%d')
+    print beginTime
+    hour = 0
+    minute = 0
+    d_day = 0
+    d_hour = 5
+    d_minute = 0
+    if req.method == 'POST':
+        pages = req.POST
+        if 'title' in pages:
+            Data.title = pages['title']
+        if 'beginTime' in pages:
+            beginTime = pages['beginTime']
+        if 'hour' in pages:
+            hour = pages['hour']
+        if 'minute' in pages:
+            minute = pages['minute']
+        if 'd_day' in pages:
+            d_day = pages['d_day']
+        if 'd_hour' in pages:
+            d_hour = pages['d_hour']
+        if 'd_minute' in pages:
+            d_minute = pages['d_minute']
+        #datetime(year, month, day[, hour[, minute[, second[, microsecond [,tzinfo]]]]])
+        if 'description' in pages:
+            Data.description = pages['description']
+        if 'announcement' in pages:
+            Data.announcement = pages['announcement']
+        if 'password' in pages:
+            Data.password = pages['password']
     if req.method == 'POST' and 'add' in req.POST:
         pages = req.POST
         sid = pages['sid']
         title = pages['problemtitle']
         oj = pages['oj']
-        if ProblemForm(oj, sid, title) in problems_list:
+        T = ProblemForm(titles = title, 
+                        pids = sid, 
+                        sojs = oj)
+        if len(problems_list) >= 26:
+            warning = 'Too many problems'
+            show = True
+        elif find(problems_list, T):
             warning = 'Problems existed !'
             show = True
-        elif check(ProblemForm(oj, sid, title)):
+        elif check(T):
             warning = 'Input Error'
             show = True
         else:
             print oj, sid, title
-            problems_list.append(ProblemForm(oj, sid, title))
+            problems_list.append(T)
     #return render_to_response('addcontest.html')
-    savedata(username, Data)
+    if not show:
+        Data.list = problems_list[ : ]
+        savedata(username, Data)
+    show_list = []
+    for ele in problems_list:
+        show_list.append(ProblemShow(titles = ele.titles, 
+                                     pids = ele.pids, 
+                                     sojs = ele.sojs, ))
+    #print type(beginTime)
+    try:
+        Data.begintime = datetime.strptime(beginTime,'%Y-%m-%d')
+        Data.begintime = Data.begintime.replace(hour = int(hour))
+        Data.begintime = Data.begintime.replace(minute = int(minute))
+        long = timedelta(days = int(d_day), hours = int(d_hour), minutes = int(d_minute))
+        Data.endtime = Data.begintime + long
+        savedata(username, Data)
+    except:
+        show = True
+        warning = "Time's fomat is wrong "
+    #print 'Begin : ', Data.begintime
+    #print 'long =', long
+    if req.method == 'POST':
+        if 'submit' in req.POST:
+            TempStore.createcontest(username)
     return render_to_response('addcontest.html', 
                               {'username' : username, 
                                'Flag' : Flag, 
                                'OJList' : OJList, 
                                'warning' : warning, 
                                'show' : show, 
+                               'problems_list' : show_list, 
+                               'data' : Data, 
+                               'beginTime' : beginTime, 
+                               'hour' : hour, 
+                               'minute' : minute, 
+                               'd_day' : d_day, 
+                               'd_hour' : d_hour, 
+                               'd_minute' : d_minute, 
                                }, 
                               context_instance = RequestContext(req))
