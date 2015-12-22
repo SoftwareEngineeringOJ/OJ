@@ -15,3 +15,4 @@
 
 ##mycodeshow
 ###访问该页面必须登录
+##mycontest改为contestlist

@@ -32,13 +32,16 @@ urlpatterns = [
     url(r'^modify/$', 'OJprojectapp.views.modify'), 
     
     url(r'^problems/$', 'OJprojectapp.views.problemss'), 
-    
-    url(r'^discuss/$', 'OJprojectapp.views.discuss'), 
-    url(r'^status/$', 'OJprojectapp.views.statuss'), 
-    
     url(r'^problemshow/$', 'OJprojectapp.views.problemshow'), 
-    url(r'^usershow/$', 'OJprojectapp.views.usershow'), 
-    url(r'^codeshow/$', 'OJprojectapp.views.mycodeshow'),
     url(r'^mysubmitcode/$', 'OJprojectapp.views.mysubmitcode'), 
+    
+    url(r'^status/$', 'OJprojectapp.views.statuss'), 
+    url(r'^discuss/$', 'OJprojectapp.views.discuss'), 
+    
+    url(r'^usershow/$', 'OJprojectapp.views.usershow'), 
+    url(r'^codeshow/$', 'OJprojectapp.views.mycodeshow'), 
+    
+    url(r'^contestlist/$', 'OJprojectapp.views.contestlist'), 
+    url(r'^addcontest/$', 'OJprojectapp.views.addcontest'), 
 ]
 urlpatterns += staticfiles_urlpatterns()

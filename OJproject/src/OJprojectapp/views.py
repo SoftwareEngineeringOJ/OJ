@@ -10,6 +10,7 @@ from UserManager import UserManager, CodeDisplay
 #from django.templatetags.i18n import language
 from ProblemManager import ProblemList, StatusList, Display
 from Discuss import Discuss
+from ContestManager import ContestEditor
 
 import linker.Maneger
 check = linker.Maneger.Judge()
@@ -59,3 +60,9 @@ def mysubmitcode(req):
 
 def mycodeshow(req):
     return CodeDisplay.mycodeshow(req)
+
+def contestlist(req):
+    return ContestEditor.contestlist(req)
+
+def addcontest(req):
+    return ContestEditor.addcontest(req)
