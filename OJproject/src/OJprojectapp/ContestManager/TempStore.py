@@ -7,6 +7,7 @@ Created on 2015年12月22日
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
+from django.utils import timezone
 from datetime import date, datetime
 #from django import forms
 from OJprojectapp.UserManager import UserInit
@@ -27,8 +28,8 @@ class LoadForm():
         self.password = ""
         self.owner = ""
         self.list = []
-        self.begintime = datetime.now()
-        self.endtime = datetime.now()
+        self.begintime = timezone.now()
+        self.endtime = timezone.now()
 
 class ProblemForm():
     def __init__(self, titles, pids, sojs):
@@ -47,8 +48,8 @@ def loaddata(username):
     tmp = contest.objects.filter(owner = username, IsReady = False)
     if len(tmp) == 0:
         tmp = contest(owner = username, 
-                      begintime = datetime.now(), 
-                      endtime = datetime.now(), 
+                      begintime = timezone.now(), 
+                      endtime = timezone.now(), 
                       IsReady = False, 
                       )
         tmp.save()

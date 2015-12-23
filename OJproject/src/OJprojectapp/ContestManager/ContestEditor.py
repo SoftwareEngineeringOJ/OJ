@@ -21,6 +21,8 @@ from OJprojectapp.ContestManager import TempStore
 
 def addcontest(req):
     username, Flag = UserInit.init(req)
+    if username ==  None or username =="":
+        return HttpResponseRedirect('/login')
     Data = loaddata(username)
     problems_list = Data.list[ : ]
     print 'Length =', len(Data.list)
@@ -107,8 +109,18 @@ def addcontest(req):
     #print 'Begin : ', Data.begintime
     #print 'long =', long
     if req.method == 'POST':
-        if 'submit' in req.POST:
-            TempStore.createcontest(username)
+        if 'submit' in req.POST and not show:
+            if Data.title is None or Data.title == "":
+                show = True
+                warning = "Please input the contest' title !"
+            elif len(Data.list) == 0:
+                show = True
+                warning = "Please add the problems !"
+            elif Data.begintime.strftime('%Y-%m-%d %H:%M:%S %f') > timezone.now().strftime('%Y-%m-%d %H:%M:%S %f'):
+                show = True
+                warning = "The begin time must be later than now !"
+            else:
+                TempStore.createcontest(username)
     return render_to_response('addcontest.html', 
                               {'username' : username, 
                                'Flag' : Flag, 
