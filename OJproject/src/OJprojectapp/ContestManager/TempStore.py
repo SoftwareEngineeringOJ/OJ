@@ -47,10 +47,10 @@ def loaddata(username):
     tmp = contest.objects.filter(owner = username, IsReady = False)
     if len(tmp) == 0:
         tmp = contest(owner = username, 
-                          begintime = datetime.now(), 
-                          endtime = datetime.now(), 
-                          IsReady = False, 
-                          )
+                      begintime = datetime.now(), 
+                      endtime = datetime.now(), 
+                      IsReady = False, 
+                      )
         tmp.save()
     tmp = contest.objects.get(owner = username, IsReady = False)
     #print tmp.owner
@@ -92,7 +92,9 @@ def savedata(username, Data):
                                               pids = problem.pids, 
                                               sojs = problem.sojs, )) == 0:
             p.save()
+        #tmp.list = None
         if not find(tmp.list.all(), p):
+            p.save()
             tmp.list.add(p)
     tmp.begintime = Data.begintime
     tmp.endtime = Data.endtime
@@ -105,7 +107,9 @@ def check(add):
     return len(tmp) == 0
 
 def find(list, aim):
+    print 'Begin find :'
     for i in list:
+        print 'Have =', i.sojs, i.pids
         if i.sojs == aim.sojs and i.pids == aim.pids:
             return True
     return False

@@ -8,6 +8,7 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from datetime import date, datetime, timedelta
+from django.utils import timezone
 #from django import forms
 from OJprojectapp.UserManager import UserInit
 from OJprojectapp.models import *
@@ -25,9 +26,8 @@ def addcontest(req):
     print 'Length =', len(Data.list)
     warning = ""
     show = False
-    TimeError = False
     OJList = DataManager.SuportOJList()
-    beginTime = datetime.now().strftime('%Y-%m-%d')
+    beginTime = timezone.now().strftime('%Y-%m-%d')
     print beginTime
     hour = 0
     minute = 0
@@ -38,6 +38,7 @@ def addcontest(req):
         pages = req.POST
         if 'title' in pages:
             Data.title = pages['title']
+        print 'Title =(', Data.title, ')'
         if 'beginTime' in pages:
             beginTime = pages['beginTime']
         if 'hour' in pages:
@@ -50,13 +51,13 @@ def addcontest(req):
             d_hour = pages['d_hour']
         if 'd_minute' in pages:
             d_minute = pages['d_minute']
-        #datetime(year, month, day[, hour[, minute[, second[, microsecond [,tzinfo]]]]])
         if 'description' in pages:
             Data.description = pages['description']
         if 'announcement' in pages:
             Data.announcement = pages['announcement']
         if 'password' in pages:
             Data.password = pages['password']
+        print 'Update'
     if req.method == 'POST' and 'add' in req.POST:
         pages = req.POST
         sid = pages['sid']
@@ -76,6 +77,12 @@ def addcontest(req):
             show = True
         else:
             print oj, sid, title
+            if title == "" or title is None:
+                #print 'Try find'
+                title = problemslist.objects.get(OJ = oj, SID = sid).title
+                T = ProblemForm(titles = title, 
+                                pids = sid, 
+                                sojs = oj)
             problems_list.append(T)
     #return render_to_response('addcontest.html')
     if not show:
@@ -91,8 +98,8 @@ def addcontest(req):
         Data.begintime = datetime.strptime(beginTime,'%Y-%m-%d')
         Data.begintime = Data.begintime.replace(hour = int(hour))
         Data.begintime = Data.begintime.replace(minute = int(minute))
-        long = timedelta(days = int(d_day), hours = int(d_hour), minutes = int(d_minute))
-        Data.endtime = Data.begintime + long
+        Data.endtime = Data.begintime + timedelta(days = int(d_day), hours = int(d_hour), minutes = int(d_minute))
+        print 'ReadDy =', Data.title
         savedata(username, Data)
     except:
         show = True
