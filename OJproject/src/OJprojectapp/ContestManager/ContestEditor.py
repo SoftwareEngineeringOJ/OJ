@@ -20,7 +20,9 @@ from OJprojectapp.ContestManager import TempStore, Editor
 def get_contest_list(req):
     username = req.COOKIES.get('username','')
     contest_list = contest.objects.all()
-    return render_to_response("mycontest.html", {'username':username, 'contest_list':contest_list},context_instance=RequestContext(req))
+    return render_to_response("mycontest.html", {'username' : username, 
+                                                 'contest_list' : contest_list, }, 
+                              context_instance = RequestContext(req))
 
 def delete_contest_problems(req):
     if req.method == 'GET':

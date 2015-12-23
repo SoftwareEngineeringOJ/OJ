@@ -111,7 +111,7 @@
                         <tbody>
                         {%for astatu in status_list%}
                             <tr>
-                                <td><a href="/problemshow/?id={{astatu.problemID}}">{{ astatu.problemTitle }}</a></td>
+                                <td><a href="/statushow/?id={{astatu.problemID}}">{{ astatu.problemTitle }}</a></td>
                                 <td>{{ astatu.username }}</td>
                                 <td>{{ astatu.OJ }}</td>
                                 <td>{{ astatu.result }}</td>
@@ -145,6 +145,29 @@
                         </tbody>
                     </table>
                 </div>
+  <div class = "apple_pagination">
+    <div class = "page_info">
+      Displaying {{ paper.name }} <b>{{ paper.begin }}&nbsp;-&nbsp;{{ paper.end }}</b> of <b>{{ paper.total }}</b> in total
+    </div>
+	<div>Now you are on the page <b>{{ paper.now }}</b> of <b>{{ paper.totalpages }}</b> </div>
+    <a class="previous_page" rel="prev" href="/status?page={{paper.previous}}">&#8592; Previous</a>
+		{% for number in paper.first %}
+			<a href="/status?page={{number}}">{{number}}</a>
+		{% endfor %}
+		{% if paper.first_gap %}
+			<span class="gap">&hellip;</span>
+		{% endif %}
+		{% for number in paper.second %}
+				<a href="/status?page={{number}}">{{number}}</a>
+		{% endfor %}
+		{% if paper.second_gap %}
+			<span class="gap">&hellip;</span>
+		{% endif %}
+		{% for number in paper.third %}
+			<a href="/status?page={{number}}">{{number}}</a>
+		{% endfor %}
+	<a class="next_page" rel="next" href="/status?page={{paper.next}}">Next &#8594;</a>
+  </div>
             </div>
         </div>
     </body>
