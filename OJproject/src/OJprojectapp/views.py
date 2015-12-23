@@ -10,7 +10,7 @@ from UserManager import UserManager, CodeDisplay
 #from django.templatetags.i18n import language
 from ProblemManager import ProblemList, StatusList, Display
 from Discuss import Discuss
-from ContestManager import ContestEditor
+from ContestManager import ContestEditor, ContestManager
 
 import linker.Maneger
 check = linker.Maneger.Judge()
@@ -72,3 +72,9 @@ def editcontest(req):
 
 def addcontest(req):
     return ContestEditor.addcontest(req)
+
+def contest_show(req):
+    return ContestManager.get_contest_show(req)
+
+def contest_problem(req):
+    return ContestManager.get_contestproblem(req)

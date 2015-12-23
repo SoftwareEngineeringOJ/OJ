@@ -18,10 +18,11 @@ from OJprojectapp.ContestManager import TempStore, Editor
 #from django.templatetags.i18n import language
 
 def get_contest_list(req):
-    username = req.COOKIES.get('username','')
+    username, Flag = UserInit.init(req)
     contest_list = contest.objects.all()
-    return render_to_response("mycontest.html", {'username' : username, 
-                                                 'contest_list' : contest_list, }, 
+    return render_to_response("contestlist.html", {'username' : username, 
+                                                   'Flag' : Flag, 
+                                                   'contest_list' : contest_list, }, 
                               context_instance = RequestContext(req))
 
 def delete_contest_problems(req):

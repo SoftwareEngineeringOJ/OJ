@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
 
 <html lang="zh-CN">
 <head lang="en">
@@ -41,20 +50,20 @@
                     </ul>
                 </div></li>
             </ul>
-					{% if Flag %}
-                    <div style="padding-top: 10px;">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}！</p></li>
-                            <li><a href="/enter/">Enter MY OJ </a></li></li>
-                            <li><a href="/logout/"> Logout </a></li>
-                        </ul>
-                    </div>
-					{% else %}
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/login/">LOGIN</a></li>
-                        <li><a href="/regist/">REGISTER</a></li>
-                    </ul>
-					{% endif %}
+			{% if Flag %}
+			<div style="padding-top: 10px;">
+				<ul class="nav navbar-nav navbar-right">
+					<li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}！</p></li>
+					<li><a href="/enter/">Enter MY OJ </a></li></li>
+					<li><a href="/logout/"> Logout </a></li>
+				</ul>
+			</div>
+			{% else %}
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="/login/">LOGIN</a></li>
+				<li><a href="/regist/">REGISTER</a></li>
+			</ul>
+			{% endif %}
         </div>
     </div>
 </nav>
@@ -64,7 +73,7 @@
 
   <!-- Nav tabs -->
 
-  <ul class="nav nav-tabs" role="tablist">
+  <ul class="nav nav-tabs" role="tablist" id="myTab">
     <li role="presentation" class="active"><a href="#Information" aria-controls="Information" role="tab" data-toggle="tab">Information</a></li>
     <li role="presentation"><a href="#Problems" aria-controls="Problems" role="tab" data-toggle="tab">Problems</a></li>
     <li role="presentation"><a href="#Problem" aria-controls="Problem" role="tab" data-toggle="tab">Problem</a></li>
@@ -100,17 +109,14 @@
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr class="bg-primary">
-                        <td>OJ</td>
-                        <td>SID </td>
+
                         <td>title</td>
                     </tr>
                     </thead>
                     <tbody>
                     {%for aproblem in problems_list%}
                     <tr>
-                        <td>{{ aproblem.OJ }}</td>
-                        <td><a href="/myproblemshow/?id={{aproblem.id}}">{{ aproblem.SID }}</a></td>
-                        <td><a href="/myproblemshow/?id={{aproblem.id}}">{{ aproblem.title }}</a></td>
+                        <td><a href='/contestproblem/?problem_id={{aproblem.id}}&contest_id={{acontest.id}}'>{{ aproblem.title }}</a></td>
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -223,21 +229,23 @@
 	</div>
   </div>
 <Script>
-    function GetQueryString(name)
+
+
+    function GetProblem(name)
     {
          var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
          var r = window.location.search.substr(1).match(reg);
          if(r!=null)return  unescape(r[2]); return null;
     }
-
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         $.ajax({
         type: "GET",
         dataType: 'json',
-        data: {'data':this.getAttribute('aria-controls'), 'id':GetQueryString('id')},
+        data: {'data':this.getAttribute('aria-controls'), 'id':GetQueryString('id'), 'proid':GetProblem()},
         url:'/contestshow/',
         });
     })
+
 
 </Script>
 
@@ -245,3 +253,4 @@
 
 </body>
 </html>
+

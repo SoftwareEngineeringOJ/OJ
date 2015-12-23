@@ -94,8 +94,8 @@
                 <tbody>
                 {%for acontest in contest_list%}
                 <tr>
-                    <td><a href="#">{{ acontest.id }}</a></td>
-                    <td><a href="#">{{ acontest.title }}</td>
+                    <td><a href="/contestshow/?id={{acontest.id}}">{{ acontest.id }}</a></td>
+                    <td><a href="/contestshow/?id={{acontest.id}}">{{ acontest.title }}</a></td>
                     <td>{{ acontest.begintime }}</a></td>
                     <td>{{ acontest.endtime }}</td>
                     <td>status</td>
