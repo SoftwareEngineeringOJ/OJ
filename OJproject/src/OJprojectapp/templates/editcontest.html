@@ -56,7 +56,7 @@
         </div>
     </div>
 </nav>
-<h1 class=" text-center">ADD CONTEST</h1>
+<h1 class=" text-center">EDIT CONTEST</h1>
 <div class="container">
     <div class="starter1">
         <form role="form" method="post" >
@@ -70,13 +70,26 @@
 				<label class=" text-primary"><h3><b>{{ warning }}</h3></label>
 			</div>
 			{% endif %}
+			{% if start %}
+			<div>
+				<label class=" text-primary"><h3><b>start</h3></label>
+			</div>
+			{% else %}
+			<div>
+				<label class=" text-primary"><h3><b>not start</h3></label>
+			</div>
+			
+			{% endif %}
+			
             <div>
                 <label class=" text-primary"><h3><b>Title &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b></h3></label>
                 <input type="text" name="title" size="70" value="{{data.title}}"><br>
+				{% if start %}
                 <label class=" text-primary"><h3><b>Begin Time &nbsp</b></h3></label>
 				<input type="date" name="beginTime" size="18" value="{{beginTime}}" id="beginTime"/>
 				<input type="text" name="hour" size="2" maxlength="2" value="{{hour}}" id="hour" class="clk_select"/>:<input type="text" name="minute" size="2" maxlength="2" value="{{minute}}" id="minute" class="clk_select"/>:00<br>
-                <label class=" text-primary"><h3><b>End Time &nbsp&nbsp&nbsp&nbsp</b></h3></label>
+				{% endif %}
+                <label class=" text-primary"><h3><b>Length &nbsp&nbsp&nbsp&nbsp</b></h3></label>
 				<input type="text" name="d_day" value="{{d_day}}" id="d_day" class="clk_select" style="width:63px"/>天 <input type="text" name="d_hour" maxlength="2" value="{{d_hour}}" id="d_hour" class="clk_select" style="width:25px"/>:<input type="text" name="d_minute" maxlength="2" value="{{d_minute}}" id="d_minute" class="clk_select" style="width:25px"/>:00<br>
                 <label class=" text-primary"><h3><b>Description </b></h3></label>
                 <textarea name="description" cols="100" rows="8" value = "{{data.description}}"/></textarea>
@@ -92,6 +105,7 @@
                 <input type="submit" class="btn" name="addproblems" value="ADD PROBLEMS">
                 <input type="submit" class="btn" name="setcontest" value="SET CONTEST">
             </div><br><br>
+			{% if start %}
             <div style="width:1000px;padding:0px 110px;">
                 <tr>
                     <td><b class="text-primary" style="font-size:20px;">OJ &nbsp</b>
@@ -124,7 +138,7 @@
                         <td>{{ aproblem.sojs }}</td>
                         <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.pids }}</a></td>
                         <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.titles }}</a></td>
-						<td><a href="/delete_contest_problems/?id={{aproblem.id}}" class="btn btn-primary" name="delete" value="x"/></td>
+						<td><a href="/delete_contest_problems/?id={{aproblem.id}}&contest_id={{contestid}}" class="btn btn-primary" name="delete" value="x"/></td>
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -133,6 +147,7 @@
             <div>
                 <input type="submit" class="btn col-md-offset-6 btn-danger" name="submit" value="SUBMIT"/>
             </div>
+			{% endif %}
         </form>
     </div>
 

@@ -18,6 +18,11 @@ def createcontest(username):
     tmp = contest.objects.get(owner = username, IsReady = False)
     tmp.IsReady = True
     tmp.save()
+    
+def edit_contest(id):
+    tmp = contest.objects.get(id = id)
+    tmp.IsReady = True
+    tmp.save()
 
 class LoadForm():
     def __init__(self):
@@ -53,6 +58,14 @@ def loaddata(username):
                       )
         tmp.save()
     return contest.objects.get(owner = username, IsReady = False)
+
+def loadcontest(username, id):
+    tmp = contest.objects.filter(owner = username, id = id)
+    if len(tmp) == 0:
+        return None, False
+    contest.objects.get(owner = username, id = id).IsReady = False
+    contest.objects.get(owner = username, id = id).save()
+    return contest.objects.get(owner = username, id = id), True
 
 def check(add):
     #print 'Check', add.sojs, add.pids
