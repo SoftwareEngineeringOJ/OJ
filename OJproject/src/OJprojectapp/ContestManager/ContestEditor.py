@@ -8,34 +8,37 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from datetime import date, datetime, timedelta
-from django.utils import timezone
 #from django import forms
 from OJprojectapp.UserManager import UserInit
 from OJprojectapp.models import *
 from OJprojectapp.DataManager import DataManager
 from TempStore import *
-from django.db.models.lookups import Year
-from matplotlib.dates import minutes
 from OJprojectapp.ContestManager import TempStore
 #from django.templatetags.i18n import language
+
+def delete_contest_problems(req):
+    if req.method == 'GET':
+        id = req.GET['id']
+        contest_problem.objects.get(id = id).delete()
+    return HttpResponseRedirect('/addcontest')
 
 def addcontest(req):
     username, Flag = UserInit.init(req)
     if username ==  None or username =="":
         return HttpResponseRedirect('/login')
+    #处理没有登录
     Data = loaddata(username)
-    problems_list = Data.list[ : ]
-    print 'Length =', len(Data.list)
+    #装载信息
     warning = ""
-    show = False
-    OJList = DataManager.SuportOJList()
-    beginTime = timezone.now().strftime('%Y-%m-%d')
-    print beginTime
-    hour = 0
-    minute = 0
+    show = False #提示信息
+    OJList = DataManager.SuportOJList() #OJ列表
+    beginTime = Data.begintime.strftime('%Y-%m-%d')
+    hour = Data.begintime.hour
+    minute = Data.begintime.minute
     d_day = 0
     d_hour = 5
     d_minute = 0
+    # 可能需要修改，时间的初始化
     if req.method == 'POST':
         pages = req.POST
         if 'title' in pages:
@@ -68,10 +71,10 @@ def addcontest(req):
         T = ProblemForm(titles = title, 
                         pids = sid, 
                         sojs = oj)
-        if len(problems_list) >= 26:
+        if len(Data.list.all()) >= 26:
             warning = 'Too many problems'
             show = True
-        elif find(problems_list, T):
+        elif find(Data.list.all(), T):
             warning = 'Problems existed !'
             show = True
         elif check(T):
@@ -85,16 +88,14 @@ def addcontest(req):
                 T = ProblemForm(titles = title, 
                                 pids = sid, 
                                 sojs = oj)
-            problems_list.append(T)
+            new = contest_problem(titles = T.titles, 
+                                  pids = T.pids, 
+                                  sojs = T.sojs, )
+            new.save()
+            Data.list.add(new)
     #return render_to_response('addcontest.html')
     if not show:
-        Data.list = problems_list[ : ]
-        savedata(username, Data)
-    show_list = []
-    for ele in problems_list:
-        show_list.append(ProblemShow(titles = ele.titles, 
-                                     pids = ele.pids, 
-                                     sojs = ele.sojs, ))
+        Data.save()
     #print type(beginTime)
     try:
         Data.begintime = datetime.strptime(beginTime,'%Y-%m-%d')
@@ -102,7 +103,7 @@ def addcontest(req):
         Data.begintime = Data.begintime.replace(minute = int(minute))
         Data.endtime = Data.begintime + timedelta(days = int(d_day), hours = int(d_hour), minutes = int(d_minute))
         print 'ReadDy =', Data.title
-        savedata(username, Data)
+        Data.save()
     except:
         show = True
         warning = "Time's fomat is wrong "
@@ -113,13 +114,16 @@ def addcontest(req):
             if Data.title is None or Data.title == "":
                 show = True
                 warning = "Please input the contest' title !"
-            elif len(Data.list) == 0:
+            elif len(Data.list.all()) == 0:
                 show = True
                 warning = "Please add the problems !"
-            elif Data.begintime.strftime('%Y-%m-%d %H:%M:%S %f') > timezone.now().strftime('%Y-%m-%d %H:%M:%S %f'):
+            elif Data.begintime.strftime('%Y-%m-%d %H:%M:%S %f') < datetime.now().strftime('%Y-%m-%d %H:%M:%S %f'):
+                #print 'Set', Data.begintime.strftime('%Y-%m-%d %H:%M:%S %f')
+                #print 'Now', datetime.now().strftime('%Y-%m-%d %H:%M:%S %f')
                 show = True
                 warning = "The begin time must be later than now !"
             else:
+                Data.save()
                 TempStore.createcontest(username)
     return render_to_response('addcontest.html', 
                               {'username' : username, 
@@ -127,7 +131,7 @@ def addcontest(req):
                                'OJList' : OJList, 
                                'warning' : warning, 
                                'show' : show, 
-                               'problems_list' : show_list, 
+                               'problems_list' : Data.list.all(), 
                                'data' : Data, 
                                'beginTime' : beginTime, 
                                'hour' : hour, 

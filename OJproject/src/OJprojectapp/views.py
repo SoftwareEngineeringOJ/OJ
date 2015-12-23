@@ -64,5 +64,8 @@ def mycodeshow(req):
 def contestlist(req):
     return ContestEditor.contestlist(req)
 
+def delete_contest_problems(req):
+    return ContestEditor.delete_contest_problems(req)
+
 def addcontest(req):
     return ContestEditor.addcontest(req)

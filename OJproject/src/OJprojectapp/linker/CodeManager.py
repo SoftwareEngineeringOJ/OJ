@@ -7,6 +7,7 @@ Created on 2015年11月24日
 import os
 import POJ
 import HOJ
+from OJprojectapp.models import code_files
 
 def GetOJ(oj):
     print 'oj =', oj
@@ -16,13 +17,25 @@ def GetOJ(oj):
         return HOJ.Submit()
 
 def SaveFile(Code, RunID):
-    output = open(os.getcwd() + '\\code\\%s.code' % RunID, 'wb')
-    output.write(Code.encode('utf-8'))
-    output.close()
+    count = 0
+    buffer = ""
+    for c in Code:
+        count += 1
+        buffer = buffer + c
+        if count == 100:
+            code_files(runID = RunID, 
+                       code = buffer).save()
+            count = 0
+            buffer = ""
+    if count > 0:
+        code_files(runID = RunID, 
+                   code = buffer).save()
+        count = 0
+        buffer = ""
     
 def GetFile(RunID):
-    path = os.getcwd() + '\\code\\%s.code' % RunID
-    f = open(path, 'r')
-    code = f.read()
-    f.close()
-    return code
+    codes = code_files.objects.filter(runID = RunID).order_by('id')
+    Ans = ""
+    for code in codes:
+        Ans = Ans + code.code
+    return Ans

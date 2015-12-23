@@ -34,7 +34,7 @@ def submit(req, check):
         RunID = new.id
         CodeManager.SaveFile(code, RunID)
         check.push(new)
-        postData = {'user': username, 
+        postData = {'user' : username, 
                     'oj': 'all'} # 发送POST
         postData = urllib.urlencode(postData)
         #print 'To', '/mystatus' + '?' + postData

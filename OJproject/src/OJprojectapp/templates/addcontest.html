@@ -124,7 +124,7 @@
                         <td>{{ aproblem.sojs }}</td>
                         <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.pids }}</a></td>
                         <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.titles }}</a></td>
-                        <td><a type="submit" class="btn btn-primary" name="delete" value="x"/></td>
+						<td><a href="/delete_contest_problems/?id={{aproblem.id}}" class="btn btn-primary" name="delete" value="x"/></td>
                     </tr>
                     {% endfor %}
                     </tbody>

@@ -28,6 +28,10 @@ class group_status(models.Model):
     is_group_private = models.BooleanField()
     submit_time = models.DateTimeField() 
 
+class code_files(models.Model):
+    runID = models.CharField(max_length = 20)
+    code = models.CharField(max_length = 128)
+
 class user_status(models.Model):
     problemID = models.CharField(max_length=15)
     problemTitle = models.CharField(max_length=35)
@@ -111,6 +115,8 @@ class contestadmin(admin.ModelAdmin):
     list_display = ('title','owner')
 class contest_problemadmin(admin.ModelAdmin):
     list_display = ('titles','pids')
+class code_filesadmin(admin.ModelAdmin):
+    list_display = ('runID','code')
 
 
 admin.site.register(user,useradmin)
@@ -121,3 +127,4 @@ admin.site.register(problemslist,problemslistadmin)
 admin.site.register(discussion,discussionadmin)
 admin.site.register(contest,contestadmin)
 admin.site.register(contest_problem,contest_problemadmin)
+admin.site.register(code_files,code_filesadmin)
