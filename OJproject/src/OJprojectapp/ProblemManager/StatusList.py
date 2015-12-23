@@ -16,8 +16,10 @@ def statuss(req):
     if username is "" or username is None:
         Flag = False
     oj_show = DataManager.SuportOJList()
+    oj_show.append('all')
     result_show = DataManager.ResultList()
     language_show = DataManager.LanguageList()
+    language_show.append('all')
     if 'page' in req.GET:
         page = req.GET['page']
     else:

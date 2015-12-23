@@ -35,6 +35,7 @@ def problemss(req):
         if cmp(req.POST["source"],"") != 0:
             problems_list=problems_list.filter(source=req.POST["source"]).order_by('SID')
         source_show=req.POST["source"]
+        page = 1
     else:
         problems_list=problemslist.objects.all()
         sid_show=""
