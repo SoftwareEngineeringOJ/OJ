@@ -43,6 +43,7 @@ urlpatterns = [
     
     url(r'^contestlist/$', 'OJprojectapp.views.contestlist'), 
     url(r'^addcontest/$', 'OJprojectapp.views.addcontest'), 
+    url(r'^editcontest/$', 'OJprojectapp.views.editcontest'), 
     url(r'^delete_contest_problems/$', 'OJprojectapp.views.delete_contest_problems'), 
 ]
 urlpatterns += staticfiles_urlpatterns()
