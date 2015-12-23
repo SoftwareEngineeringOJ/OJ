@@ -62,7 +62,7 @@ def mycodeshow(req):
     return CodeDisplay.mycodeshow(req)
 
 def contestlist(req):
-    return ContestEditor.contestlist(req)
+    return ContestEditor.get_contest_list(req)
 
 def delete_contest_problems(req):
     return ContestEditor.delete_contest_problems(req)
