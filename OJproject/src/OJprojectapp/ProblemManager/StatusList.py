@@ -9,23 +9,25 @@ from OJprojectapp.models import *
 from OJprojectapp.UserManager.UserManager import usershow
 from OJprojectapp.DataManager import DataManager
 from OJprojectapp.PagesManager import PagesManager
+from django.templatetags.i18n import language
 
 def statuss(req):
     username = req.COOKIES.get('username','')
     Flag = True
     if username is "" or username is None:
         Flag = False
-    oj_show = DataManager.SuportOJList()
-    oj_show.append('all')
+    oj_show = ['all']
+    oj_show += DataManager.SuportOJList()
     result_show = DataManager.ResultList()
-    language_show = DataManager.LanguageList()
-    language_show.append('all')
+    language_show = ['all']
+    language_show += DataManager.LanguageList()
     if 'page' in req.GET:
         page = req.GET['page']
     else:
         page = 1
     usershow = "", 
     if req.POST:
+        print 'POST'
         if cmp(req.POST["oj"],"all") == 0:
             status_list=user_status.objects.all().order_by('-id')
         else:
@@ -48,9 +50,39 @@ def statuss(req):
         result_show[find]=first
         if cmp(req.POST["user"],"") != 0:
             status_list=status_list.filter(username=req.POST["user"]).order_by('-id')
+        print 'Get =', req.POST['user']
         user_show=req.POST["user"]
     else:
-        status_list=user_status.objects.all().order_by('-id')
+        GET = req.GET
+        if ('oj' not in GET) or cmp(GET["oj"],"all") == 0:
+            status_list=user_status.objects.all().order_by('-id')
+            tmp = 'all'
+        else:
+            status_list=user_status.objects.filter(OJ=GET["oj"]).order_by('-id')
+            tmp = GET['oj']
+        find=oj_show.index(tmp)
+        first=oj_show[0]
+        oj_show[0]=tmp
+        oj_show[find]=first
+        tmp = 'all'
+        if ('language' in GET) and cmp(GET["language"],"all") != 0:
+            status_list=status_list.filter(language=GET["language"]).order_by('-id')
+            tmp = GET["language"]
+        find = language_show.index(tmp)
+        first = language_show[0]
+        language_show[0] = tmp
+        language_show[find] = first
+        tmp = 'all'
+        if ('result' in GET) and cmp(GET["result"],"all") != 0:
+            status_list=status_list.filter(result=GET["result"]).order_by('-id')
+            tmp = GET['result']
+        find=result_show.index(tmp)
+        first=result_show[0]
+        result_show[0]=tmp
+        result_show[find]=first
+        if ('user' in GET) and cmp(GET["user"],"") != 0:
+            status_list=status_list.filter(username=GET["user"]).order_by('-id')
+            user_show=GET["user"]
     paper = PagesManager(name = 'status', now = int(page), data = status_list, segment = 20)
     return render_to_response('status.html',{'status_list' : paper.show_list, 
                                              'Flag' : Flag, 

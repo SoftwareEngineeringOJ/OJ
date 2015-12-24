@@ -9,7 +9,7 @@ def SuportOJList():
     return ['HOJ', 'HDU', 'POJ']
 
 def ResultList():
-    return ["all","Accept","Wrong answer","Compilation Error","Presentation Error","Submit Failed","Memory limit exceeded","Time Limit Exceeded","Output Limit Exceeded"]
+    return ["all","Accepted","Wrong answer","Compilation Error","Presentation Error","Submit Failed","Memory limit exceeded","Time Limit Exceeded","Output Limit Exceeded"]
 
 def LanguageList():
     return ["all", "C", "C++", "C#", "Python", "Java"]
