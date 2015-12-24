@@ -8,8 +8,8 @@ class problemslist(models.Model):
     SID = models.CharField(max_length=20)
     title = models.CharField(max_length=50)
     ratio = models.CharField(max_length=50)
-    time_limit = models.CharField(max_length=30)
-    mem_limit = models.CharField(max_length=30)
+    time_limit = models.CharField(max_length=15)
+    mem_limit = models.CharField(max_length=15)
     description = models.TextField()
     inputs = models.TextField()
     output = models.TextField()
@@ -28,17 +28,21 @@ class group_status(models.Model):
     is_group_private = models.BooleanField()
     submit_time = models.DateTimeField() 
 
+class code_files(models.Model):
+    runID = models.CharField(max_length = 20)
+    code = models.CharField(max_length = 128)
+
 class user_status(models.Model):
-    problemID = models.CharField(max_length=20)
+    problemID = models.CharField(max_length=15)
     problemTitle = models.CharField(max_length=35)
-    problemSID = models.CharField(max_length=20)
+    problemSID = models.CharField(max_length=15)
     contestID = models.CharField(max_length=10)
     userID = models.CharField(max_length=20)
     username = models.CharField(max_length=50)
     OJ = models.CharField(max_length=10)
     result = models.CharField(max_length=30)
-    memory = models.CharField(max_length=30)
-    time = models.CharField(max_length=30)
+    memory = models.CharField(max_length=15)
+    time = models.CharField(max_length=15)
     language = models.CharField(max_length=10)
     code = models.TextField()
     submit_time = models.DateTimeField()
@@ -61,18 +65,22 @@ class user(models.Model):
     problems = models.ManyToManyField(user_status)
     contests = models.ManyToManyField(group_status)
 
+class contest_problem(models.Model):
+    titles = models.CharField(max_length = 50) #修改的标题，注意和原来的题目可能不一样
+    pids = models.CharField(max_length = 15) #题目编号
+    sojs = models.CharField(max_length = 20) #来源OJ
+
 class contest(models.Model):
     title = models.CharField(max_length = 50) #比赛标题
     description = models.TextField() #比赛介绍
     announcement = models.TextField() #比赛申明
     password = models.CharField(max_length = 50) #比赛密码，如果为空，则加入空串
     owner = models.CharField(max_length = 50) #创建者ID
-    pcnt = 0 #题目数量统计
-    ptitles = [models.CharField(max_length = 50)] * 26 #修改的标题，注意和原来的题目可能不一样
-    pids = [models.CharField(max_length = 15)] * 26 #题目编号
-    sojs = [models.CharField(max_length = 20)] * 26 #来源OJ
+    #total = models.CharField(max_length = 50) #题目数量记录
+    list = models.ManyToManyField(contest_problem)
     begintime = models.DateTimeField() #开始时间
     endtime = models.DateTimeField() #结束时间
+    IsReady = models.BooleanField()
 
 class group(models.Model):
     groupname = models.CharField(max_length=50)
@@ -103,6 +111,12 @@ class problemslistadmin(admin.ModelAdmin):
     list_display = ('OJ','title')
 class discussionadmin(admin.ModelAdmin):
     list_display = ('problemTitle','submit_time')
+class contestadmin(admin.ModelAdmin):
+    list_display = ('title','owner')
+class contest_problemadmin(admin.ModelAdmin):
+    list_display = ('titles','pids')
+class code_filesadmin(admin.ModelAdmin):
+    list_display = ('runID','code')
 
 
 admin.site.register(user,useradmin)
@@ -111,3 +125,6 @@ admin.site.register(user_status,user_statusadmin)
 admin.site.register(group_status,group_statusadmin)
 admin.site.register(problemslist,problemslistadmin)
 admin.site.register(discussion,discussionadmin)
+admin.site.register(contest,contestadmin)
+admin.site.register(contest_problem,contest_problemadmin)
+admin.site.register(code_files,code_filesadmin)

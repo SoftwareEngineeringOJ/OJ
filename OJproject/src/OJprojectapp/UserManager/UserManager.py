@@ -8,11 +8,12 @@ from OJprojectapp.models import *
 
 #用户表单
 class UserRegisterForm(forms.Form): 
-    username = forms.CharField(label='Username',max_length=100)
-    password = forms.CharField(label='Password',widget=forms.PasswordInput())
+    username = forms.CharField(label= 'Username ',max_length=100)
+    password = forms.CharField(label= 'Password ',widget=forms.PasswordInput())
     signature = forms.CharField(label='Signature',max_length=100)
-    school = forms.CharField(label='School ',max_length=100)
-    email = forms.EmailField(label='Email ',max_length=50)
+    school = forms.CharField(label=   'School',max_length=100)
+    email = forms.EmailField(label=   'Email',max_length=50)
+
 class UserLoginForm(forms.Form): 
     username = forms.CharField(label='Username',max_length=100)
     password = forms.CharField(label='Password',widget=forms.PasswordInput())
@@ -96,6 +97,36 @@ def index(req):
     return render_to_response('oj.html',{'username' : username, 
                                            'Flag' : Flag})
 
+#修改
+def modify(req):
+    username = req.COOKIES.get('username','')
+    user_ = user.objects.get(username = username)
+
+    if req.method == 'POST':
+        uf = UserRegisterForm(req.POST)
+        if uf.is_valid():
+            #获得表单数据
+
+            username = uf.cleaned_data['username']
+            password = uf.cleaned_data['password']
+            signature = uf.cleaned_data['signature']
+            school = uf.cleaned_data['school']
+            email = uf.cleaned_data['email']
+
+            user_.username = username
+            user_.password = password
+            user_.signature = signature
+            user_.school = school
+            user_.email = email
+            user_.save()
+
+            response = HttpResponseRedirect('/enter/')
+            response.set_cookie('username',user_.username,3600)
+            return response
+    else:
+        uf = UserRegisterForm()
+    return render_to_response('regist.html',{'uf':uf, 'user':user_}, context_instance=RequestContext(req))
+
 def enter(req):
     username = req.COOKIES.get('username','')
     if cmp("",username)==0:
@@ -103,7 +134,10 @@ def enter(req):
     else:
         theuser = user.objects.get(username=username)
         problems = theuser.problems.all().order_by('-submit_time')
-        ac = theuser.problems.all().filter(result='Accept').order_by('-submit_time')
+        #ac = theuser.problems.all().filter(result='Accept').order_by('-submit_time')
+        ac = user_status.objects.filter(userID=theuser.id).order_by('-submit_time')#加上filter(result='Accept')就不对了
+        print theuser.id
+        print ac
         if len(problems)>0:
            problems1 = problems[0]
         else:
@@ -152,34 +186,5 @@ def enter(req):
             ac_others = ac[5:]
         else:
             ac_others=[]
-        return render_to_response('enter.html' ,{'username':username,'theuser':theuser,'problems1':problems1,'problems2':problems2,'problems3':problems3,'problems4':problems4,'problems5':problems5,'problems_others':problems_others,'ac1':ac1,'ac2':ac2,'ac3':ac3,'ac4':ac4,'ac5':ac5,'ac_others':ac_others})
-
-#修改
-def modify(req):
-    username = req.COOKIES.get('username','')
-    user_ = user.objects.get(username = username)
-
-    if req.method == 'POST':
-        uf = UserRegisterForm(req.POST)
-        if uf.is_valid():
-            #获得表单数据
-
-            username = uf.cleaned_data['username']
-            password = uf.cleaned_data['password']
-            signature = uf.cleaned_data['signature']
-            school = uf.cleaned_data['school']
-            email = uf.cleaned_data['email']
-
-            user_.username = username
-            user_.password = password
-            user_.signature = signature
-            user_.school = school
-            user_.email = email
-            user_.save()
-
-            response = HttpResponseRedirect('/enter/')
-            response.set_cookie('username',user_.username,3600)
-            return response
-    else:
-        uf = UserRegisterForm()
-    return render_to_response('regist.html',{'uf':uf, 'user':user_}, context_instance=RequestContext(req))
+        return render_to_response('enter.html' ,{'username':username,'user':theuser,'problems1':problems1,'problems2':problems2,'problems3':problems3,'problems4':problems4,'problems5':problems5,'problems_others':problems_others,'ac1':ac1,'ac2':ac2,'ac3':ac3,'ac4':ac4,'ac5':ac5,'ac_others':ac_others})
+    

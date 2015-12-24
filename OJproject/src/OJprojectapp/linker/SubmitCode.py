@@ -3,7 +3,8 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
-from datetime import datetime
+#from datetime import datetime
+from django.utils import timezone
 from OJprojectapp.models import user_status, user
 import CodeManager
 import urllib
@@ -17,22 +18,23 @@ def submit(req, check):
     man = user.objects.get(username = username)
     if req.POST:
         page = req.POST
-        new = user_status(submit_time = datetime.now(), 
-                     is_code_private = (req.POST["sharecode"] is 'Yes'), 
-                     userID = man.id, 
-                     username = username, 
-                     language = page['language'], 
-                     problemID = sid, 
-                     result = 'Pending', 
-                     OJ = oj, 
-                     contestID = 'hello', 
-                     is_user_private = True)
+        new = user_status(submit_time = timezone.now(), 
+                          is_code_private = page["sharecode"] == "Yes", 
+                          userID = man.id, 
+                          username = username, 
+                          language = page['language'], 
+                          problemID = sid, 
+                          result = 'Pending', 
+                          problemTitle = title, 
+                          OJ = oj, 
+                          contestID = 'hello', 
+                          is_user_private = True)
         code=req.POST["answer"]
         new.save()
         RunID = new.id
         CodeManager.SaveFile(code, RunID)
         check.push(new)
-        postData = {'user': username, 
+        postData = {'user' : username, 
                     'oj': 'all'} # 发送POST
         postData = urllib.urlencode(postData)
         #print 'To', '/mystatus' + '?' + postData

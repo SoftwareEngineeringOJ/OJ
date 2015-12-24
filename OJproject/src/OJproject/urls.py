@@ -29,16 +29,23 @@ urlpatterns = [
     url(r'^regist/$', 'OJprojectapp.views.regist'), 
     url(r'^enter/$', 'OJprojectapp.views.enter'), 
     url(r'^logout/$', 'OJprojectapp.views.logout'), 
+    url(r'^modify/$', 'OJprojectapp.views.modify'), 
     
     url(r'^problems/$', 'OJprojectapp.views.problemss'), 
-    
-    url(r'^discuss/$', 'OJprojectapp.views.discuss'), 
-    url(r'^status/$', 'OJprojectapp.views.statuss'), 
-    
     url(r'^problemshow/$', 'OJprojectapp.views.problemshow'), 
+    url(r'^mysubmitcode/$', 'OJprojectapp.views.mysubmitcode'), 
+    
+    url(r'^status/$', 'OJprojectapp.views.statuss'), 
+    url(r'^discuss/$', 'OJprojectapp.views.discuss'), 
+    
     url(r'^usershow/$', 'OJprojectapp.views.usershow'), 
-    #url(r'^mycodeshow/$', 'OJprojectapp.views.mycodeshow'),
-    url(r'^mysubmitcode/$', 'OJprojectapp.views.mysubmitcode'),
-    url(r'^modify/$', 'OJprojectapp.views.modify')
+    url(r'^codeshow/$', 'OJprojectapp.views.mycodeshow'), 
+    
+    url(r'^contestlist/$', 'OJprojectapp.views.contestlist'), 
+    url(r'^addcontest/$', 'OJprojectapp.views.addcontest'), 
+    url(r'^editcontest/$', 'OJprojectapp.views.editcontest'), 
+    url(r'^delete_contest_problems/$', 'OJprojectapp.views.delete_contest_problems'),
+    url(r'^contestshow/$', 'OJprojectapp.views.contest_show'),
+    url(r'^contestproblem/$','OJprojectapp.views.contest_problem')
 ]
 urlpatterns += staticfiles_urlpatterns()

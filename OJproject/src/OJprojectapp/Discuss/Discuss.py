@@ -4,13 +4,11 @@ Created on 2015年12月21日
 
 @author: Rhapsody
 '''
-from django.shortcuts import render,render_to_response
-from django.http import HttpResponse,HttpResponseRedirect
+from django.shortcuts import render, render_to_response
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
-from datetime import date, datetime
-from django import forms
+from datetime import datetime
 from OJprojectapp.models import *
-from django.templatetags.i18n import language
 
 def discuss(req):
     username = req.COOKIES.get('username','')

@@ -117,7 +117,15 @@
                                 <td>{{ astatu.result }}</td>
                                 <td>{{ astatu.memory }}</td>
                                 <td>{{ astatu.time }}</td>
-                                <td>{{ astatu.language }}</td>
+								{% ifequal username astatu.username %}
+                                    <td><a href="/codeshow/?id={{astatu.id}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.language }}</a></td>
+								{% else %}
+									{% if astatu.is_code_private %}
+									<td><a href="/codeshow/?id={{astatu.id}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.language }}</a></td>
+									{% else %}
+										<td>{{ astatu.language }}</td>
+									{% endif %}
+								{% endifequal %}
                                 <td>{{ astatu.submit_time }}</td>
 								{% if Flag %}
                                 {% if astatu.is_user_private %}
@@ -126,9 +134,9 @@
                                     <td>{{ astatu.is_user_private }}</td>
                                 {% endif %}
                                 {% if astatu.is_code_private %}
-                                    <td><a href="/codeshow/?id={{astatu.id}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.is_code_private }}</a></td>
+                                    <td><a href="/codeshow/?id={{astatu.id}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.language }}</a></td>
                                 {% else %}
-                                    <td>{{ astatu.is_code_private }}</td>
+                                    <td>{{ astatu.language }}</td>
                                 {% endif %}
 								{% endif %}
                                 <td><a href="/discuss/?id={{astatu.problemID}}&addid=-1">ENTER</a></td>
