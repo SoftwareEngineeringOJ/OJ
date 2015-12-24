@@ -7,6 +7,7 @@ Created on 2015年11月24日
 import CodeManager
 import POJ
 import HOJ
+import HDU
 from Queue import Queue
 import threading
 from OJprojectapp.models import user_status
@@ -18,12 +19,15 @@ class Worker(threading.Thread):
         self.Q = Q
         self.pojlinker = POJ.Submit()
         self.hojlinker = HOJ.Submit()
+        self.hdulinker = HDU.Submit()
         
     def getOJ(self, oj):
         if (oj == 'POJ'):
             return self.pojlinker
         if (oj == 'HOJ'):
             return self.hojlinker
+        if (oj == 'HDU'):
+            return self.hdulinker
     
     def run(self):
         while not self.Q.empty():

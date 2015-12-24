@@ -7,6 +7,7 @@ Created on 2015年11月24日
 import os
 import POJ
 import HOJ
+import HDU
 from OJprojectapp.models import code_files
 
 def GetOJ(oj):
@@ -15,6 +16,8 @@ def GetOJ(oj):
         return POJ.Submit()
     if oj == 'HOJ':
         return HOJ.Submit()
+    if oj == 'HDU':
+        return HDU.Submit()
 
 def SaveFile(Code, RunID):
     count = 0
