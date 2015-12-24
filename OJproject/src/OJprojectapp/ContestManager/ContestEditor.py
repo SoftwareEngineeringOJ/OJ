@@ -15,6 +15,7 @@ from OJprojectapp.models import *
 from OJprojectapp.DataManager import DataManager
 from TempStore import *
 from OJprojectapp.ContestManager import TempStore, Editor
+from OJprojectapp.PagesManager import PagesManager
 #from django.templatetags.i18n import language
 
 def get_contest_list(req):
@@ -25,10 +26,34 @@ def get_contest_list(req):
         settershow = setter
         print 'Find', settershow
     contest_list = contest.objects.filter(IsReady = True)
+    if 'page' in req.GET:
+        page = req.GET['page']
+    else:
+        page = 1
+    title_show = ""
+    setter_show = ""
+    if req.method == 'POST':
+        title_show = req.POST['title']
+        setter_show = req.POST['setter']
+    else:
+        if 'title' in req.GET:
+            title_show = req.GET['title']
+        if 'setter' in req.GET:
+            setter_show = req.GET['setter']
+    if title_show != "":
+        contest_list = contest_list.filter(title = title_show)
+    if setter_show != "":
+        contest_list = contest_list.filter(owner = setter)
+    contest_list = contest_list.order_by('-begintime')
+    paper = PagesManager(name = 'problem', now = int(page), data = contest_list, segment = 20)
+    page = int(page)
     return render_to_response("contestlist.html", {'username' : username, 
                                                    'Flag' : Flag, 
                                                    'settershow' : settershow, 
-                                                   'contest_list' : contest_list, }, 
+                                                   'setter_show' : setter_show, 
+                                                   'title_show' : title_show, 
+                                                   'contest_list' : contest_list, 
+                                                   'paper' : paper, }, 
                               context_instance = RequestContext(req))
 
 def delete_contest_problems(req):

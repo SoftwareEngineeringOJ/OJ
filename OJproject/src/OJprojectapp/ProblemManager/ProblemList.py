@@ -37,10 +37,30 @@ def problemss(req):
         source_show=req.POST["source"]
         page = 1
     else:
-        problems_list=problemslist.objects.all()
-        sid_show=""
-        title_show=""
-        source_show=""
+        GET = req.GET
+        if ('oj' not in GET) or cmp(GET["oj"],"all") == 0:
+            problems_list=problemslist.objects.all().order_by('SID')
+            tmp = 'all'
+        else:
+            problems_list=problemslist.objects.filter(OJ = GET["oj"]).order_by('SID')
+            tmp = GET('oj')
+        find=oj_show.index(tmp)
+        first=oj_show[0]
+        oj_show[0] = tmp
+        oj_show[find]=first
+        tmp = ""
+        if ('sid' in GET) and cmp(GET["sid"],"") != 0:
+            problems_list=problems_list.filter(SID=GET["sid"]).order_by('SID')
+            tmp = GET['sid']
+        sid_show=tmp
+        title_show = ""
+        if ('title' in GET) and cmp(GET["title"],"") != 0:
+            problems_list=problems_list.filter(title=GET["title"]).order_by('SID')
+            title_show = GET["title"]
+        source_show = ""
+        if ('source' in GET) and cmp(GET["source"],"") != 0:
+            problems_list=problems_list.filter(source=GET["source"]).order_by('SID')
+            source_show = GET["source"]
     paper = PagesManager(name = 'problem', now = int(page), data = problems_list, segment = 20)
     page = int(page)
     return render_to_response('problems.html', {'problems_list' : paper.show_list, 
