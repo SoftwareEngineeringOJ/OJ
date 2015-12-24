@@ -24,20 +24,20 @@
 <nav  class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <a href="/myoj/" class="navbar-brand">HOME</a>
+            <a href="/" class="navbar-brand">HOME</a>
         </div>
         <div id="navbar1" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li><a href="/myproblems/">PROBLEM</a></li>
-                <li><a href="/mystatus/">STATUS</a></li>
+                <li><a href="/problems/">PROBLEM</a></li>
+                <li><a href="/status/">STATUS</a></li>
                 <li><div class="dropdown" style="padding-top: 10px;">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                         CONTEST
                         <span class="caret"></span>
                     </button>
                     <ul  class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#" class="btn btn-sm active" role="menuitem">Contest Details</a></li>
-                        <li><a href="#" class="btn btn-sm active" role="menuitem">Contest Problems</a></li>
+                        <li><a href="/addcontest" class="btn btn-sm active" role="menuitem">Add Contest</a></li>
+                        <li><a href="/contestlist" class="btn btn-sm active" role="menuitem">Show Contest</a></li>
                     </ul>
                 </div></li>
             </ul>
@@ -109,8 +109,8 @@
                     {%for aproblem in problems_list%}
                     <tr>
                         <td>{{ aproblem.OJ }}</td>
-                        <td><a href="/myproblemshow/?id={{aproblem.id}}">{{ aproblem.SID }}</a></td>
-                        <td><a href="/myproblemshow/?id={{aproblem.id}}">{{ aproblem.title }}</a></td>
+                        <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.SID }}</a></td>
+                        <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.title }}</a></td>
                     </tr>
                     {% endfor %}
                     </tbody>
