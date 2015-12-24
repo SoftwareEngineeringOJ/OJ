@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head lang="en">
+    <link href="/t/static/css/bootstrap.min.css", rel="stylesheet"/>
+    <script src="/t/static/js/jquery-2.1.1.min.js"></script>
+    <script src="/t/static/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Book</title>
+    <style>
+        body{
+            padding-top:50px;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .starter1{
+            padding:14px 210px;
+        }
+    </style>
+</head>
+<body background="/static/images/bg_8.png">
+<nav  class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand">HOME</a>
+        </div>
+        <div id="navbar1" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="/problems/">PROBLEM</a></li>
+                <li><a href="/status/">STATUS</a></li>
+                <li><div class="dropdown" style="padding-top: 10px;">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        CONTEST
+                        <span class="caret"></span>
+                    </button>
+                    <ul  class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="/addcontest" class="btn btn-sm active" role="menuitem">Add Contest</a></li>
+                        <li><a href="/contestlist" class="btn btn-sm active" role="menuitem">Show Contest</a></li>
+                    </ul>
+                </div></li>
+            </ul>
+			{% if Flag %}
+			<div style="padding-top: 10px;">
+				<ul class="nav navbar-nav navbar-right">
+					<li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}！</p></li>
+					<li><a href="/enter/">Enter MY OJ </a></li></li>
+					<li><a href="/logout/"> Logout </a></li>
+				</ul>
+			</div>
+			{% else %}
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="/login/">LOGIN</a></li>
+				<li><a href="/regist/">REGISTER</a></li>
+			</ul>
+			{% endif %}
+        </div>
+    </div>
+</nav>
+<h1 class=" text-center">EDIT CONTEST</h1>
+<div class="container">
+    <div class="starter1">
+        <form role="form" method="post" >
+            {% csrf_token %}
+            <div class="form-group left">
+                <input type="submit" class="btn" name="addproblems" value="ADD PROBLEMS">
+                <input type="submit" class="btn" name="setcontest" value="SET CONTEST">
+            </div><br><br>
+			{% if show %}
+			<div>
+				<label class=" text-primary"><h3><b>{{ warning }}</h3></label>
+			</div>
+			{% endif %}
+			{% if start %}
+			<div>
+				<label class=" text-primary"><h3><b>start</h3></label>
+			</div>
+			{% else %}
+			<div>
+				<label class=" text-primary"><h3><b>not start</h3></label>
+			</div>
+			
+			{% endif %}
+			
+            <div>
+                <label class=" text-primary"><h3><b>Title &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b></h3></label>
+                <input type="text" name="title" size="70" value="{{data.title}}"><br>
+				{% if start %}
+                <label class=" text-primary"><h3><b>Begin Time &nbsp</b></h3></label>
+				<input type="date" name="beginTime" size="18" value="{{beginTime}}" id="beginTime"/>
+				<input type="text" name="hour" size="2" maxlength="2" value="{{hour}}" id="hour" class="clk_select"/>:<input type="text" name="minute" size="2" maxlength="2" value="{{minute}}" id="minute" class="clk_select"/>:00<br>
+				{% endif %}
+                <label class=" text-primary"><h3><b>Length &nbsp&nbsp&nbsp&nbsp</b></h3></label>
+				<input type="text" name="d_day" value="{{d_day}}" id="d_day" class="clk_select" style="width:63px"/>天 <input type="text" name="d_hour" maxlength="2" value="{{d_hour}}" id="d_hour" class="clk_select" style="width:25px"/>:<input type="text" name="d_minute" maxlength="2" value="{{d_minute}}" id="d_minute" class="clk_select" style="width:25px"/>:00<br>
+                <label class=" text-primary"><h3><b>Description </b></h3></label>
+                <textarea name="description" cols="100" rows="8" value = "{{data.description}}"/></textarea>
+                <label class=" text-primary"><h3><b>Announcement </b></h3></label>
+                <textarea name="announcement" cols="100" rows="8" value = "{{data.announcement}}"/></textarea>
+                <label class=" text-primary"><h3><b>Password &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b></h3></label>
+                <input type="password" name="password" value=""><br>
+                <input type="submit" class="btn col-md-offset-5 btn-danger" name="submit" value="SUBMIT"/>
+            </div>
+
+            {% csrf_token %}
+            <div class="form-group left">
+                <input type="submit" class="btn" name="addproblems" value="ADD PROBLEMS">
+                <input type="submit" class="btn" name="setcontest" value="SET CONTEST">
+            </div><br><br>
+			{% if start %}
+            <div style="width:1000px;padding:0px 110px;">
+                <tr>
+                    <td><b class="text-primary" style="font-size:20px;">OJ &nbsp</b>
+                        <select name="oj">
+                            {% for i in OJList %}
+                            <option value="{{i}}">{{i}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td><b class="text-primary" style="font-size:20px;">&nbsp SID &nbsp</b>
+                        <input type="text" name="sid" value="{{sid}}"></td>
+                    <td><b class="text-primary" style="font-size:20px;">&nbsp Title &nbsp</b>
+                        <input type="text" name="problemtitle" value="{{problemtitle}}"></td>
+                    <td><input type="submit" class="btn btn-danger" name="add" value="+"></td>
+                </tr>
+            </div>
+            <div class="table-responsive" style="width:800px;padding:20px 100px;">
+                <table class="table table-striped table-hover"/>
+                    <thead>
+                    <tr class="bg-primary">
+                        <td>OJ</td>
+                        <td>SID </td>
+                        <td>title</td>
+                        <td>delete</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {%for aproblem in problems_list%}
+                    <tr>
+                        <td>{{ aproblem.sojs }}</td>
+                        <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.pids }}</a></td>
+                        <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.titles }}</a></td>
+						<td><a href="/delete_contest_problems/?id={{aproblem.id}}&contest_id={{contestid}}" class="btn btn-primary" name="delete" value="x"/></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <input type="submit" class="btn col-md-offset-6 btn-danger" name="submit" value="SUBMIT"/>
+            </div>
+			{% endif %}
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

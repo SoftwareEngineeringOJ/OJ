@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head lang="en">
+    <link href="/t/static/css/bootstrap.min.css", rel="stylesheet"/>
+    <script src="/t/static/js/jquery-2.1.1.min.js"></script>
+    <script src="/t/static/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Book</title>
+    <style>
+        body{
+            padding-top:50px;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .starter1{
+            padding:14px 80px;
+        }
+
+    </style>
+</head>
+<body background="/static/images/bg_8.png">
+<nav  class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand">HOME</a>
+        </div>
+        <div id="navbar1" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="/problems/">PROBLEM</a></li>
+                <li><a href="/status/">STATUS</a></li>
+                <li><div class="dropdown" style="padding-top: 10px;">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        CONTEST
+                        <span class="caret"></span>
+                    </button>
+                    <ul  class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="/addcontest" class="btn btn-sm active" role="menuitem">Add Contest</a></li>
+                        <li><a href="/contestlist" class="btn btn-sm active" role="menuitem">Show Contest</a></li>
+                    </ul>
+                </div></li>
+            </ul>
+					{% if Flag %}
+                    <div style="padding-top: 10px;">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}！</p></li>
+                            <li><a href="/enter/">Enter MY OJ </a></li></li>
+                            <li><a href="/logout/"> Logout </a></li>
+                        </ul>
+                    </div>
+					{% else %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/login/">LOGIN</a></li>
+                        <li><a href="/regist/">REGISTER</a></li>
+                    </ul>
+					{% endif %}
+        </div>
+    </div>
+</nav>
+<h1 class=" text-center">CONTEST</h1>
+
+<div>
+
+  <!-- Nav tabs -->
+
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#Information" aria-controls="Information" role="tab" data-toggle="tab">Information</a></li>
+    <li role="presentation"><a href="#Problems" aria-controls="Problems" role="tab" data-toggle="tab">Problems</a></li>
+    <li role="presentation"><a href="#Problem" aria-controls="Problem" role="tab" data-toggle="tab">Problem</a></li>
+    <li role="presentation"><a href="#Status" aria-controls="Status" role="tab" data-toggle="tab">Status</a></li>
+    <li role="presentation"><a href="#Rank" aria-controls="Rank" role="tab" data-toggle="tab">Rank</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="Information">
+	#1
+        <div style="padding: 0px 130px;">
+            <label class=" text-primary"><h3><b>Title &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:</b></h3></label>
+            <label><h3><b>&nbsp{{acontest.title}}</b></h3></label><br>
+            <label class=" text-primary"><h3><b>Begin Time &nbsp:</b></h3></label>
+            <label><h3><b>&nbsp{{acontest.begintime}}</b></h3></label><br>
+            <label class=" text-primary"><h3><b>End Time &nbsp&nbsp&nbsp&nbsp:</b></h3></label>
+            <label><h3><b>&nbsp{{acontest.endtime}}</b></h3></label><br>
+            <label class=" text-primary"><h3><b>Description </b></h3></label>
+            <div class="panel-body">
+                <pre>{{acontst.description}}</pre>
+            </div>
+            <label class=" text-primary"><h3><b>Announcement </b></h3></label>
+            <div class="panel-body">
+                <pre>{{acontst.announcemrnt}}</pre>
+            </div>
+        </div>
+	</div>
+
+    <div role="tabpanel" class="tab-pane" id="Problems">
+	#2
+        <div class="table-responsive" style="width:1000px;padding:20px 200px;">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr class="bg-primary">
+                        <td>OJ</td>
+                        <td>SID </td>
+                        <td>title</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {%for aproblem in problems_list%}
+                    <tr>
+                        <td>{{ aproblem.OJ }}</td>
+                        <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.SID }}</a></td>
+                        <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.title }}</a></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+	</div>
+
+	<div role="tabpanel" class="tab-pane" id="Problem">
+	#3
+        <div class="container">
+			<div class="panelset">
+				<div class="panelset1">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h1 class="text-center"><b>{{problem.title}}</b></h1>
+                            <br><p>Time Limit : {{problem.time_limit}} &nbsp &nbsp &nbsp &nbsp &nbsp Memory Limit : {{problem.mem_limit}}</p>
+						</div>
+					</div>
+                    <pre class="text-left"><h1 class="text-left text-info">Description </h1><br>{{problem.description}}<br>{% for pic in pic_addr %}<img src={{pic}} >{% endfor %}<br><h3 class="text-left">Input  </h3><br>{{problem.inputs}}<br><h3 class="text-left">Output  </h3><br>{{problem.output}}<br><h3 class="text-left">Sample Input  </h3><br>{{problem.sample_input}}<br><h3 class="text-left">Sample Output  </h3><br>{{problem.sample_output}}</pre>
+                </div>
+			</div>
+			{% if Flag %}
+			<div class="formset">
+                <a href="/mysubmitcode/?sid={{problem.SID}}&oj={{problem.OJ}}&title={{problem.title}}&id={{problem.id}}" class="btn btn-lg active col-md-offset-5 col-md-2" role="menuitem"></b>Submit</b></a>
+			</div>
+			{% else %}
+			<div class="formset">
+                <a href="/login/" class="btn btn-lg active col-md-offset-5 col-md-2" role="menuitem"></b>Submit</b></a>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+
+    <div role="tabpanel" class="tab-pane" id="Status">
+	#4
+        <div class="table-responsive" style="width:1000px;padding:20px 0px;">
+            <form role="form" method="post" >
+                {% csrf_token %}
+                <div style="width:1000px;">
+                    <tr>
+                        <td ><b class="text-primary" style="font-size:15px;">User &nbsp</b>
+                            <input type="text" name="sid" value="{{sid_show}}"></td>
+                        <td><b class="text-primary" style="font-size:15px;">&nbsp problem &nbsp</b>
+                            <input type="text" name="sid" value="{{sid_show}}"></td>
+                        <td><b class="text-primary" style="font-size:15px;">&nbsp result &nbsp</b>
+                            <input type="text" name="result" value="{{sid_show}}"></td>
+                        <td><b class="text-primary" style="font-size:15px;">&nbsp language &nbsp</b>
+                            <input type="text" name="language" value="{{sid_show}}"></td>
+                        <td><input type="submit" class="btn btn-danger" name="search" value="show"></td>
+                    </tr>
+                </div>
+            </form>
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr class="info">
+                        <td>problem </td>
+                        <td>user </td>
+                        <td>OJ </td>
+                        <td>result <br></td>
+                        <td>memory </td>
+                        <td>time </td>
+                        <td>language </td>
+                        <td>submit time </td>
+                        <td>discussion</td>
+                    </tr>
+                </form>
+                </thead>
+                <tbody>
+                {%for astatu in status_list %}
+                <tr>
+                    <td><a href="/problemshow/?id={{astatu.problemID}}">{{ astatu.problemTitle }}</a></td>
+                    <td>{{ astatu.username }}</td>
+                    <td>{{ astatu.OJ }}</td>
+                    <td>{{ astatu.result }}</td>
+                    <td>{{ astatu.memory }}</td>
+                    <td>{{ astatu.time }}</td>
+                    <td>{{ astatu.language }}</td>
+                    <td>{{ astatu.submit_time }}</td>
+                    <td><a href="/discuss/?id={{astatu.problemID}}&addid=-1">ENTER</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+	</div>
+
+    <div role="tabpanel" class="tab-pane" id="Rank">
+	#5
+        <div class="table-responsive" style="width:1000px;padding:20px 0px;">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr class="info">
+                    <td>rank </td>
+                    <td>user </td>
+                    <td>AC </td>
+                </tr>
+                </form>
+                </thead>
+                <tbody>
+                {%for arank in rank_list%}
+                <tr>
+                    <td>{{ arank.rank }}</td>
+                    <td>{{ arank.username }}</td>
+                    <td>{{ arank.ac }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+	</div>
+  </div>
+<Script>
+    function GetQueryString(name)
+    {
+         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+         var r = window.location.search.substr(1).match(reg);
+         if(r!=null)return  unescape(r[2]); return null;
+    }
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $.ajax({
+        type: "GET",
+        dataType: 'json',
+        data: {'data':this.getAttribute('aria-controls'), 'id':GetQueryString('id')},
+        url:'/contestshow/',
+        });
+    })
+
+</Script>
+
+</div>
+
+</body>
+</html>

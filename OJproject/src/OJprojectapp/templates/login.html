@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head lang="en">
+        <link href="/t/static/css/bootstrap.min.css", rel="stylesheet"/>
+        <link href="/t/static/css/various_button.css", rel="stylesheet"/>
+        <script src="/t/static/js/jquery-2.1.1.min.js"></script>
+        <script src="/t/static/js/bootstrap.min.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Login</title>
+        <style>
+            body{
+                padding-top:50px;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+            }
+            .starter{
+                padding:14px 50px;
+                text-align: center;
+            }
+        </style>
+    </head>
+  <body background="/static/images/bg_8.png">
+        <nav  class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="/" class="navbar-brand">HOME</a>
+                </div>
+                <div id="navbar1" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="/problems/">PROBLEM</a></li>
+                        <li><a href="/status/">STATUS</a></li>
+                        <li><div class="dropdown" style="padding-top: 10px;">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                CONTEST
+                                <span class="caret"></span>
+                            </button>
+                            <ul  class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="/addcontest" class="btn btn-sm active" role="menuitem">Add Contest</a></li>
+                        <li><a href="/contestlist" class="btn btn-sm active" role="menuitem">Show Contest</a></li>
+                            </ul>
+                        </div></li>
+                    </ul>
+					{% if Flag %}
+                    <div style="padding-top: 10px;">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}！</p></li>
+                            <li><a href="/enter/">Enter MY OJ </a></li></li>
+                            <li><a href="/logout/"> Logout </a></li>
+                        </ul>
+                    </div>
+					{% else %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/login/">LOGIN</a></li>
+                        <li><a href="/regist/">REGISTER</a></li>
+                    </ul>
+					{% endif %}
+                </div>
+            </div>
+        </nav>
+    <div class="container">
+    	<h1 align="center" class="">Login Page</h1>
+		<form method = 'post' enctype="multipart/form-data" style="margin:45px">
+      <div align="center" style="padding-left: 20px">
+			{% csrf_token %}
+		    {{uf.as_p}}
+      </div>
+		  <div class="span1" align="center" style="padding-left: 55px;padding-top:15px;">
+        <div>
+           <input type="submit" value="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Login" class="y-btn">
+        </div>
+        <a href="http://127.0.0.1:8000/regist/" style="padding-left: 90px;">register</a>
+      </div>
+		</form>			
+    </div> <!-- /container -->
+  </body>
+</html>
+

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head lang="en">
+        <link href="/t/static/css/bootstrap.min.css", rel="stylesheet"/>
+        <link href="/t/static/css/various_button.css", rel="stylesheet"/>
+        <script src="/t/static/js/jquery-2.1.1.min.js"></script>
+        <script src="/t/static/js/bootstrap.min.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Book</title>
+        <style>
+            body{
+                padding-top:50px;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+            }
+            .starter{
+                padding:14px 100px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body background="/static/images/bg_8.png">
+        <nav  class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="/" class="navbar-brand">HOME</a>
+                </div>
+                <div id="navbar1" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="/problems/">PROBLEM</a></li>
+                        <li><a href="/status/">STATUS</a></li>
+                        <li><div class="dropdown" style="padding-top: 10px;">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                CONTEST
+                                <span class="caret"></span>
+                            </button>
+                            <ul  class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+								<li><a href="/addcontest" class="btn btn-sm active" role="menuitem">Add Contest</a></li>
+								<li><a href="/contestlist" class="btn btn-sm active" role="menuitem">Show Contest</a></li>
+                            </ul>
+                        </div></li>
+                    </ul>
+					{% if Flag %}
+                    <div style="padding-top: 10px;">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}！</p></li>
+                            <li><a href="/enter/">Enter MY OJ </a></li></li>
+                            <li><a href="/logout/"> Logout </a></li>
+                        </ul>
+                    </div>
+					{% else %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/login/">LOGIN</a></li>
+                        <li><a href="/regist/">REGISTER</a></li>
+                    </ul>
+					{% endif %}
+                </div>
+            </div>
+        </nav>
+        <h1 class="text-center text-danger">PROBLEM LIST</h1>
+        <div class="container">
+            <div class="starter">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <form role="form" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="submit" class="btn" name="filter" value="Filter">
+                                    <input type="reset" class="btn" name="reset" value="Reset">
+                                </div>
+                                <tr class="info">
+                                    <td>OJ <br><select name="oj">
+                                        {% for i in oj_show %}
+                                            <option value="{{i}}">{{i}}</option>
+                                        {% endfor %}
+                                        </select></td>
+                                    <td>SID <br><input type="text" name="sid" value="{{sid_show}}"></td>
+                                    <td>title <br><input type="text" name="title" value="{{title_show}}"></td>
+                                    <td>ratio</td>
+                                    <td>source </td>
+                                    <td>discussion</td>
+                                </tr>
+                            </form>
+                        </thead>
+                        <tbody>
+                        {%for aproblem in problems_list%}
+                            <tr>
+                                <td>{{ aproblem.OJ }}</td>
+                                <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.SID }}</a></td>
+                                <td><a href="/problemshow/?id={{aproblem.id}}">{{ aproblem.title }}</a></td>
+                                <td>{{ aproblem.ratio }}</td>
+                                <td>{{ aproblem.source }}</td>
+                                <td><a href="/discuss/?id={{aproblem.id}}&addid=-1">ENTER</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+  <div class = "apple_pagination">
+    <div class = "page_info">
+      Displaying {{ paper.name }} <b>{{ paper.begin }}&nbsp;-&nbsp;{{ paper.end }}</b> of <b>{{ paper.total }}</b> in total
+    </div>
+	<div>Now you are on the page <b>{{ paper.now }}</b> of <b>{{ paper.totalpages }}</b> </div>
+    <a class="previous_page" rel="prev" href="/problems?page={{paper.previous}}">&#8592; Previous</a>
+		{% for number in paper.first %}
+			<a href="/problems?page={{number}}">{{number}}</a>
+		{% endfor %}
+		{% if paper.first_gap %}
+			<span class="gap">&hellip;</span>
+		{% endif %}
+		{% for number in paper.second %}
+				<a href="/problems?page={{number}}">{{number}}</a>
+		{% endfor %}
+		{% if paper.second_gap %}
+			<span class="gap">&hellip;</span>
+		{% endif %}
+		{% for number in paper.third %}
+			<a href="/problems?page={{number}}">{{number}}</a>
+		{% endfor %}
+	<a class="next_page" rel="next" href="/problems?page={{paper.next}}">Next &#8594;</a>
+  </div>
+
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+
+<html lang="zh-CN">
+<head lang="en">
+    <link href="/t/static/css/bootstrap.min.css", rel="stylesheet"/>
+    <script src="/t/static/js/jquery-2.1.1.min.js"></script>
+    <script src="/t/static/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Book</title>
+    <style>
+        body{
+            padding-top:50px;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .starter1{
+            padding:14px 80px;
+        }
+
+    </style>
+</head>
+<body background="/static/images/bg_8.png">
+<nav  class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand">HOME</a>
+        </div>
+        <div id="navbar1" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="/problems/">PROBLEM</a></li>
+                <li><a href="/status/">STATUS</a></li>
+                <li><div class="dropdown" style="padding-top: 10px;">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        CONTEST
+                        <span class="caret"></span>
+                    </button>
+                    <ul  class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="/addcontest" class="btn btn-sm active" role="menuitem">Add Contest</a></li>
+                        <li><a href="/contestlist" class="btn btn-sm active" role="menuitem">Show Contest</a></li>
+                    </ul>
+                </div></li>
+            </ul>
+			{% if Flag %}
+			<div style="padding-top: 10px;">
+				<ul class="nav navbar-nav navbar-right">
+					<li><p class="btn btn-primary dropdown-toggle">Welcome {{username}}！</p></li>
+					<li><a href="/enter/">Enter MY OJ </a></li></li>
+					<li><a href="/logout/"> Logout </a></li>
+				</ul>
+			</div>
+			{% else %}
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="/login/">LOGIN</a></li>
+				<li><a href="/regist/">REGISTER</a></li>
+			</ul>
+			{% endif %}
+        </div>
+    </div>
+</nav>
+<h1 class=" text-center">CONTEST</h1>
+
+<div>
+
+  <!-- Nav tabs -->
+
+  <ul class="nav nav-tabs" role="tablist" id="myTab">
+    <li role="presentation"><a href="/contestshow/?id={{contest_id}}" >Information</a></li>
+    <li role="presentation"><a href="/contestproblem/?contest_id={{contest_id}}&problem_id={{problem_id}}">Problem</a></li>
+    <li role="presentation"><a href="/conteststatus/?contest_id={{contest_id}}">Status</a></li>
+    <li role="presentation" class="active"><a href="#Rank">Rank</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane" id="Information">
+	#1
+
+	</div>
+
+    <div role="tabpanel" class="tab-pane" id="Problem">
+	#3
+
+	</div>
+
+    <div role="tabpanel" class="tab-pane" id="Status">
+	#4
+
+	</div>
+
+    <div role="tabpanel" class="tab-pane active" id="Rank">
+	#5
+        <div class="table-responsive" style="width:1000px;padding:20px 0px;">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr class="info">
+                    <td>rank </td>
+                    <td>user </td>
+					<td>Solve </td>
+					<td>Penalty </td>
+                    {% for label in rank_list.labels %}
+					<td> {{label}} </td>
+					{% endfor %}
+                </tr>
+                </form>
+                </thead>
+                <tbody>
+                {% for user in rank_list.users %}
+                <tr>
+                    <td>{{ user.rank }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.score }}</td>
+                    <td>{{ user.time }}</td>
+                    {% for status in user.status %}
+					{% if status.FB %}
+					<td> {{status}} </td>
+					{% else %}
+					<td> {{status}} </td>
+					{% endif %}
+					{% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+	</div>
+  </div>
+<Script>
+
+
+    function GetProblem(name)
+    {
+         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+         var r = window.location.search.substr(1).match(reg);
+         if(r!=null)return  unescape(r[2]); return null;
+    }
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $.ajax({
+        type: "GET",
+        dataType: 'json',
+        data: {'data':this.getAttribute('aria-controls'), 'id':GetQueryString('id'), 'proid':GetProblem()},
+        url:'/contestshow/',
+        });
+    })
+
+
+</Script>
+
+</div>
+
+</body>
+</html>
+
