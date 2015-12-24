@@ -14,6 +14,7 @@ from ContestManager import ContestEditor, ContestManager
 
 import linker.Maneger
 check = linker.Maneger.Judge()
+
 #首页
 def oj(req):
     return UserManager.index(req)
@@ -78,3 +79,9 @@ def contest_show(req):
 
 def contest_problem(req):
     return ContestManager.get_contestproblem(req)
+
+def contest_status(req):
+    return ContestManager.get_contest_status(req)
+
+def contest_rank(req):
+    return ContestManager.get_contest_rank(req)

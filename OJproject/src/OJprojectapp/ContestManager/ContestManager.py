@@ -20,18 +20,15 @@ def get_contest_show(req):
         contest_id = req.GET["id"]
         print contest_id
     ctest = contest.objects.get(id=contest_id)
-    problems_list = ctest.list.all()
     List = ContestTools.get_contest_problems_list(contest_id = contest_id)
-    pro = []
-    for i in problems_list:
-        pro.append(problemslist.objects.filter(OJ=i.sojs).get(SID=i.pids))
-    status = user_status.objects.filter(contestID=contest_id)
-    return render_to_response("contestshow.html", {'username' : username, 
-                                                   'problems_list' : pro, 
+    problem_id = List[0].id
+
+    return render_to_response("contestshow.html", {'username' : username,
                                                    'MapList' : List,
                                                    'acontest' : ctest, 
-                                                   'Flag' : Flag, 
-                                                   'status_list' : status}, 
+                                                   'Flag' : Flag,
+                                                   'problem_id' :problem_id
+                                                   },
                               context_instance=RequestContext(req))
 
 def get_contestproblem(req):
@@ -47,4 +44,32 @@ def get_contestproblem(req):
                                                           'Flag' : Flag, 
                                                           'problem_id' : problem_id, 
                                                           'contest_id' : contest_id, }, 
+                                  context_instance=RequestContext(req))
+
+def get_contest_status(req):
+    username, Flag = UserInit.init(req)
+    if "contest_id" in req.GET:
+        contest_id = req.GET["contest_id"]
+        status_list = user_status.objects.filter(contestID=contest_id)
+        List = ContestTools.get_contest_problems_list(contest_id = contest_id)
+        problem_id = List[0].id
+    return render_to_response("conteststatus.html", {'username' : username,
+                                                      'Flag' : Flag,
+                                                      'contest_id' : contest_id,
+                                                      'status_list':status_list,
+                                                      'problem_id':problem_id},
+                                  context_instance=RequestContext(req))
+def get_contest_rank(req):
+    username, Flag = UserInit.init(req)
+    if "contest_id" in req.GET:
+        contest_id = req.GET["contest_id"]
+        List = ContestTools.get_contest_problems_list(contest_id = contest_id)
+        problem_id = List[0].id
+        rank_list = []
+    return render_to_response("contestrank.html", {'username' : username,
+                                                   'Flag' : Flag,
+                                                   'contest_id' : contest_id,
+                                                   'problem_id':problem_id,
+                                                   'rank_list':rank_list
+                                                   },
                                   context_instance=RequestContext(req))

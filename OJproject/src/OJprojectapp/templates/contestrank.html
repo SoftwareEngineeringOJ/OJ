@@ -74,42 +74,53 @@
   <!-- Nav tabs -->
 
   <ul class="nav nav-tabs" role="tablist" id="myTab">
-    <li role="presentation"><a href="/contestshow/?id={{contest_id}}">Information</a></li>
-    <li role="presentation" class="active"><a href="#Problem" aria-controls="Problem" role="tab" data-toggle="tab">Problem</a></li>
-    <li role="presentation"><a href="/conteststatus/?contest_id={{contest_id}}" >Status</a></li>
-    <li role="presentation"><a href="/contestrank/?contest_id={{contest_id}}" >Rank</a></li>
+    <li role="presentation"><a href="/contestshow/?id={{contest_id}}" >Information</a></li>
+    <li role="presentation"><a href="/contestproblem/?contest_id={{contest_id}}&problem_id={{problem_id}}">Problem</a></li>
+    <li role="presentation"><a href="/conteststatus/?contest_id={{contest_id}}">Status</a></li>
+    <li role="presentation" class="active"><a href="#Rank">Rank</a></li>
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content">
+    <div role="tabpanel" class="tab-pane" id="Information">
+	#1
 
-	<div role="tabpanel" class="tab-pane active" id="Problem">
-	#3
-        <div class="container">
-			<div class="panelset">
-				<div class="panelset1">
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h1 class="text-center"><b>{{problem.title}}</b></h1>
-                            <br><p>Time Limit : {{problem.time_limit}} &nbsp &nbsp &nbsp &nbsp &nbsp Memory Limit : {{problem.mem_limit}}</p>
-						</div>
-					</div>
-                    <pre class="text-left"><h1 class="text-left text-info">Description </h1><br>{{problem.description}}<br>{% for pic in pic_addr %}<img src={{pic}} >{% endfor %}<br><h3 class="text-left">Input  </h3><br>{{problem.inputs}}<br><h3 class="text-left">Output  </h3><br>{{problem.output}}<br><h3 class="text-left">Sample Input  </h3><br>{{problem.sample_input}}<br><h3 class="text-left">Sample Output  </h3><br>{{problem.sample_output}}</pre>
-                </div>
-			</div>
-			{% if Flag %}
-			<div class="formset">
-                <a href="/mysubmitcode/?problem_id={{problem_id}}&title={{problem.title}}&contest_id={{contest_id}}" class="btn btn-lg active col-md-offset-5 col-md-2" role="menuitem"></b>Submit</b></a>
-			</div>
-			{% else %}
-			<div class="formset">
-                <a href="/login/" class="btn btn-lg active col-md-offset-5 col-md-2" role="menuitem"></b>Submit</b></a>
-			</div>
-			{% endif %}
-		</div>
 	</div>
 
+    <div role="tabpanel" class="tab-pane" id="Problem">
+	#3
 
+	</div>
+
+    <div role="tabpanel" class="tab-pane" id="Status">
+	#4
+
+	</div>
+
+    <div role="tabpanel" class="tab-pane active" id="Rank">
+	#5
+        <div class="table-responsive" style="width:1000px;padding:20px 0px;">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr class="info">
+                    <td>rank </td>
+                    <td>user </td>
+                    <td>AC </td>
+                </tr>
+                </form>
+                </thead>
+                <tbody>
+                {%for arank in rank_list%}
+                <tr>
+                    <td>{{ arank.rank }}</td>
+                    <td>{{ arank.username }}</td>
+                    <td>{{ arank.ac }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+	</div>
   </div>
 <Script>
 
