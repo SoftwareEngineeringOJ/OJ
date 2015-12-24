@@ -105,16 +105,28 @@
                 <tr class="info">
                     <td>rank </td>
                     <td>user </td>
-                    <td>AC </td>
+					<td>Solve </td>
+					<td>Penalty </td>
+                    {% for label in rank_list.labels %}
+					<td> {{label}} </td>
+					{% endfor %}
                 </tr>
                 </form>
                 </thead>
                 <tbody>
-                {%for arank in rank_list%}
+                {% for user in rank_list.users %}
                 <tr>
-                    <td>{{ arank.rank }}</td>
-                    <td>{{ arank.username }}</td>
-                    <td>{{ arank.ac }}</td>
+                    <td>{{ user.rank }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.score }}</td>
+                    <td>{{ user.time }}</td>
+                    {% for status in user.status %}
+					{% if status.FB %}
+					<td> {{status}} </td>
+					{% else %}
+					<td> {{status}} </td>
+					{% endif %}
+					{% endfor %}
                 </tr>
                 {% endfor %}
                 </tbody>

@@ -95,53 +95,80 @@
     <div role="tabpanel" class="tab-pane active" id="Status">
 	#4
         <div class="table-responsive" style="width:1000px;padding:20px 0px;">
-            <form role="form" method="post" >
-                {% csrf_token %}
-                <div style="width:1000px;">
-                    <tr>
-                        <td ><b class="text-primary" style="font-size:15px;">User &nbsp</b>
-                            <input type="text" name="sid" value="{{sid_show}}"></td>
-                        <td><b class="text-primary" style="font-size:15px;">&nbsp problem &nbsp</b>
-                            <input type="text" name="sid" value="{{sid_show}}"></td>
-                        <td><b class="text-primary" style="font-size:15px;">&nbsp result &nbsp</b>
-                            <input type="text" name="result" value="{{sid_show}}"></td>
-                        <td><b class="text-primary" style="font-size:15px;">&nbsp language &nbsp</b>
-                            <input type="text" name="language" value="{{sid_show}}"></td>
-                        <td><input type="submit" class="btn btn-danger" name="search" value="show"></td>
-                    </tr>
-                </div>
-            </form>
-            <table class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr class="info">
-                        <td>problem </td>
-                        <td>user </td>
-                        <td>OJ </td>
-                        <td>result <br></td>
-                        <td>memory </td>
-                        <td>time </td>
-                        <td>language </td>
-                        <td>submit time </td>
-                        <td>discussion</td>
-                    </tr>
-                </form>
-                </thead>
-                <tbody>
-                {%for astatu in status_list %}
-                <tr>
-                    <td><a href="/problemshow/?id={{astatu.problemID}}">{{ astatu.problemTitle }}</a></td>
-                    <td>{{ astatu.username }}</td>
-                    <td>{{ astatu.OJ }}</td>
-                    <td>{{ astatu.result }}</td>
-                    <td>{{ astatu.memory }}</td>
-                    <td>{{ astatu.time }}</td>
-                    <td>{{ astatu.language }}</td>
-                    <td>{{ astatu.submit_time }}</td>
-                    <td><a href="/discuss/?id={{astatu.problemID}}&addid=-1">ENTER</a></td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <form role="form" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="submit" class="btn" name="filter" value="Filter">
+                                    <input type="reset" class="btn" name="reset" value="Reset">
+                                </div>
+                                <tr class="info">
+                                    <td>user <br><input type="text" name="user" value="{{user_show}}"></td>
+                                    <td>OJ <br><select name="oj">
+                                        {% for i in oj_show %}
+                                            <option value="{{i}}">{{i}}</option>
+                                        {% endfor %}
+                                        </select></td>
+									<td>Problem ID <br><input type="text" name="ProID" value="{{ProID_show}}"></td>
+                                    <td>result <br><select name="result">
+                                        {% for i in result_show %}
+                                            <option value="{{i}}">{{i}}</option>
+                                        {% endfor %}
+                                        </select></td>
+                                    <td>memory </td>
+									{% if Flag %}
+									<td>User private </td>
+                                    <td>Code private </td>
+									{% endif %}
+                                    <td>time </td>
+                                    <td>language <br><select name="language">
+                                        {% for i in language_show %}
+                                            <option value="{{i}}">{{i}}</option>
+                                        {% endfor %}
+                                        </select></td>
+                                    <td>submit time </td>
+                                    <td>discussion</td>
+                                </tr>
+                            </form>
+                        </thead>
+                        <tbody>
+                        {%for astatu in status_list%}
+                            <tr>
+                                <td>{{ astatu.username }}</td>
+                                <td>{{ astatu.OJ }}</td>
+                                <td><a href="/problemshow/?id={{astatu.problemID}}">{{ astatu.OJ }} {{ astatu.problemID }}</a></td>
+                                <td>{{ astatu.result }}</td>
+                                <td>{{ astatu.memory }}</td>
+                                <td>{{ astatu.time }}</td>
+								{% ifequal username astatu.username %}
+                                    <td><a href="/codeshow/?id={{astatu.id}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.language }}</a></td>
+								{% else %}
+									{% if astatu.is_code_private %}
+									<td><a href="/codeshow/?id={{astatu.id}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.language }}</a></td>
+									{% else %}
+										<td>{{ astatu.language }}</td>
+									{% endif %}
+								{% endifequal %}
+                                <td>{{ astatu.submit_time }}</td>
+								{% if Flag %}
+                                {% if astatu.is_user_private %}
+                                    <td><a href="/usershow/?id={{astatu.userID}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.is_user_private }}</a></td>
+                                {% else %}
+                                    <td>{{ astatu.is_user_private }}</td>
+                                {% endif %}
+                                {% if astatu.is_code_private %}
+                                    <td><a href="/codeshow/?id={{astatu.id}}" onclick="window.open(this.href,'_blank','height=400,width=600,top=200,left=350,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no, status=no');return false">{{ astatu.language }}</a></td>
+                                {% else %}
+                                    <td>{{ astatu.language }}</td>
+                                {% endif %}
+								{% endif %}
+                                <td><a href="/discuss/?id={{astatu.problemID}}&addid=-1">ENTER</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
         </div>
 	</div>
 

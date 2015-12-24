@@ -6,10 +6,8 @@ from datetime import date, datetime
 from OJprojectapp.UserManager import UserManager
 from django import forms
 from OJprojectapp.models import *
-from OJprojectapp.UserManager.UserManager import usershow
 from OJprojectapp.DataManager import DataManager
 from OJprojectapp.PagesManager import PagesManager
-from django.templatetags.i18n import language
 
 def statuss(req):
     username = req.COOKIES.get('username','')
@@ -51,7 +49,7 @@ def statuss(req):
         if cmp(req.POST["user"],"") != 0:
             status_list=status_list.filter(username=req.POST["user"]).order_by('-id')
         print 'Get =', req.POST['user']
-        user_show=req.POST["user"]
+        usershow=req.POST["user"]
     else:
         GET = req.GET
         if ('oj' not in GET) or cmp(GET["oj"],"all") == 0:
@@ -79,10 +77,20 @@ def statuss(req):
         find=result_show.index(tmp)
         first=result_show[0]
         result_show[0]=tmp
-        result_show[find]=first
+        result_show[find] = first
         if ('user' in GET) and cmp(GET["user"],"") != 0:
             status_list=status_list.filter(username=GET["user"]).order_by('-id')
-            user_show=GET["user"]
+            usershow = GET["user"]
+    ProID_show = ""
+    if req.POST:
+        if cmp(req.POST["ProID"],"") != 0:
+            ProID_show = req.POST["ProID"]
+            status_list = status_list.filter(problemID = ProID_show)
+    else:
+        if ('ProID' in req.GET):
+            ProID_show = req.GET["ProID"]
+            status_list = status_list.filter(problemID = ProID_show)
+    
     paper = PagesManager(name = 'status', now = int(page), data = status_list, segment = 20)
     return render_to_response('status.html',{'status_list' : paper.show_list, 
                                              'Flag' : Flag, 
@@ -90,7 +98,7 @@ def statuss(req):
                                              'oj_show' : oj_show, 
                                              'result_show' : result_show, 
                                              'language_show' : language_show, 
-                                             'usershow' : usershow, 
+                                             'user_show' : usershow, 
                                              'paper' : paper, 
                                              }, 
                               context_instance=RequestContext(req))

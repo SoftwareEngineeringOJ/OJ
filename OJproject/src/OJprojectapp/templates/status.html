@@ -71,13 +71,13 @@
                                     <input type="reset" class="btn" name="reset" value="Reset">
                                 </div>
                                 <tr class="info">
-                                    <td>problem Title</td>
                                     <td>user <br><input type="text" name="user" value="{{user_show}}"></td>
                                     <td>OJ <br><select name="oj">
                                         {% for i in oj_show %}
                                             <option value="{{i}}">{{i}}</option>
                                         {% endfor %}
                                         </select></td>
+									<td>Problem ID <br><input type="text" name="ProID" value="{{ProID_show}}"></td>
                                     <td>result <br><select name="result">
                                         {% for i in result_show %}
                                             <option value="{{i}}">{{i}}</option>
@@ -102,9 +102,9 @@
                         <tbody>
                         {%for astatu in status_list%}
                             <tr>
-                                <td><a href="/problemshow/?id={{astatu.problemID}}">{{ astatu.problemTitle }}</a></td>
                                 <td>{{ astatu.username }}</td>
                                 <td>{{ astatu.OJ }}</td>
+                                <td><a href="/problemshow/?id={{astatu.problemID}}">{{ astatu.OJ }} {{ astatu.problemID }}</a></td>
                                 <td>{{ astatu.result }}</td>
                                 <td>{{ astatu.memory }}</td>
                                 <td>{{ astatu.time }}</td>
