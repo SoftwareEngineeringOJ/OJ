@@ -46,5 +46,7 @@ def submit(req, check):
         postData = urllib.urlencode(postData)
         #print 'To', '/mystatus' + '?' + postData
         #如果是比赛，那么需要跳转到比赛的status
+        if 'contest_id' in req.GET:
+            return HttpResponseRedirect('/conteststatus' + '?' + 'contest_id=' + contestID)
         return HttpResponseRedirect('/status' + '?' + postData)
     return render_to_response('mysubmitcode.html',{'username':username,'title':title, 'lan':lan},context_instance=RequestContext(req))
