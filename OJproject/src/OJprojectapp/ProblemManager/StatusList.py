@@ -24,6 +24,7 @@ def statuss(req):
         page = req.GET['page']
     else:
         page = 1
+    usershow = "", 
     if req.POST:
         if cmp(req.POST["oj"],"all") == 0:
             status_list=user_status.objects.all().order_by('-id')

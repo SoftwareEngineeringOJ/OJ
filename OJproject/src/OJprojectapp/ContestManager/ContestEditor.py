@@ -19,9 +19,15 @@ from OJprojectapp.ContestManager import TempStore, Editor
 
 def get_contest_list(req):
     username, Flag = UserInit.init(req)
-    contest_list = contest.objects.all()
+    settershow = ""
+    if req.method == 'POST':
+        setter = req.POST['setter']
+        settershow = setter
+        print 'Find', settershow
+    contest_list = contest.objects.filter(IsReady = True)
     return render_to_response("contestlist.html", {'username' : username, 
                                                    'Flag' : Flag, 
+                                                   'settershow' : settershow, 
                                                    'contest_list' : contest_list, }, 
                               context_instance = RequestContext(req))
 
