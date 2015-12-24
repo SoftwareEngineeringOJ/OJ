@@ -15,6 +15,7 @@ class Node():
         self.status = [0] * num
         self.show = ["+"] * num
         self.ac = [False] * num
+        self.rank = 0
         self.each = [datetime.timedelta()] * num
         self.score = 0
         self.time = datetime.timedelta()
@@ -48,6 +49,11 @@ class Tree():
         self.usernames.append(username)
         self.users.append(Node(username, self.num))
     
+    def mycmp(self, a, b):
+        if a.score != b.score:
+            return a.score < b.score
+        return a.time > b.time
+    
     def accepted(self, status):
         id = -1
         for p in self.problems:
@@ -76,6 +82,12 @@ class Tree():
         for man in self.users:
             if man.username == status.username:
                 man.submit(id, result, status.submit_time - BeginTime)
+        for i in range(len(self.users)):
+            for j in range(i):
+                if self.mycmp(self.users[j], self.users[i]):
+                    self.users[j], self.users[i] = self.users[i], self.users[j]
+        for i in range(len(self.users)):
+            self.users[i].rank = i + 1
 
 def GeneratorRank(ProblemsList, StatusList, BeginTime, EndTime):
     m = len(ProblemsList) #题目数量
