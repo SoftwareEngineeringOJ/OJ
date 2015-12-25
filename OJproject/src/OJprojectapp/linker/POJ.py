@@ -65,9 +65,9 @@ class Submit(object):
     def find_status(self, page):
         #page = page.encode('utf-8')
         res = re.findall(r'user_id=raft_oj>raft_oj</a>(.*?)showsource', page)
-        fout = open('res.html', 'wb')
-        fout.write(page)
-        fout.close()
+        #fout = open('res.html', 'wb')
+        #fout.write(page)
+        #fout.close()
         if (len(res) <= 0):
             return 'Judge Error'
         tmp = res[0]

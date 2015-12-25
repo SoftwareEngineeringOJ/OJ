@@ -86,3 +86,6 @@ def contest_status(req):
 
 def contest_rank(req):
     return ContestManager.get_contest_rank(req)
+
+def contest_confirm(req):
+    return ContestManager.contest_confirm(req)

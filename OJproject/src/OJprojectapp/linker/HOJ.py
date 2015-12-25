@@ -33,9 +33,10 @@ class Submit(object):
         # 账号密码
         
     def html(self, text):
-        f = open('res.html', 'wb')
-        f.write(text)
-        f.close()
+        #f = open('res.html', 'wb')
+        #f.write(text)
+        #f.close()
+        pass
         
     def login(self):
         postData = {'user': self.username, 

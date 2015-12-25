@@ -50,5 +50,8 @@ urlpatterns = [
     url(r'^contestproblem/$','OJprojectapp.views.contest_problem'), 
     url(r'^conteststatus/$', 'OJprojectapp.views.contest_status'),
     url(r'^contestrank/$', 'OJprojectapp.views.contest_rank'), 
+    
+    url(r'^contest_confirm/$', 'OJprojectapp.views.contest_confirm'), 
+    
 ]
 urlpatterns += staticfiles_urlpatterns()
